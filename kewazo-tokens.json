@@ -1,0 +1,257 @@
+{
+  "global": {
+    "color": {
+      "turquoise": {
+        "100": { "value": "#F5FAFB", "type": "color", "description": "AAA 12.62:1." },
+        "200": { "value": "#D9F0F1", "type": "color", "description": "AAA 11.19:1." },
+        "300": { "value": "#A3DADB", "type": "color", "description": "AAA 8.61:1." },
+        "400": { "value": "#40C0C0", "type": "color", "description": "Brand base. CTAs, banners, totals. AA 6:1." },
+        "500": { "value": "#1EA7A6", "type": "color", "description": "AA 4.5:1." },
+        "600": { "value": "#058B8C", "type": "color", "description": "AA 4:1." },
+        "700": { "value": "#1A5E59", "type": "color", "description": "Active links, secondary headlines. AAA 7.5:1." },
+        "800": { "value": "#14433E", "type": "color", "description": "AAA 11:1." },
+        "900": { "value": "#1F3331", "type": "color", "description": "AAA 13:1." }
+      },
+      "bright": {
+        "100": { "value": "#FAFCFC", "type": "color" },
+        "200": { "value": "#F2F6F7", "type": "color" },
+        "300": { "value": "#D8E5E7", "type": "color", "description": "Brand base. Soft full-bleed backgrounds." },
+        "400": { "value": "#BAD1D4", "type": "color" },
+        "500": { "value": "#9FBDC1", "type": "color" },
+        "600": { "value": "#6C979D", "type": "color" },
+        "700": { "value": "#51777C", "type": "color" },
+        "800": { "value": "#3E5A5D", "type": "color" },
+        "900": { "value": "#263D42", "type": "color" }
+      },
+      "dark": {
+        "100": { "value": "#F5F7FB", "type": "color", "description": "Page backgrounds." },
+        "200": { "value": "#EAEDF3", "type": "color" },
+        "300": { "value": "#D7DEE6", "type": "color", "description": "Disabled state text." },
+        "400": { "value": "#AFB9C6", "type": "color" },
+        "500": { "value": "#7A899C", "type": "color" },
+        "600": { "value": "#576779", "type": "color" },
+        "700": { "value": "#414C59", "type": "color" },
+        "800": { "value": "#2B3037", "type": "color", "description": "Brand base. Headlines, dark surfaces." },
+        "900": { "value": "#1B1F24", "type": "color", "description": "Maximum contrast text." }
+      },
+      "mono": {
+        "100": { "value": "#FFFFFF", "type": "color", "description": "Pure white surfaces." },
+        "200": { "value": "#F4F4F4", "type": "color" },
+        "300": { "value": "#EEEEEE", "type": "color" },
+        "400": { "value": "#D9D9D9", "type": "color" },
+        "500": { "value": "#BABABB", "type": "color" },
+        "600": { "value": "#8C8C8C", "type": "color" },
+        "700": { "value": "#555555", "type": "color" },
+        "800": { "value": "#434343", "type": "color" },
+        "900": { "value": "#191919", "type": "color", "description": "Black for print emphasis." }
+      },
+      "accent": {
+        "red-500": { "value": "#EC1010", "type": "color", "description": "Critical alerts only. Never decorative." },
+        "red-200": { "value": "#FEF3F3", "type": "color" },
+        "yellow-500": { "value": "#F9EE89", "type": "color", "description": "Highlight markers. Use sparingly." },
+        "yellow-300": { "value": "#F9FF93", "type": "color" }
+      },
+      "print": {
+        "pantone-326c": { "value": "#00B2A9", "type": "color", "description": "Pantone 326C — Primary print equivalent. C0 M92 Y40 K18." },
+        "turquoise-print-fallback": { "value": "#056B6C", "type": "color", "description": "Print fallback / LIFTBOT v.2. C92 M0 Y30 K50." },
+        "turquoise-print-tint": { "value": "#4CB0C0", "type": "color", "description": "Tertiary print accent. C74 M0 Y22 K0." }
+      },
+      "semantic": {
+        "background": { "value": "{color.dark.100}", "type": "color" },
+        "surface": { "value": "{color.mono.100}", "type": "color" },
+        "border": { "value": "#E6E8EB", "type": "color" },
+        "border-strong": { "value": "#D1D5DB", "type": "color" },
+        "text-primary": { "value": "{color.dark.800}", "type": "color" },
+        "text-secondary": { "value": "{color.dark.500}", "type": "color" },
+        "text-muted": { "value": "#6B7280", "type": "color" },
+        "text-subtle": { "value": "#9CA3AF", "type": "color" },
+        "action-primary": { "value": "{color.turquoise.400}", "type": "color" },
+        "action-primary-hover": { "value": "{color.turquoise.500}", "type": "color" },
+        "action-secondary": { "value": "{color.dark.800}", "type": "color" },
+        "action-secondary-hover": { "value": "{color.dark.700}", "type": "color" },
+        "danger": { "value": "{color.accent.red-500}", "type": "color" }
+      }
+    },
+
+    "fontFamilies": {
+      "sans": { "value": "Barlow", "type": "fontFamilies" }
+    },
+
+    "fontWeights": {
+      "light": { "value": "300", "type": "fontWeights" },
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" },
+      "extrabold": { "value": "800", "type": "fontWeights" },
+      "black": { "value": "900", "type": "fontWeights" }
+    },
+
+    "fontSize": {
+      "caption": { "value": "0.9rem", "type": "fontSizes", "description": "Caption / Label · 14.4 px" },
+      "body": { "value": "0.9375rem", "type": "fontSizes", "description": "Body · 15 px" },
+      "body-lg": { "value": "1.0625rem", "type": "fontSizes", "description": "Body large · 17 px" },
+      "h3": { "value": "1.25rem", "type": "fontSizes", "description": "Heading 3 · 20 px" },
+      "h2": { "value": "1.625rem", "type": "fontSizes", "description": "Heading 2 · 26 px" },
+      "h1": { "value": "2.25rem", "type": "fontSizes", "description": "Heading 1 · 36 px" },
+      "stat": { "value": "2.75rem", "type": "fontSizes", "description": "Stat / Number · 44 px" },
+      "display": { "value": "3.5rem", "type": "fontSizes", "description": "Display · 56 px" }
+    },
+
+    "lineHeights": {
+      "tight": { "value": "1.05", "type": "lineHeights" },
+      "snug": { "value": "1.2", "type": "lineHeights" },
+      "normal": { "value": "1.55", "type": "lineHeights" },
+      "loose": { "value": "1.75", "type": "lineHeights" },
+      "single": { "value": "1", "type": "lineHeights" }
+    },
+
+    "letterSpacing": {
+      "tight": { "value": "-0.02em", "type": "letterSpacing" },
+      "snug": { "value": "-0.01em", "type": "letterSpacing" },
+      "normal": { "value": "0em", "type": "letterSpacing" },
+      "wide": { "value": "0.06em", "type": "letterSpacing" },
+      "caps": { "value": "0.1em", "type": "letterSpacing" }
+    },
+
+    "typography": {
+      "display": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.extrabold}",
+          "lineHeight": "{lineHeights.tight}",
+          "fontSize": "{fontSize.display}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Display · 3.5rem / 1.05 · ExtraBold · −0.02em."
+      },
+      "h1": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.bold}",
+          "lineHeight": "{lineHeights.snug}",
+          "fontSize": "{fontSize.h1}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "H1 · 2.25rem / 1.15 · Bold · −0.02em."
+      },
+      "h2": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.bold}",
+          "lineHeight": "{lineHeights.snug}",
+          "fontSize": "{fontSize.h2}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "H2 · 1.625rem / 1.2 · Bold · −0.02em."
+      },
+      "h3": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.semibold}",
+          "lineHeight": "{lineHeights.snug}",
+          "fontSize": "{fontSize.h3}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "H3 · 1.25rem / 1.3 · SemiBold · −0.02em."
+      },
+      "body-lg": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "lineHeight": "{lineHeights.normal}",
+          "fontSize": "{fontSize.body-lg}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Body large · 1.0625rem / 1.55 · Regular · −0.02em."
+      },
+      "body": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.regular}",
+          "lineHeight": "{lineHeights.normal}",
+          "fontSize": "{fontSize.body}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Body · 0.9375rem / 1.55 · Regular · −0.02em."
+      },
+      "caption": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.semibold}",
+          "lineHeight": "{lineHeights.single}",
+          "fontSize": "{fontSize.caption}",
+          "letterSpacing": "{letterSpacing.tight}",
+          "textCase": "uppercase"
+        },
+        "type": "typography",
+        "description": "Caption / Label · 0.9rem / 1 · SemiBold · −0.02em · UPPERCASE."
+      },
+      "stat": {
+        "value": {
+          "fontFamily": "{fontFamilies.sans}",
+          "fontWeight": "{fontWeights.extrabold}",
+          "lineHeight": "{lineHeights.single}",
+          "fontSize": "{fontSize.stat}",
+          "letterSpacing": "{letterSpacing.tight}"
+        },
+        "type": "typography",
+        "description": "Big-number stats · 2.75rem / 1 · ExtraBold · −0.02em · tabular numerals."
+      }
+    },
+
+    "spacing": {
+      "0": { "value": "0", "type": "spacing" },
+      "1": { "value": "4", "type": "spacing" },
+      "2": { "value": "8", "type": "spacing" },
+      "3": { "value": "12", "type": "spacing" },
+      "4": { "value": "16", "type": "spacing" },
+      "5": { "value": "20", "type": "spacing" },
+      "6": { "value": "24", "type": "spacing" },
+      "8": { "value": "32", "type": "spacing" },
+      "10": { "value": "40", "type": "spacing" },
+      "12": { "value": "48", "type": "spacing" },
+      "14": { "value": "56", "type": "spacing" },
+      "16": { "value": "64", "type": "spacing" },
+      "20": { "value": "80", "type": "spacing" },
+      "24": { "value": "96", "type": "spacing" }
+    },
+
+    "borderRadius": {
+      "none": { "value": "0", "type": "borderRadius" },
+      "xs": { "value": "3", "type": "borderRadius" },
+      "sm": { "value": "4", "type": "borderRadius" },
+      "md": { "value": "6", "type": "borderRadius" },
+      "lg": { "value": "8", "type": "borderRadius" },
+      "xl": { "value": "12", "type": "borderRadius" },
+      "full": { "value": "999", "type": "borderRadius" }
+    },
+
+    "borderWidth": {
+      "1": { "value": "1", "type": "borderWidth" },
+      "2": { "value": "2", "type": "borderWidth" },
+      "4": { "value": "4", "type": "borderWidth" }
+    },
+
+    "asset": {
+      "logo-signature": { "value": "../01_Brand_Resources/01_Signature/Signature_bg.svg", "type": "asset", "description": "KEWAZO wordmark — single-color SVG." },
+      "logo-symbol": { "value": "../01_Brand_Resources/01_Signature/Symbol_bk.svg", "type": "asset", "description": "KEWAZO symbol mark." },
+      "logo-motion": { "value": "../01_Brand_Resources/01_Signature/Signature_motion_bg.gif", "type": "asset", "description": "Animated wordmark." }
+    },
+
+    "opacity": {
+      "scrim": { "value": "65%", "type": "opacity", "description": "Required scrim opacity when placing logo over imagery." }
+    }
+  },
+
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": ["global"]
+  }
+}

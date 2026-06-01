@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KEWAZO Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* LIFTBOT brand display font — reserved for the "LIFTBOT" wordmark
+     and high-impact product display moments. Body never uses this. */
+  @font-face {
+    font-family: "LIFTBOT";
+    src: url("./LIFTBOT Medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* Primary — synced with Figma KDS spec */
+    --kw-turquoise-100: #F5FAFB;
+    --kw-turquoise-200: #D9F0F1;
+    --kw-turquoise-300: #A3DADB;
+    --kw-turquoise-400: #40C0C0;
+    --kw-turquoise-500: #1EA7A6;
+    --kw-turquoise-600: #058B8C;
+    --kw-turquoise-700: #1A5E59;
+    --kw-turquoise-800: #14433E;
+    --kw-turquoise-900: #1F3331;
+    --kw-turquoise-base: #40C0C0;
+
+    --kw-bright-100: #FAFCFC;
+    --kw-bright-200: #F2F6F7;
+    --kw-bright-300: #D8E5E7;
+    --kw-bright-400: #BAD1D4;
+    --kw-bright-500: #9FBDC1;
+    --kw-bright-600: #6C979D;
+    --kw-bright-700: #51777C;
+    --kw-bright-800: #3E5A5D;
+    --kw-bright-900: #263D42;
+    --kw-bright-base: #D8E5E7;
+
+    --kw-dark-100: #F5F7FB;
+    --kw-dark-200: #EAEDF3;
+    --kw-dark-300: #D7DEE6;
+    --kw-dark-400: #AFB9C6;
+    --kw-dark-500: #7A899C;
+    --kw-dark-600: #576779;
+    --kw-dark-700: #414C59;
+    --kw-dark-800: #2B3037;
+    --kw-dark-900: #1B1F24;
+    --kw-dark-base: #2B3037;
+
+    --kw-mono-100: #FFFFFF;
+    --kw-mono-200: #F4F4F4;
+    --kw-mono-300: #EEEEEE;
+    --kw-mono-400: #D9D9D9;
+    --kw-mono-500: #BABABB;
+    --kw-mono-600: #8C8C8C;
+    --kw-mono-700: #555555;
+    --kw-mono-800: #434343;
+    --kw-mono-900: #191919;
+
+    --kw-red-500: #EC1010;
+    --kw-red-200: #FEF3F3;
+    --kw-yellow-500: #F9EE89;
+    --kw-yellow-300: #F9FF93;
+
+    /* Surfaces */
+    --bg: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --border: #E6E8EB;
+    --border-strong: #D1D5DB;
+    --text: #2B3037;
+    --text-muted: #6B7280;
+    --text-subtle: #9CA3AF;
+
+    /* Type — Barlow is the default for everything (body, headings, captions, UI).
+       LIFTBOT is reserved for the LIFTBOT wordmark and headline accents only. */
+    --font-sans: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-display: "LIFTBOT", "Barlow", -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }                    /* 1rem == 16px baseline */
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: var(--bg);
+    font-size: 1rem;                            /* 16px body baseline */
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+  aside.sidebar {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    background: #FFFFFF; border-right: 1px solid var(--border);
+    padding: 28px 20px;
+  }
+  .brand { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 32px; }
+  .brand-sub { font-weight: 500; color: var(--text-muted); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  nav.nav { display: flex; flex-direction: column; gap: 4px; }
+  nav.nav .group-title {
+    font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-subtle); margin: 16px 8px 4px; font-weight: 700;
+  }
+  nav.nav a {
+    display: block; padding: 7px 10px; border-radius: 6px; font-size: 0.875rem;
+    color: var(--text); transition: background 0.12s;
+  }
+  nav.nav a:hover { background: var(--bg); }
+  nav.nav a.active { background: var(--kw-turquoise-base); color: white; font-weight: 500; }
+
+  main { padding: 40px 48px 80px; max-width: 1500px; }
+
+  /* Page header */
+  .breadcrumb { color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 6px; }
+  .breadcrumb span + span:before { content: " / "; }
+  h1.page-title { font-size: 2.75rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; }
+  p.page-lede { font-size: 1rem; color: var(--text-muted); max-width: 720px; margin: 0 0 40px; }
+
+  section { padding: 36px 0; border-top: 1px solid var(--border); }
+  section:first-of-type { border-top: 0; padding-top: 0; }
+  h2.section-title { font-size: 1.625rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; }
+  p.section-lede { color: var(--text-muted); margin: 0 0 24px; max-width: 680px; font-size: 0.9375rem; }
+
+  h3.subsection-title {
+    font-size: 0.8125rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted);
+    margin: 32px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+
+  /* Group divider between major sidebar sections */
+  .group-divider {
+    margin: 56px 0 0; padding: 28px 0 0;
+    border-top: 2px solid var(--kw-turquoise-base);
+  }
+  .group-divider .group-eyebrow {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.18em;
+    color: var(--kw-turquoise-700); text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .group-divider .group-name { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .group-divider .group-desc { color: var(--text-muted); margin: 0; max-width: 640px; }
+
+  /* Color system */
+  .color-row { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start; margin-bottom: 40px; }
+  .color-name { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; }
+  .color-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 16px 6px 6px;
+    border: 1px solid var(--border); border-radius: 0;
+    background: white; align-self: flex-start; cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .color-pill:hover { border-color: var(--kw-turquoise-700); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .color-pill .pill-swatch { width: 26px; height: 26px; border-radius: 0; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.06); }
+  .color-pill .pill-label { font-weight: 700; font-size: 0.875rem; color: var(--kw-dark-800); }
+  .color-pill .pill-hex { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; color: var(--text-muted); }
+  .color-name .scale-name { font-size: 0.875rem; color: var(--text); padding-left: 4px; }
+
+  .color-scale { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; }
+  .color-scale.cols-4 { grid-template-columns: repeat(4, 1fr); max-width: 540px; }
+  .swatch-cell { display: flex; flex-direction: column; gap: 8px; }
+  .swatch {
+    aspect-ratio: 1 / 1; border-radius: 4px;
+    display: grid; place-items: center; cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.18s ease;
+  }
+  .swatch:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.14); }
+  .swatch .badge { font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.02em; text-align: center; line-height: 1.15; }
+  .swatch-info { padding-left: 2px; }
+  .swatch-info .step { font-weight: 700; font-size: 0.8125rem; color: var(--kw-dark-800); line-height: 1.2; }
+  .swatch-info .hex-mini { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* Print swatches */
+  .print-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px; }
+  .print-card {
+    background: var(--kw-turquoise-700); color: white;
+    padding: 18px; border-radius: 8px; min-height: 130px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .print-card .pct { display: flex; gap: 14px; font-size: 0.6875rem; opacity: 0.85; }
+  .print-card .pct span b { display: block; font-weight: 700; opacity: 1; }
+  .print-card h4 { margin: 0; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.02em; }
+  .print-card .pantone { font-family: ui-monospace, monospace; font-size: 0.6875rem; opacity: 0.8; margin-top: 4px; }
+  .print-card.alt-1 { background: var(--kw-turquoise-600); }
+  .print-card.alt-2 { background: var(--kw-turquoise-base); }
+
+  /* Typography */
+  .type-row {
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .type-row:last-child { border-bottom: 0; }
+  .type-meta { color: var(--text-muted); font-size: 0.75rem; }
+  .type-meta .name { font-weight: 600; color: var(--text); display: block; font-size: 0.8125rem; margin-bottom: 4px; }
+  .type-sample { font-family: var(--font-sans); }
+
+  /* Type scale (1rem == 16px baseline) */
+  .t-display      { font-size: 4rem;     font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .t-h1           { font-size: 2.5rem;   font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .t-h2           { font-size: 1.75rem;  font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+  .t-h3           { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; }
+  .t-h4           { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; }
+  .t-body-lg      { font-size: 1.125rem; font-weight: 400; line-height: 1.55; }
+  .t-body         { font-size: 1rem;     font-weight: 400; line-height: 1.55; }    /* base 16px */
+  .t-body-sm      { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
+  .t-caption      { font-size: 0.75rem;  font-weight: 600; letter-spacing: -0.02em; text-transform: uppercase; color: var(--text-muted); line-height: 1.2; }
+  .t-stat         { font-size: 3rem;     font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: var(--kw-dark-800); }
+
+  .liftbot-font   { font-family: var(--font-display); letter-spacing: 0.02em; }
+
+  .kw-logo { display: inline-block; height: 1em; width: auto; vertical-align: middle; flex-shrink: 0; }
+
+  .weight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+  .weight-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+  .weight-card .num { font-size: 2rem; line-height: 1; }
+  .weight-card .name { color: var(--text-muted); font-size: 0.75rem; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .w300 { font-weight: 300; } .w400 { font-weight: 400; } .w500 { font-weight: 500; } .w600 { font-weight: 600; }
+  .w700 { font-weight: 700; } .w800 { font-weight: 800; } .w900 { font-weight: 900; }
+
+  .font-spec-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; display: grid;
+    grid-template-columns: 1fr 240px; gap: 32px; align-items: center;
+    margin-bottom: 18px;
+  }
+  .font-spec-card.dark { background: var(--kw-dark-900); color: white; border-color: var(--kw-dark-800); }
+  .font-spec-card .specimen { font-size: 4rem; line-height: 1; letter-spacing: -0.01em; }
+  .font-spec-card .meta h4 { margin: 0 0 6px; font-size: 1rem; }
+  .font-spec-card .meta p { margin: 0 0 10px; font-size: 0.8125rem; color: var(--text-muted); }
+  .font-spec-card.dark .meta p { color: rgba(255,255,255,0.65); }
+  .font-spec-card .meta .role-pill {
+    display: inline-block; font-size: 0.6875rem; font-weight: 700;
+    letter-spacing: 0.1em; padding: 4px 10px; border-radius: 999px;
+    background: var(--kw-turquoise-200); color: var(--kw-turquoise-700);
+    text-transform: uppercase;
+  }
+  .font-spec-card.dark .meta .role-pill { background: var(--kw-turquoise-700); color: white; }
+
+  /* Logo / Signature */
+  .logo-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+  .logo-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px;
+    display: flex; flex-direction: column;
+  }
+  .logo-card.dark { background: var(--kw-dark-800); border: 0; }
+  .logo-card.tone { background: var(--kw-turquoise-base); border: 0; }
+  .logo-card .logo-stage {
+    flex: 1; display: grid; place-items: center;
+    min-height: 160px; margin-bottom: 16px; border-radius: 8px; position: relative;
+  }
+  .logo-card .caption { font-size: 0.75rem; color: var(--text-muted); }
+  .logo-card.dark .caption, .logo-card.tone .caption { color: rgba(255,255,255,0.75); }
+
+  .clearspace { position: relative; display: inline-block; }
+  .clearspace::before { content: ""; position: absolute; inset: -28px; border: 1px dashed var(--kw-turquoise-base); border-radius: 4px; }
+  .clearspace::after { content: "X"; position: absolute; left: -42px; top: 50%; transform: translateY(-50%); font-size: 0.8125rem; color: var(--kw-turquoise-700); font-weight: 600; }
+
+  .cobrand { display: inline-flex; align-items: center; gap: 18px; }
+  .cobrand .divider { width: 1px; height: 30px; background: var(--kw-mono-300); }
+  .partner-mark { font-weight: 700; font-size: 1.375rem; color: var(--kw-mono-700); font-family: var(--font-sans); letter-spacing: 0.02em; }
+  .partner-mark.red { color: #DC0000; font-weight: 800; }
+
+  /* Animation specimen card */
+  .anim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .anim-card {
+    background: var(--kw-dark-900); color: white;
+    border-radius: 12px; padding: 32px; display: flex;
+    flex-direction: column; align-items: center; gap: 18px;
+    min-height: 220px; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .anim-card .anim-label {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--kw-turquoise-300);
+  }
+  .anim-card .anim-spec { font-size: 0.75rem; color: rgba(255,255,255,0.55); text-align: center; }
+  .anim-card .anim-stage { display: grid; place-items: center; min-height: 60px; }
+
+  @keyframes kw-fade-in { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
+  @keyframes kw-underbar { 0% { transform: scaleX(0); transform-origin: left center; } 100% { transform: scaleX(1); } }
+  @keyframes kw-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(64,192,192,0.5); } 50% { box-shadow: 0 0 0 14px rgba(64,192,192,0); } }
+  .anim-card.fade .anim-stage svg { animation: kw-fade-in 1.6s ease-out infinite alternate; }
+  .anim-card.bar { position: relative; }
+  .anim-card.bar .anim-stage { position: relative; }
+  .anim-card.bar .anim-stage::after {
+    content: ""; display: block; height: 3px; width: 80px;
+    background: var(--kw-turquoise-base); margin-top: 8px;
+    animation: kw-underbar 1.6s cubic-bezier(.65,.05,.36,1) infinite alternate;
+  }
+  .anim-card.pulse .anim-stage span {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--kw-turquoise-base); display: inline-block;
+    animation: kw-pulse 1.8s ease-out infinite;
+  }
+
+  /* ============ ELEMENT — Client logos (click-to-copy SVG) ============ */
+  .logo-grid-asset {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; width: 100%;
+  }
+  .logo-card-asset {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: border-color 0.15s, transform 0.18s, box-shadow 0.18s;
+  }
+  .logo-card-asset:hover { border-color: var(--kw-turquoise-300); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,40,55,0.08); }
+  .logo-stage-asset {
+    aspect-ratio: 4 / 3; display: grid; place-items: center;
+    padding: 18px; background: white;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.18s;
+  }
+  .logo-stage-asset .logo-svg { display: none; width: 100%; max-width: 100%; max-height: 100%; }
+  .logo-stage-asset .logo-svg svg,
+  .logo-stage-asset .logo-svg img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+    object-fit: contain;
+  }
+  .logo-svg[data-missing] { color: var(--text-subtle); font-size: 0.875rem; }
+  .logo-svg[data-missing] .logo-missing-mark {
+    display: block; text-align: center; padding: 28px 0;
+    font-style: italic; color: var(--text-subtle);
+  }
+  .variant-chip[disabled] {
+    opacity: 0.35; cursor: not-allowed;
+    background: var(--kw-mono-200) !important; color: var(--text-subtle) !important;
+  }
+  /* Show the active variant only */
+  .logo-card-asset[data-active="fc"]   .logo-svg[data-variant="fc"]   { display: block; }
+  .logo-card-asset[data-active="bk"]   .logo-svg[data-variant="bk"]   { display: block; }
+  .logo-card-asset[data-active="wh"]   .logo-svg[data-variant="wh"]   { display: block; }
+  .logo-card-asset[data-active="grey"] .logo-svg[data-variant="grey"] { display: block; }
+  /* White variant needs a dark stage to be visible */
+  .logo-card-asset[data-active="wh"] .logo-stage-asset { background: var(--kw-dark-900); }
+
+  .logo-meta { padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .logo-name { font-size: 0.875rem; font-weight: 600; color: var(--kw-dark-800); }
+  .variant-row { display: flex; gap: 6px; }
+  .variant-chip {
+    flex: 1; font-family: var(--font-sans); cursor: pointer;
+    font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em;
+    padding: 5px 0; border-radius: 4px;
+    background: var(--kw-mono-200); color: var(--kw-dark-700);
+    border: 1px solid transparent;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .variant-chip:hover { background: var(--kw-turquoise-200); color: var(--kw-turquoise-700); }
+  .logo-card-asset[data-active="fc"]   .variant-chip[data-variant="fc"],
+  .logo-card-asset[data-active="bk"]   .variant-chip[data-variant="bk"],
+  .logo-card-asset[data-active="wh"]   .variant-chip[data-variant="wh"],
+  .logo-card-asset[data-active="grey"] .variant-chip[data-variant="grey"] {
+    background: var(--kw-turquoise-base); color: white;
+  }
+
+  .element-category {
+    display: flex; align-items: baseline; gap: 12px; margin: 32px 0 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .element-category h3 {
+    font-size: 0.8125rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted); margin: 0;
+  }
+  .element-category .count { font-size: 0.75rem; color: var(--text-subtle); }
+
+  .element-empty {
+    border: 1px dashed var(--border-strong); border-radius: 12px;
+    padding: 32px; text-align: center; color: var(--text-subtle); font-size: 0.875rem;
+    background: white;
+  }
+
+  /* Do / don't */
+  .rules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+  .rule { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .rule .tag {
+    display: inline-block; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em;
+    padding: 3px 10px; border-radius: 999px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .rule.do .tag { background: #E6F8F0; color: #0E7A4F; }
+  .rule.dont .tag { background: #FBEAEA; color: #B91C1C; }
+  .rule .stage { background: var(--bg); border-radius: 6px; padding: 28px; min-height: 110px; display: grid; place-items: center; }
+  .rule p { color: var(--text-muted); font-size: 0.8125rem; margin: 12px 0 0; }
+
+  /* Component preview wrappers */
+  .component { margin-bottom: 36px; }
+  .component-title { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .component-title h3 { font-size: 1.125rem; margin: 0; font-weight: 600; }
+  .component-title .desc { color: var(--text-muted); font-size: 0.8125rem; }
+
+  .preview {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px;
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  }
+  .preview.center { justify-content: center; }
+  .preview.col { flex-direction: column; align-items: stretch; gap: 14px; }
+  .preview.dark { background: var(--kw-dark-900); border-color: var(--kw-dark-800); }
+  .preview.flush { padding: 0; overflow: hidden; }
+
+  /* ============ WEB UI components ============ */
+  .web-display { font-size: 4rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; margin: 0; color: var(--kw-dark-900); }
+  .web-display.on-dark { color: white; }
+  .web-h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+
+  /* Eyebrow label (small uppercase) */
+  .eyebrow {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--kw-turquoise-700); margin-bottom: 12px;
+  }
+  .eyebrow.muted { color: var(--text-muted); }
+  .eyebrow.on-dark { color: var(--kw-turquoise-300); }
+
+  /* Tags */
+  .tag-pill {
+    display: inline-block; font-size: 0.6875rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--kw-turquoise-base); color: white;
+  }
+  .tag-pill.outline { background: transparent; color: var(--kw-dark-800); border: 1px solid var(--kw-dark-800); }
+  .tag-pill.dark { background: var(--kw-dark-900); color: white; }
+  .tag-pill.muted { background: var(--kw-mono-200); color: var(--kw-dark-700); }
+
+  /* Web buttons (kewazo.com style) */
+  .web-btn {
+    font-family: var(--font-sans); font-weight: 600; font-size: 0.8125rem;
+    padding: 12px 24px; border-radius: 999px; cursor: pointer;
+    border: 1px solid transparent; transition: all 0.18s; line-height: 1;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .web-btn::after { content: "→"; transition: transform 0.18s; font-size: 0.875rem; }
+  .web-btn-primary { background: var(--kw-turquoise-base); color: white; }
+  .web-btn-primary:hover { background: var(--kw-turquoise-600); }
+  .web-btn-primary:hover::after { transform: translateX(3px); }
+  .web-btn-dark { background: var(--kw-dark-900); color: white; }
+  .web-btn-dark:hover { background: var(--kw-dark-700); }
+  .web-btn-dark:hover::after { transform: translateX(3px); }
+  .web-btn-outline { background: transparent; color: var(--kw-dark-800); border-color: var(--kw-dark-800); }
+  .web-btn-outline:hover { background: var(--kw-dark-800); color: white; }
+  .web-btn-outline:hover::after { transform: translateX(3px); }
+  .web-btn-link { background: transparent; color: var(--kw-turquoise-700); padding: 10px 0; border-radius: 0; }
+  .web-btn-link:hover::after { transform: translateX(3px); }
+  .web-btn-sm { font-size: 0.6875rem; padding: 8px 16px; }
+  .web-btn-lg { font-size: 0.9375rem; padding: 16px 32px; }
+
+  /* Icon (round) button */
+  .icon-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--kw-turquoise-base); color: white;
+    display: inline-grid; place-items: center; cursor: pointer;
+    border: 0; transition: background 0.18s, transform 0.18s;
+    font-size: 0.875rem;
+  }
+  .icon-btn:hover { background: var(--kw-turquoise-600); transform: scale(1.05); }
+  .icon-btn.outline { background: transparent; color: var(--kw-dark-800); border: 1px solid var(--kw-dark-800); }
+  .icon-btn.outline:hover { background: var(--kw-dark-800); color: white; }
+
+  /* Top navigation */
+  .web-nav {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; gap: 24px;
+  }
+  .web-nav.dark { background: var(--kw-dark-900); border-color: var(--kw-dark-800); }
+  .web-nav .nav-links { display: flex; gap: 28px; align-items: center; }
+  .web-nav .nav-links a {
+    font-size: 0.8125rem; font-weight: 600; color: var(--kw-dark-800);
+    text-transform: uppercase; letter-spacing: 0.06em; transition: color 0.15s;
+  }
+  .web-nav.dark .nav-links a { color: rgba(255,255,255,0.85); }
+  .web-nav .nav-links a:hover { color: var(--kw-turquoise-600); }
+  .web-nav .nav-cta {
+    background: var(--kw-turquoise-base); color: white;
+    padding: 10px 20px; border-radius: 999px;
+    font-size: 0.8125rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    transition: background 0.15s;
+  }
+  .web-nav .nav-cta:hover { background: var(--kw-turquoise-600); }
+
+  /* Breadcrumb pattern */
+  .web-breadcrumb { display: flex; gap: 8px; font-size: 0.8125rem; color: var(--text-muted); }
+  .web-breadcrumb a { color: inherit; }
+  .web-breadcrumb a:hover { color: var(--kw-turquoise-600); }
+  .web-breadcrumb span:not(:last-child)::after { content: "/"; margin-left: 8px; opacity: 0.4; }
+  .web-breadcrumb .current { color: var(--text); font-weight: 600; }
+
+  /* Hero */
+  .web-hero {
+    background: var(--kw-dark-900); border-radius: 14px; padding: 56px 48px;
+    color: white;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
+    align-items: center; position: relative; overflow: hidden;
+  }
+  .web-hero h1 { font-size: 3.25rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.04; margin: 0 0 18px; }
+  .web-hero p { color: rgba(255,255,255,0.78); font-size: 1rem; max-width: 460px; margin: 0 0 28px; }
+  .web-hero .hero-visual {
+    background: linear-gradient(135deg, var(--kw-turquoise-700), var(--kw-turquoise-base));
+    border-radius: 10px; aspect-ratio: 16 / 10;
+    display: grid; place-items: center;
+    color: white; font-weight: 700; letter-spacing: 0.08em; font-size: 0.8125rem; text-transform: uppercase;
+    position: relative; overflow: hidden;
+  }
+  .web-hero .hero-visual::before {
+    content: "▶"; position: absolute;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); backdrop-filter: blur(4px);
+    display: grid; place-items: center; font-size: 1.125rem;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.10);
+  }
+
+  /* Cards */
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; }
+  .feature-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(15,40,55,0.12); }
+  .feature-card .image {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--kw-bright-300), var(--kw-bright-500));
+    position: relative;
+  }
+  .feature-card.tone-dark .image { background: linear-gradient(135deg, var(--kw-dark-700), var(--kw-dark-800)); }
+  .feature-card.tone-turquoise .image { background: linear-gradient(135deg, var(--kw-turquoise-500), var(--kw-turquoise-700)); }
+  .feature-card .body { padding: 22px 24px 24px; }
+  .feature-card .body .eyebrow { margin-bottom: 8px; }
+  .feature-card .body h3 { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px; line-height: 1.15; }
+  .feature-card .body .product-name {
+    font-size: 0.8125rem; font-weight: 700; color: var(--kw-turquoise-700);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px;
+  }
+  .feature-card .body p { color: var(--text-muted); font-size: 0.875rem; margin: 0 0 18px; }
+  .feature-card .body .feature-cta {
+    font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--kw-dark-800); display: inline-flex; align-items: center; gap: 6px;
+    border-top: 1px solid var(--border); padding-top: 14px; margin-top: 8px;
+  }
+  .feature-card .body .feature-cta::after { content: "→"; transition: transform 0.18s; }
+  .feature-card:hover .feature-cta::after { transform: translateX(3px); }
+
+  /* Image card (small) */
+  .image-card {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; max-width: 280px;
+  }
+  .image-card .img-stage {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--kw-bright-400), var(--kw-bright-600));
+  }
+  .image-card .label {
+    padding: 14px 18px; font-size: 0.8125rem; font-weight: 600;
+    color: var(--kw-dark-800); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* Stat callouts */
+  .callout-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+  .callout {
+    background: white; border: 1px solid var(--border); border-radius: 14px;
+    padding: 26px 24px; display: flex; flex-direction: column; gap: 8px;
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .callout:hover { border-color: var(--kw-turquoise-base); transform: translateY(-2px); }
+  .callout .label { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .callout .figure { font-size: 2.25rem; font-weight: 800; color: var(--kw-dark-900); letter-spacing: -0.02em; line-height: 1.05; }
+  .callout .qualifier { font-size: 0.875rem; color: var(--text); }
+  .callout .category { font-size: 0.6875rem; font-weight: 700; color: var(--kw-turquoise-700); text-transform: uppercase; letter-spacing: 0.12em; margin-top: auto; padding-top: 10px; }
+  .callout.tone { background: var(--kw-turquoise-base); color: white; border-color: var(--kw-turquoise-base); }
+  .callout.tone .label, .callout.tone .qualifier { color: rgba(255,255,255,0.85); }
+  .callout.tone .figure { color: white; }
+  .callout.tone .category { color: rgba(255,255,255,0.95); }
+
+  /* Testimonial */
+  .testimonial {
+    background: var(--kw-dark-900); color: white;
+    border-radius: 14px; padding: 40px 44px; max-width: 720px;
+  }
+  .testimonial .eyebrow.on-dark { margin-bottom: 18px; }
+  .testimonial blockquote {
+    font-size: 1.5rem; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em;
+    margin: 0 0 24px; color: white;
+    quotes: "\201C" "\201D";
+  }
+  .testimonial blockquote::before { content: open-quote; color: var(--kw-turquoise-400); margin-right: 4px; }
+  .testimonial blockquote::after { content: close-quote; color: var(--kw-turquoise-400); margin-left: 4px; }
+  .testimonial .attribution { display: flex; align-items: center; gap: 14px; }
+  .testimonial .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--kw-turquoise-500); display: grid; place-items: center; font-weight: 700; color: white; }
+  .testimonial .name { font-weight: 700; }
+  .testimonial .role { font-size: 0.8125rem; color: rgba(255,255,255,0.7); }
+
+  /* News list */
+  .news-list { display: flex; flex-direction: column; width: 100%; }
+  .news-item {
+    display: grid; grid-template-columns: 140px 1fr auto;
+    gap: 24px; align-items: center;
+    padding: 18px 0; border-bottom: 1px solid var(--border);
+    transition: padding 0.18s;
+  }
+  .news-item:last-child { border-bottom: 0; }
+  .news-item:hover { padding-left: 8px; }
+  .news-item .date { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .news-item .news-title { font-size: 1.0625rem; font-weight: 600; color: var(--kw-dark-900); line-height: 1.4; }
+  .news-item .news-arrow { font-size: 1.125rem; color: var(--text-muted); transition: transform 0.18s, color 0.18s; }
+  .news-item:hover .news-arrow { transform: translateX(4px); color: var(--kw-turquoise-600); }
+
+  /* Forms */
+  .form-grid { display: grid; gap: 16px; max-width: 460px; width: 100%; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .field input, .field textarea, .field select {
+    font-family: var(--font-sans); font-size: 1rem;
+    padding: 12px 14px; border: 1px solid var(--border-strong); border-radius: 8px;
+    background: white; color: var(--text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--kw-turquoise-base);
+    box-shadow: 0 0 0 3px rgba(64,192,192,0.18);
+  }
+  .field textarea { min-height: 90px; resize: vertical; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Footer */
+  .web-footer { background: var(--kw-dark-900); color: rgba(255,255,255,0.85); border-radius: 14px; padding: 48px 40px 28px; }
+  .web-footer .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px;
+    padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px;
+  }
+  .web-footer h4 {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--kw-turquoise-300); margin: 0 0 14px;
+  }
+  .web-footer p, .web-footer a { font-size: 0.8125rem; color: rgba(255,255,255,0.78); margin: 0 0 6px; line-height: 1.55; }
+  .web-footer a:hover { color: var(--kw-turquoise-300); }
+  .web-footer .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: rgba(255,255,255,0.55);
+  }
+
+  /* ============ Presentation Materials ============ */
+  .btn {
+    font-family: var(--font-sans); font-weight: 600; font-size: 0.875rem;
+    padding: 11px 22px; border-radius: 6px; cursor: pointer;
+    border: 1px solid transparent; transition: all 0.15s; line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary { background: var(--kw-turquoise-base); color: white; }
+  .btn-primary:hover { background: var(--kw-turquoise-600); }
+  .btn-secondary { background: var(--kw-dark-800); color: white; }
+  .btn-secondary:hover { background: var(--kw-dark-700); }
+  .btn-outline { background: transparent; color: var(--kw-dark-800); border-color: var(--kw-dark-800); }
+  .btn-outline:hover { background: var(--kw-dark-800); color: white; }
+  .btn-ghost { background: transparent; color: var(--kw-turquoise-700); }
+  .btn-ghost:hover { background: var(--kw-turquoise-100); }
+  .btn-sm { font-size: 0.75rem; padding: 8px 14px; }
+  .btn-lg { font-size: 1rem; padding: 14px 28px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; width: 100%; }
+  .stat-cell .label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-cell .value { font-size: 2rem; font-weight: 800; color: var(--kw-dark-800); letter-spacing: -0.01em; line-height: 1.1; }
+  .stat-cell .value .unit { font-size: 1.125rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
+
+  .highlight-box {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 22px; box-shadow: 0 2px 8px rgba(20, 30, 50, 0.06); max-width: 360px;
+  }
+  .highlight-box .tag {
+    display: inline-block; font-size: 0.6875rem; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--kw-dark-800); background: var(--kw-bright-200);
+    padding: 4px 8px; margin-bottom: 10px; border-radius: 3px;
+  }
+  .highlight-box ul { margin: 0; padding-left: 18px; font-size: 0.8125rem; }
+  .highlight-box li { margin-bottom: 4px; color: var(--kw-dark-700); }
+
+  .compare-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 22px; max-width: 320px; }
+  .compare-card .h { font-size: 0.6875rem; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.05em; }
+  .compare-card .product { background: var(--kw-turquoise-base); color: white; display: inline-block; font-weight: 700; font-size: 1rem; padding: 5px 14px; border-radius: 4px; margin-bottom: 12px; }
+  .compare-card .total { font-size: 2rem; font-weight: 800; color: var(--kw-dark-800); letter-spacing: -0.01em; }
+  .compare-card .breakdown { margin-top: 14px; font-size: 0.8125rem; color: var(--text-muted); }
+  .compare-card .breakdown div { display: flex; justify-content: space-between; padding: 4px 0; }
+
+  .savings-banner {
+    background: var(--kw-turquoise-base); color: white; padding: 14px 22px; border-radius: 4px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.125rem; font-weight: 700; max-width: 540px;
+  }
+  .savings-banner .amount { font-size: 1.375rem; }
+
+  .header-bar {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; width: 100%;
+  }
+  .header-bar .left { display: flex; align-items: center; gap: 16px; }
+  .header-bar .partners { display: flex; align-items: center; gap: 16px; }
+
+  table.kds-table {
+    width: 100%; border-collapse: collapse; background: white;
+    border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+  }
+  table.kds-table th {
+    background: var(--bg); padding: 10px 14px; text-align: left;
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); border-bottom: 1px solid var(--border);
+  }
+  table.kds-table td { padding: 12px 14px; font-size: 0.875rem; border-bottom: 1px solid var(--border); }
+  table.kds-table tr:last-child td { border-bottom: 0; }
+  table.kds-table tr.total td { background: var(--kw-turquoise-base); color: white; font-weight: 700; }
+  table.kds-table .num { font-variant-numeric: tabular-nums; text-align: right; }
+  table.kds-table .pos { color: #0E7A4F; font-weight: 600; }
+  table.kds-table .neg { color: var(--kw-red-500); font-weight: 600; }
+
+  pre.code {
+    background: var(--kw-dark-800); color: #E5E7EB;
+    padding: 14px 16px; border-radius: 6px; overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem; line-height: 1.55; margin: 12px 0 0;
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--kw-dark-800); color: white;
+    padding: 10px 18px; border-radius: 999px; font-size: 0.8125rem;
+    opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none; z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+  .spacing-grid { display: flex; flex-direction: column; gap: 10px; max-width: 540px; }
+  .spacing-row { display: grid; grid-template-columns: 80px 80px 1fr; align-items: center; gap: 12px; font-size: 0.8125rem; }
+  .spacing-row .token { font-family: ui-monospace, monospace; font-size: 0.75rem; color: var(--text-muted); }
+  .spacing-bar { height: 14px; background: var(--kw-turquoise-300); border-radius: 2px; }
+  .spacing-row .px { color: var(--text-muted); }
+
+  /* Social */
+  .coming-soon { background: white; border: 2px dashed var(--border-strong); border-radius: 14px; padding: 60px 40px; text-align: center; color: var(--text-muted); }
+  .coming-soon h3 { color: var(--kw-dark-800); font-size: 1.375rem; margin: 0 0 8px; }
+  .coming-soon p { margin: 0 auto; max-width: 480px; }
+  .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; }
+  .social-mock { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .social-mock .platform { padding: 12px 16px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .social-mock .surface { aspect-ratio: 1 / 1; background: var(--kw-dark-900); color: white; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+  .social-mock .surface .badge { background: var(--kw-turquoise-base); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; align-self: flex-start; }
+  .social-mock .surface h4 { font-size: 1.375rem; line-height: 1.15; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  .social-mock .surface .footer { display: flex; align-items: center; justify-content: space-between; font-size: 0.6875rem; opacity: 0.85; }
+  .social-mock.alt .surface { background: var(--kw-turquoise-base); }
+  .social-mock.alt .surface .badge { background: var(--kw-dark-900); }
+  .social-mock.bright .surface { background: var(--kw-bright-300); color: var(--kw-dark-900); }
+  .social-mock.bright .surface .badge { background: var(--kw-dark-900); }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .feature-grid, .callout-grid, .social-grid, .anim-grid { grid-template-columns: repeat(2, 1fr); }
+    .web-hero { grid-template-columns: 1fr; }
+    .web-footer .footer-top { grid-template-columns: repeat(2, 1fr); }
+    .font-spec-card { grid-template-columns: 1fr; }
+    .logo-grid-asset { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 960px) {
+    .layout { grid-template-columns: 1fr; }
+    aside.sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { padding: 24px; }
+    .color-row { grid-template-columns: 1fr; }
+    .color-scale { grid-template-columns: repeat(3, 1fr); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .logo-grid { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .weight-grid { grid-template-columns: repeat(2, 1fr); }
+    .feature-grid, .callout-grid, .social-grid, .anim-grid { grid-template-columns: 1fr; }
+    .logo-grid-asset { grid-template-columns: repeat(2, 1fr); }
+    .news-item { grid-template-columns: 1fr; gap: 4px; }
+    .news-item .news-arrow { display: none; }
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="kw-logo" viewBox="0 0 107.39 16.11">
+    <path d="M31.9,0v1.9h-11.37v3.03h10.92v1.9h-10.92v3.03h11.37v1.9h-11.77c-.5-.5-.99-.99-1.48-1.48V1.49c.5-.5.99-.99,1.48-1.48h11.77Z"/>
+    <polygon points="0 10.27 0 0 1.9 0 1.9 8.86 11.89 0 14.74 0 8.43 5.6 15.09 11.76 12.29 11.76 7 6.86 1.48 11.76 0 10.27"/>
+    <polygon points="75.48 9.6 85.1 1.91 75.48 1.91 75.48 0 86.32 0 87.8 1.5 87.8 2.17 78.18 9.86 87.8 9.86 87.8 11.76 76.97 11.76 75.48 10.27 75.48 9.6"/>
+    <path d="M70.44,1.49v10.26h-1.9v-4.92h-10.42v4.92h-1.9V1.49L57.71,0h11.24l1.48,1.48h0ZM68.54,4.94V1.75h-10.42v3.19h10.42Z"/>
+    <rect y="14.9" width="107.39" height="1.21"/>
+    <polygon points="37.11 0 39.01 0 39.01 8.95 43.17 5.47 45.27 5.47 49.43 8.95 49.43 0 51.33 0 51.33 10.28 49.85 11.76 44.22 7.06 38.59 11.76 37.11 10.28 37.11 0"/>
+    <path d="M105.9,11.76h-11.24l-1.48-1.48V1.5L94.66,0h11.24l1.48,1.48v8.78l-1.48,1.48h0ZM95.07,9.86h10.42V1.91h-10.42v7.96Z"/>
+  </symbol>
+</svg>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="kw-logo" style="height: 18px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+      <small class="brand-sub">Design System</small>
+    </div>
+    <nav class="nav">
+      <span class="group-title">Foundation</span>
+      <a href="#signature" class="active">Signature</a>
+      <a href="#colour">Colour</a>
+      <a href="#typography">Typography</a>
+      <a href="#element">Element</a>
+
+      <span class="group-title">User Interface</span>
+      <a href="#ui-buttons">Buttons</a>
+      <a href="#ui-navigation">Navigation</a>
+      <a href="#ui-tags">Tags &amp; Eyebrows</a>
+      <a href="#ui-sections">Sections &amp; Hero</a>
+      <a href="#ui-cards">Cards</a>
+      <a href="#ui-data">Data Display</a>
+      <a href="#ui-quotes">Quotes &amp; Testimonials</a>
+      <a href="#ui-lists">Lists</a>
+      <a href="#ui-forms">Forms</a>
+      <a href="#ui-footer">Footer</a>
+
+      <span class="group-title">Presentation Materials</span>
+      <a href="#pres-buttons">Buttons</a>
+      <a href="#pres-stats">Stat blocks</a>
+      <a href="#pres-cards">Cards</a>
+      <a href="#pres-tables">Tables</a>
+      <a href="#pres-headers">Document Header</a>
+      <a href="#pres-banners">Savings banner</a>
+      <a href="#pres-templates">Templates</a>
+
+      <span class="group-title">Social Network Materials</span>
+      <a href="#social-overview">Overview</a>
+      <a href="#social-mocks">Post mockups</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><span>Library</span><span>v1.2</span></div>
+    <h1 class="page-title">KEWAZO Design System</h1>
+    <p class="page-lede">Brand foundation, web UI components and customer-facing materials. Body text uses Barlow at 1rem (16px); the LIFTBOT typeface is reserved for the LIFTBOT product wordmark and high-impact display moments.</p>
+
+    <!-- ===================================================== -->
+    <!-- ============== FOUNDATION GROUP ====================== -->
+    <!-- ===================================================== -->
+    <div class="group-divider" id="foundation-group" style="border-top: none; margin-top: 0; padding-top: 0;">
+      <div class="group-eyebrow">Group 01</div>
+      <h2 class="group-name">Foundation</h2>
+      <p class="group-desc">The brand fundamentals — Signature, Colour, Typography and Element — that every other component inherits from. All logo SVGs are click-to-copy.</p>
+    </div>
+
+    <!-- ============ SIGNATURE ============ -->
+    <section id="signature">
+      <h2 class="section-title">Signature</h2>
+      <p class="section-lede">The KEWAZO signature system — wordmark logo, abbreviated symbol and motion behaviours. Always pair the wordmark with a clear-space buffer equal to the cap-height of the "K".</p>
+
+      <h3 class="subsection-title">Logo — wordmark</h3>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-stage" data-copy-svg="kw-wordmark" style="cursor: pointer;">
+            <svg id="kw-wordmark" class="kw-logo" style="height: 38px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          </div>
+          <div class="caption">Primary wordmark — Dark 800 on light surfaces · Click to copy SVG</div>
+        </div>
+        <div class="logo-card dark">
+          <div class="logo-stage" data-copy-svg="kw-wordmark-wh" style="cursor: pointer;">
+            <svg id="kw-wordmark-wh" class="kw-logo" style="height: 38px; color: white;" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          </div>
+          <div class="caption">Reversed — White on Dark 800 · Click to copy SVG</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">LIFTBOT typelogo</h3>
+      <p class="section-lede" style="margin-top: 0;">The LIFTBOT product wordmark — used to identify the lifting robot product alongside or beneath the KEWAZO signature. Click to copy the SVG markup.</p>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-stage" data-copy-svg="liftbot-typelogo" style="cursor: pointer;">
+            <svg id="liftbot-typelogo" style="height: 36px; color: var(--kw-dark-800);" viewBox="0 0 278.63 33.11" fill="currentColor" aria-label="LIFTBOT">
+              <path d="M198.43.01l-4.51,4.51v23.99l4.51,4.51h30.49l4.51-4.51V4.52L228.92.01h-30.49ZM226.42,7.02v19h-25.49V7.02h25.49Z"/>
+              <polygon points="7.02 26.03 7 0 0 0 .02 28.46 4.5 33.11 41.8 33.03 41.8 26.03 7.02 26.03"/>
+              <rect x="46.35" y="0" width="7.4" height="33.03"/>
+              <polygon points="58.3 4.52 58.32 33.03 65.32 33.03 65.32 20.02 95.11 20.02 95.11 13.02 65.32 13.02 65.31 7 100.11 7 100.11 0 62.81 0 58.3 4.52"/>
+              <polygon points="236.83 0 236.83 7 254.23 7 254.23 33.03 261.23 33.03 261.23 7 278.63 7 278.63 0 236.83 0"/>
+              <polygon points="103.51 7 120.91 7 120.91 33.03 127.91 33.03 127.91 7 145.31 7 145.31 0 103.51 0 103.51 7"/>
+              <path d="M148.72,0v33.03h37.26l4.54-4.56v-8.41l-3.54-3.54,3.54-3.55V4.55s-4.54-4.55-4.54-4.55h-37.26ZM183.52,26.02h-27.8s.01-6,.01-6h27.77l.02,6ZM155.72,13.02v-6.01h27.78s.02,3.05.02,3.05l-.02,2.96h-27.78Z"/>
+            </svg>
+          </div>
+          <div class="caption">LIFTBOT typelogo — Dark 800 on light surfaces · Click to copy SVG</div>
+        </div>
+        <div class="logo-card dark">
+          <div class="logo-stage" data-copy-svg="liftbot-typelogo-wh" style="cursor: pointer;">
+            <svg id="liftbot-typelogo-wh" style="height: 36px; color: white;" viewBox="0 0 278.63 33.11" fill="currentColor" aria-label="LIFTBOT">
+              <path d="M198.43.01l-4.51,4.51v23.99l4.51,4.51h30.49l4.51-4.51V4.52L228.92.01h-30.49ZM226.42,7.02v19h-25.49V7.02h25.49Z"/>
+              <polygon points="7.02 26.03 7 0 0 0 .02 28.46 4.5 33.11 41.8 33.03 41.8 26.03 7.02 26.03"/>
+              <rect x="46.35" y="0" width="7.4" height="33.03"/>
+              <polygon points="58.3 4.52 58.32 33.03 65.32 33.03 65.32 20.02 95.11 20.02 95.11 13.02 65.32 13.02 65.31 7 100.11 7 100.11 0 62.81 0 58.3 4.52"/>
+              <polygon points="236.83 0 236.83 7 254.23 7 254.23 33.03 261.23 33.03 261.23 7 278.63 7 278.63 0 236.83 0"/>
+              <polygon points="103.51 7 120.91 7 120.91 33.03 127.91 33.03 127.91 7 145.31 7 145.31 0 103.51 0 103.51 7"/>
+              <path d="M148.72,0v33.03h37.26l4.54-4.56v-8.41l-3.54-3.54,3.54-3.55V4.55s-4.54-4.55-4.54-4.55h-37.26ZM183.52,26.02h-27.8s.01-6,.01-6h27.77l.02,6ZM155.72,13.02v-6.01h27.78s.02,3.05.02,3.05l-.02,2.96h-27.78Z"/>
+            </svg>
+          </div>
+          <div class="caption">Reversed — White on Dark 800</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Symbol</h3>
+      <p class="section-lede" style="margin-top: 0;">Square symbol mark for app icons, favicons and tight social avatars. Click to copy the SVG markup.</p>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-stage" data-copy-svg="kw-symbol" style="cursor: pointer;">
+            <svg id="kw-symbol" style="height: 84px; color: var(--kw-dark-800);" viewBox="0 0 400 400" fill="currentColor" aria-label="KEWAZO Symbol">
+              <polygon points="81.03 235.04 81.03 72.99 110.94 72.99 110.94 212.77 268.53 73.01 313.59 73.02 214 161.34 318.97 258.48 274.94 258.48 191.51 181.28 104.47 258.48 81.03 235.04"/>
+              <rect x="81.03" y="307.92" width="237.94" height="19.09"/>
+            </svg>
+          </div>
+          <div class="caption">Symbol — Dark 800 on light surface · Click to copy SVG</div>
+        </div>
+        <div class="logo-card dark">
+          <div class="logo-stage" data-copy-svg="kw-symbol-wh" style="cursor: pointer;">
+            <svg id="kw-symbol-wh" style="height: 84px; color: white;" viewBox="0 0 400 400" fill="currentColor" aria-label="KEWAZO Symbol">
+              <polygon points="81.03 235.04 81.03 72.99 110.94 72.99 110.94 212.77 268.53 73.01 313.59 73.02 214 161.34 318.97 258.48 274.94 258.48 191.51 181.28 104.47 258.48 81.03 235.04"/>
+              <rect x="81.03" y="307.92" width="237.94" height="19.09"/>
+            </svg>
+          </div>
+          <div class="caption">Symbol — Reversed white on Dark 800</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Animation</h3>
+      <p class="section-lede" style="margin-top: 0;">The signature has an official motion sequence (<code style="background:var(--kw-mono-200); padding:2px 6px; border-radius:3px; font-size:0.85em;">Signature_motion_bg.gif</code>) used for video opens. Beyond the master motion, three restrained UI motions: a soft fade-in for hero reveals, an underbar wipe for headline emphasis, and a turquoise pulse for live data.</p>
+      <div class="anim-grid">
+        <div class="anim-card" style="padding: 0; overflow: hidden;">
+          <img src="01_Signature/Signature_motion_bg.gif" alt="KEWAZO signature motion" style="width: 100%; height: 100%; object-fit: cover; min-height: 220px;">
+        </div>
+        <div class="anim-card fade">
+          <span class="anim-label">Reveal</span>
+          <div class="anim-stage">
+            <svg class="kw-logo" style="height: 32px; color: white;" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          </div>
+          <span class="anim-spec">Fade up · 1.6s · ease-out<br>Used on hero load &amp; section reveal</span>
+        </div>
+        <div class="anim-card bar">
+          <span class="anim-label">Headline emphasis</span>
+          <div class="anim-stage liftbot-font" style="font-size:1.5rem;">LIFTBOT</div>
+          <span class="anim-spec">Underbar wipe · 1.6s<br>Reinforces a key phrase</span>
+        </div>
+        <div class="anim-card pulse">
+          <span class="anim-label">Live data</span>
+          <div class="anim-stage"><span></span></div>
+          <span class="anim-spec">Pulse · 1.8s infinite<br>Indicates ONSITE telemetry</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Clear space &amp; minimum size</h3>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-stage">
+            <span class="clearspace">
+              <svg class="kw-logo" style="height: 38px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+            </span>
+          </div>
+          <div class="caption">Clear space = X (the cap-height of "K"). Always maintain on every side.</div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-stage" style="gap: 32px; flex-direction: row; place-items: end center; padding: 24px;">
+            <svg class="kw-logo" style="height: 14px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+            <svg class="kw-logo" style="height: 22px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+            <svg class="kw-logo" style="height: 38px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          </div>
+          <div class="caption">Minimum: 60px on screen / 18mm in print.</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Co-branding</h3>
+      <div class="preview center">
+        <div class="cobrand">
+          <svg class="kw-logo" style="height: 28px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          <span class="divider"></span>
+          <span class="partner-mark">Shell</span>
+          <span class="partner-mark red">Bilfinger</span>
+        </div>
+      </div>
+      <p class="section-lede" style="margin-top: 12px;">When pairing with partners (Shell, Bilfinger, Dow, BrandSafway, Flint Hills, Turner, Bechtel...), use a 1px Mono-300 vertical divider between marks. Keep all logos optically aligned to the same x-height.</p>
+
+      <h3 class="subsection-title">Do &amp; Don't</h3>
+      <div class="rules-grid">
+        <div class="rule do">
+          <span class="tag">Do</span>
+          <div class="stage"><svg class="kw-logo" style="height: 32px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg></div>
+          <p>Use the wordmark in Dark 800 or pure white. Maintain clear space and proportions.</p>
+        </div>
+        <div class="rule dont">
+          <span class="tag">Don't</span>
+          <div class="stage"><svg class="kw-logo" style="height: 32px; color: var(--kw-red-500); transform: skewX(-10deg);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg></div>
+          <p>Don't recolour with non-brand hues, distort, skew, outline, or place over busy imagery without scrim.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COLOUR ============ -->
+    <section id="colour">
+      <h2 class="section-title">Colour</h2>
+      <p class="section-lede">KEWAZO values accessibility — keep contrast 4.5:1 or higher per WCAG. Click any swatch to copy its hex.</p>
+
+      <h3 class="subsection-title">Primary colours</h3>
+
+      <!-- Turquoise -->
+      <div class="color-row">
+        <div class="color-name">
+          <span class="color-pill" data-copy="#40C0C0">
+            <span class="pill-swatch" style="background: var(--kw-turquoise-base)"></span>
+            <span class="pill-label">KEWAZO Turquoise</span>
+            <span class="pill-hex">#40C0C0</span>
+          </span>
+          <span class="scale-name">Turquoise-000</span>
+        </div>
+        <div class="color-scale">
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-900); color: white" data-copy="#1F3331"><span class="badge">AAA 13:1</span></div><div class="swatch-info"><div class="step">900</div><div class="hex-mini">#1F3331</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-800); color: white" data-copy="#14433E"><span class="badge">AAA 11:1</span></div><div class="swatch-info"><div class="step">800</div><div class="hex-mini">#14433E</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-700); color: white" data-copy="#1A5E59"><span class="badge">AAA 7.5:1</span></div><div class="swatch-info"><div class="step">700</div><div class="hex-mini">#1A5E59</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-600); color: white" data-copy="#058B8C"><span class="badge">AA 4:1</span></div><div class="swatch-info"><div class="step">600</div><div class="hex-mini">#058B8C</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-500); color: white" data-copy="#1EA7A6"><span class="badge">AA 4.5:1</span></div><div class="swatch-info"><div class="step">500</div><div class="hex-mini">#1EA7A6</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-400); color: white" data-copy="#40C0C0"><span class="badge">AA 6:1</span></div><div class="swatch-info"><div class="step">400</div><div class="hex-mini">#40C0C0</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-300); color: var(--kw-dark-800)" data-copy="#A3DADB"><span class="badge">AAA 8.61:1</span></div><div class="swatch-info"><div class="step">300</div><div class="hex-mini">#A3DADB</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-200); color: var(--kw-dark-800)" data-copy="#D9F0F1"><span class="badge">AAA 11.19:1</span></div><div class="swatch-info"><div class="step">200</div><div class="hex-mini">#D9F0F1</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-turquoise-100); color: var(--kw-dark-800)" data-copy="#F5FAFB"><span class="badge">AAA 12.62:1</span></div><div class="swatch-info"><div class="step">100</div><div class="hex-mini">#F5FAFB</div></div></div>
+        </div>
+      </div>
+
+      <!-- Bright -->
+      <div class="color-row">
+        <div class="color-name">
+          <span class="color-pill" data-copy="#D8E5E7">
+            <span class="pill-swatch" style="background: var(--kw-bright-base)"></span>
+            <span class="pill-label">KEWAZO Bright</span>
+            <span class="pill-hex">#D8E5E7</span>
+          </span>
+          <span class="scale-name">Bright-000</span>
+        </div>
+        <div class="color-scale">
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-900); color: white" data-copy="#263D42"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">900</div><div class="hex-mini">#263D42</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-800); color: white" data-copy="#3E5A5D"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">800</div><div class="hex-mini">#3E5A5D</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-700); color: white" data-copy="#51777C"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">700</div><div class="hex-mini">#51777C</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-600); color: white" data-copy="#6C979D"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">600</div><div class="hex-mini">#6C979D</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-500); color: var(--kw-dark-800)" data-copy="#9FBDC1"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">500</div><div class="hex-mini">#9FBDC1</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-400); color: var(--kw-dark-800)" data-copy="#BAD1D4"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">400</div><div class="hex-mini">#BAD1D4</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-300); color: var(--kw-dark-800)" data-copy="#D8E5E7"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">300</div><div class="hex-mini">#D8E5E7</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-200); color: var(--kw-dark-800)" data-copy="#F2F6F7"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">200</div><div class="hex-mini">#F2F6F7</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-bright-100); color: var(--kw-dark-800); border: 1px solid var(--border)" data-copy="#FAFCFC"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">100</div><div class="hex-mini">#FAFCFC</div></div></div>
+        </div>
+      </div>
+
+      <!-- Dark -->
+      <div class="color-row">
+        <div class="color-name">
+          <span class="color-pill" data-copy="#2B3037">
+            <span class="pill-swatch" style="background: var(--kw-dark-base)"></span>
+            <span class="pill-label">KEWAZO Dark</span>
+            <span class="pill-hex">#2B3037</span>
+          </span>
+          <span class="scale-name">Dark-000</span>
+        </div>
+        <div class="color-scale">
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-900); color: white" data-copy="#1B1F24"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">900</div><div class="hex-mini">#1B1F24</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-800); color: white" data-copy="#2B3037"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">800</div><div class="hex-mini">#2B3037</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-700); color: white" data-copy="#414C59"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">700</div><div class="hex-mini">#414C59</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-600); color: white" data-copy="#576779"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">600</div><div class="hex-mini">#576779</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-500); color: white" data-copy="#7A899C"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">500</div><div class="hex-mini">#7A899C</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-400); color: var(--kw-dark-800)" data-copy="#AFB9C6"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">400</div><div class="hex-mini">#AFB9C6</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-300); color: var(--kw-dark-800)" data-copy="#D7DEE6"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">300</div><div class="hex-mini">#D7DEE6</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-200); color: var(--kw-dark-800)" data-copy="#EAEDF3"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">200</div><div class="hex-mini">#EAEDF3</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-dark-100); color: var(--kw-dark-800); border: 1px solid var(--border)" data-copy="#F5F7FB"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">100</div><div class="hex-mini">#F5F7FB</div></div></div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Secondary colours</h3>
+
+      <!-- Mono -->
+      <div class="color-row">
+        <div class="color-name">
+          <span class="color-pill" data-copy="#FFFFFF">
+            <span class="pill-swatch" style="background: var(--kw-mono-100); border-color: var(--border)"></span>
+            <span class="pill-label">Base mono</span>
+            <span class="pill-hex">#FFFFFF</span>
+          </span>
+          <span class="scale-name">Mono-000</span>
+        </div>
+        <div class="color-scale">
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-900); color: white" data-copy="#191919"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">900</div><div class="hex-mini">#191919</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-800); color: white" data-copy="#434343"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">800</div><div class="hex-mini">#434343</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-700); color: white" data-copy="#555555"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">700</div><div class="hex-mini">#555555</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-600); color: white" data-copy="#8C8C8C"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">600</div><div class="hex-mini">#8C8C8C</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-500); color: var(--kw-dark-800)" data-copy="#BABABB"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">500</div><div class="hex-mini">#BABABB</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-400); color: var(--kw-dark-800)" data-copy="#D9D9D9"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">400</div><div class="hex-mini">#D9D9D9</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-300); color: var(--kw-dark-800)" data-copy="#EEEEEE"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">300</div><div class="hex-mini">#EEEEEE</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-200); color: var(--kw-dark-800)" data-copy="#F4F4F4"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">200</div><div class="hex-mini">#F4F4F4</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-mono-100); color: var(--kw-dark-800); border: 1px solid var(--border)" data-copy="#FFFFFF"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">100</div><div class="hex-mini">#FFFFFF</div></div></div>
+        </div>
+      </div>
+
+      <!-- Accent -->
+      <div class="color-row">
+        <div class="color-name">
+          <span class="color-pill" data-copy="#EC1010">
+            <span class="pill-swatch" style="background: var(--kw-red-500)"></span>
+            <span class="pill-label">Accent</span>
+            <span class="pill-hex">#EC1010</span>
+          </span>
+        </div>
+        <div class="color-scale cols-4">
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-red-500); color: white" data-copy="#EC1010"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">Red 500</div><div class="hex-mini">#EC1010</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-red-200); color: var(--kw-dark-800); border: 1px solid var(--border)" data-copy="#FEF3F3"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">Red 200</div><div class="hex-mini">#FEF3F3</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-yellow-500); color: var(--kw-dark-800)" data-copy="#F9EE89"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">Yellow</div><div class="hex-mini">#F9EE89</div></div></div>
+          <div class="swatch-cell"><div class="swatch" style="background: var(--kw-yellow-300); color: var(--kw-dark-800)" data-copy="#F9FF93"><span class="badge">AA</span></div><div class="swatch-info"><div class="step">Yellow</div><div class="hex-mini">#F9FF93</div></div></div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Print</h3>
+      <div class="print-grid">
+        <div class="print-card">
+          <h4>Pantone 326C</h4>
+          <div class="pantone">#00b2a9</div>
+          <div class="pct"><span><b>0%</b>C</span><span><b>92%</b>M</span><span><b>40%</b>Y</span><span><b>18%</b>K</span></div>
+          <div class="caption" style="font-size: 0.6875rem; opacity: 0.85">Print material -1</div>
+        </div>
+        <div class="print-card alt-1">
+          <h4>Pantone (N/A)</h4>
+          <div class="pantone">#056B6C · Turquoise 600</div>
+          <div class="pct"><span><b>92%</b>C</span><span><b>0%</b>M</span><span><b>30%</b>Y</span><span><b>50%</b>K</span></div>
+          <div class="caption" style="font-size: 0.6875rem; opacity: 0.85">LIFTBOT v.2</div>
+        </div>
+        <div class="print-card alt-2">
+          <h4>Pantone (N/A)</h4>
+          <div class="pantone">#4Cb0c0</div>
+          <div class="pct"><span><b>74%</b>C</span><span><b>0%</b>M</span><span><b>22%</b>Y</span><span><b>0%</b>K</span></div>
+          <div class="caption" style="font-size: 0.6875rem; opacity: 0.85">Print material -3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TYPOGRAPHY ============ -->
+    <section id="typography">
+      <h2 class="section-title">Typography</h2>
+      <p class="section-lede">Body text and almost every UI element use <strong>Barlow</strong>. The <strong>LIFTBOT</strong> typeface is reserved for the LIFTBOT product wordmark and high-impact display moments — never for paragraphs or running copy. Body baseline is <strong>1rem · 16px</strong>.</p>
+
+      <h3 class="subsection-title">Typefaces in use</h3>
+
+      <div class="font-spec-card">
+        <div class="specimen" style="font-family: var(--font-sans); font-weight: 700;">Barlow</div>
+        <div class="meta">
+          <span class="role-pill">Default</span>
+          <h4 style="margin-top: 8px;">Barlow · Variable (300–900)</h4>
+          <p>Used for body, headings, buttons, captions and every UI element. Slightly condensed grotesk built for industrial signage; highly legible at small sizes.</p>
+          <code style="font-family: ui-monospace, monospace; font-size: 0.75rem; color: var(--kw-turquoise-700);">--font-sans</code>
+        </div>
+      </div>
+
+      <div class="font-spec-card dark">
+        <div class="specimen liftbot-font">LIFTBOT</div>
+        <div class="meta">
+          <span class="role-pill">Display only</span>
+          <h4 style="margin-top: 8px; color: white;">LIFTBOT Medium</h4>
+          <p>Reserved for the LIFTBOT product wordmark, hero key-phrases and short display labels (case-study covers, social posters, video lower-thirds). Never use for body, paragraphs or UI elements.</p>
+          <code style="font-family: ui-monospace, monospace; font-size: 0.75rem; color: var(--kw-turquoise-300);">--font-display · .liftbot-font</code>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Type scale (1rem = 16px)</h3>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Display</span>4rem · 64px / 1.05<br>ExtraBold (800) · −0.02em</div>
+        <div class="type-sample t-display">Sustainable construction.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Heading 1</span>2.5rem · 40px / 1.15<br>Bold (700) · −0.02em</div>
+        <div class="type-sample t-h1">Shell Chemicals Park Moerdijk</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Heading 2</span>1.75rem · 28px / 1.2<br>Bold (700) · −0.02em</div>
+        <div class="type-sample t-h2">Cost savings analysis</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Heading 3</span>1.375rem · 22px / 1.3<br>SemiBold (600)</div>
+        <div class="type-sample t-h3">Project efficiency</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Heading 4</span>1.125rem · 18px / 1.4<br>SemiBold (600)</div>
+        <div class="type-sample t-h4">Crew composition</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Body large</span>1.125rem · 18px / 1.55<br>Regular (400)</div>
+        <div class="type-sample t-body-lg">Roads remained clear of cranes to ensure continuous, safe, and unobstructed access for vehicles and personnel.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Body</span>1rem · 16px / 1.55 · Baseline<br>Regular (400)</div>
+        <div class="type-sample t-body">FCC pre-turnaround scaffold built in 2.5 weeks at 125ft height. Used by 12 crew members on rotating shifts.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Body small</span>0.875rem · 14px / 1.5<br>Regular (400)</div>
+        <div class="type-sample t-body-sm">Footnote and caption-adjacent body text for tables, breadcrumbs and footers.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Caption / Label</span>0.75rem · 12px / 1.2<br>SemiBold (600) · UPPERCASE<br>Letter −0.02em</div>
+        <div class="type-sample t-caption">Total operating time</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">Stat / Number</span>3rem · 48px / 1<br>ExtraBold (800) · tabular</div>
+        <div class="type-sample t-stat">92,885 kg</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="name">LIFTBOT display</span>Display only<br>For product wordmark</div>
+        <div class="type-sample" style="font-size: 3rem; font-weight: 500;"><span class="liftbot-font">LIFTBOT</span></div>
+      </div>
+
+      <h3 class="subsection-title">Barlow weights in use</h3>
+      <div class="weight-grid">
+        <div class="weight-card"><div class="num w300">Aa</div><div class="name">Light · 300</div></div>
+        <div class="weight-card"><div class="num w400">Aa</div><div class="name">Regular · 400</div></div>
+        <div class="weight-card"><div class="num w500">Aa</div><div class="name">Medium · 500</div></div>
+        <div class="weight-card"><div class="num w600">Aa</div><div class="name">SemiBold · 600</div></div>
+        <div class="weight-card"><div class="num w700">Aa</div><div class="name">Bold · 700</div></div>
+        <div class="weight-card"><div class="num w800">Aa</div><div class="name">ExtraBold · 800</div></div>
+        <div class="weight-card"><div class="num w900">Aa</div><div class="name">Black · 900</div></div>
+        <div class="weight-card"><div class="num" style="font-style: italic">Aa</div><div class="name">Italics · all weights</div></div>
+      </div>
+
+      <h3 class="subsection-title">Embed</h3>
+      <pre class="code">/* Barlow — body &amp; UI */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&amp;display=swap');
+
+/* LIFTBOT — display only (locally hosted) */
+@font-face {
+  font-family: "LIFTBOT";
+  src: url("./LIFTBOT Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* CSS variables */
+--font-sans:    "Barlow", -apple-system, "Segoe UI", system-ui, sans-serif;
+--font-display: "LIFTBOT", "Barlow", -apple-system, sans-serif;
+
+/* Body baseline */
+html { font-size: 16px; }   /* 1rem == 16px */
+body { font-family: var(--font-sans); font-size: 1rem; line-height: 1.55; }</pre>
+    </section>
+
+    <!-- ============ ELEMENT ============ -->
+    <section id="element">
+      <h2 class="section-title">Element</h2>
+      <p class="section-lede">Approved third-party brand assets for use in case studies, partnership pages and social posts. Each logo ships in four variants — full colour (FC), black (BK), white (WH) and grey (GR). Click a variant chip to switch the displayed logo and copy that variant as a transparent PNG to your clipboard. Click the logo itself to copy the currently active variant. (PNG copy requires opening the page via a local server, e.g. VS Code Live Preview; if it falls back to plain file://, you'll get the raw SVG instead.)</p>
+
+      <div class="element-category">
+        <h3>Asset Owners</h3>
+        <span class="count">15 logos · 4 variants each</span>
+      </div>
+
+      <div class="logo-grid-asset">
+        <div class="logo-card-asset" data-active="bk" data-name="BASF">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_BASF%2C%20Mono%3DFullColour.svg" alt="BASF full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_BASF%2C%20Mono%3DDark.svg" alt="BASF black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_BASF%2C%20Mono%3DWhite.svg" alt="BASF white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_BASF%2C%20Mono%3Dgrey.svg" alt="BASF grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">BASF</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Dow">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_DOW%2C%20Mono%3DFullColour.svg" alt="Dow full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_DOW%2C%20Mono%3DDark.svg" alt="Dow black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_DOW%2C%20Mono%3DWhite.svg" alt="Dow white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_DOW%2C%20Mono%3Dgrey.svg" alt="Dow grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Dow</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Flint Hills">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_FlintHillsResources%2C%20Mono%3DFullColour.svg" alt="Flint Hills full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_FlintHillsResources%2C%20Mono%3DDark.svg" alt="Flint Hills black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_FlintHillsResources%2C%20Mono%3DWhite.svg" alt="Flint Hills white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_FlintHillsResources%2C%20Mono%3Dgrey.svg" alt="Flint Hills grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Flint Hills</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="LyondellBasell">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_LyondellBasell%2C%20Mono%3DFullColour.svg" alt="LyondellBasell full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_LyondellBasell%2C%20Mono%3DDark.svg" alt="LyondellBasell black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_LyondellBasell%2C%20Mono%3DWhite.svg" alt="LyondellBasell white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_LyondellBasell%2C%20Mono%3Dgrey.svg" alt="LyondellBasell grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">LyondellBasell</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Borealis">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Borealis%2C%20Mono%3DFullColour.svg" alt="Borealis full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Borealis%2C%20Mono%3DDark.svg" alt="Borealis black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Borealis%2C%20Mono%3DWhite.svg" alt="Borealis white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Borealis%2C%20Mono%3Dgrey.svg" alt="Borealis grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Borealis</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Syensqo">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syensqo%2C%20Mono%3DFullColour.svg" alt="Syensqo full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syensqo%2C%20Mono%3DDark.svg" alt="Syensqo black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syensqo%2C%20Mono%3DWhite.svg" alt="Syensqo white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syensqo%2C%20Mono%3Dgrey.svg" alt="Syensqo grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Syensqo</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Intel">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Intel%2C%20Mono%3DFullColour.svg" alt="Intel full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Intel%2C%20Mono%3DDark.svg" alt="Intel black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Intel%2C%20Mono%3DWhite.svg" alt="Intel white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Intel%2C%20Mono%3Dgrey.svg" alt="Intel grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Intel</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Ternium">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Ternium%2C%20Mono%3DFullColour.svg" alt="Ternium full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Ternium%2C%20Mono%3DDark.svg" alt="Ternium black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Ternium%2C%20Mono%3DWhite.svg" alt="Ternium white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Ternium%2C%20Mono%3Dgrey.svg" alt="Ternium grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Ternium</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Chevron Phillips">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_CPchem%2C%20Mono%3DFullColour.svg" alt="Chevron Phillips full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_CPchem%2C%20Mono%3DDark.svg" alt="Chevron Phillips black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_CPchem%2C%20Mono%3DWhite.svg" alt="Chevron Phillips white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_CPchem%2C%20Mono%3Dgrey.svg" alt="Chevron Phillips grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Chevron Phillips</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Chevron">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Chevron%2C%20Mono%3DFullColour.svg" alt="Chevron full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Chevron%2C%20Mono%3DDark.svg" alt="Chevron black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Chevron%2C%20Mono%3DWhite.svg" alt="Chevron white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Chevron%2C%20Mono%3Dgrey.svg" alt="Chevron grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Chevron</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="fc" data-name="BP">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D200_bp%2C%20Mono%3DFullColour.svg" alt="bp full colour"></div>
+            <div class="logo-svg" data-variant="bk" data-missing="true"><span class="logo-missing-mark">— not provided —</span></div>
+            <div class="logo-svg" data-variant="wh" data-missing="true"><span class="logo-missing-mark">— not provided —</span></div>
+            <div class="logo-svg" data-variant="grey" data-missing="true"><span class="logo-missing-mark">— not provided —</span></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">BP</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy">FC</button>
+              <button class="variant-chip" data-variant="bk" disabled title="Not provided">BK</button>
+              <button class="variant-chip" data-variant="wh" disabled title="Not provided">WH</button>
+              <button class="variant-chip" data-variant="grey" disabled title="Not provided">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Syncrude">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syncrude%2C%20Mono%3DFullColour.svg" alt="Syncrude full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syncrude%2C%20Mono%3DDark.svg" alt="Syncrude black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syncrude%2C%20Mono%3DWhite.svg" alt="Syncrude white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_Syncrude%2C%20Mono%3Dgrey.svg" alt="Syncrude grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Syncrude</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="fc" data-name="ExxonMobil">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_ExxonMobil%2C%20Mono%3DFullColour.svg" alt="ExxonMobil full colour"></div>
+            <div class="logo-svg" data-variant="bk" data-missing="true"><span class="logo-missing-mark">— not provided —</span></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_ExxonMobil%2C%20Mono%3DWhite.svg" alt="ExxonMobil white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D210_ExxonMobil%2C%20Mono%3Dgrey.svg" alt="ExxonMobil grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">ExxonMobil</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy">FC</button>
+              <button class="variant-chip" data-variant="bk" disabled title="Not provided">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="Shell">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D200_shell%2C%20Mono%3DFullColour.svg" alt="Shell full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D200_shell%2C%20Mono%3DDark.svg" alt="Shell black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D200_shell%2C%20Mono%3DWhite.svg" alt="Shell white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3D200_shell%2C%20Mono%3Dgrey.svg" alt="Shell grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">Shell</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-asset" data-active="bk" data-name="PBF Energy">
+          <div class="logo-stage-asset">
+            <div class="logo-svg" data-variant="fc"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3DPBF%20Energy%2C%20Mono%3DFullColour.svg" alt="PBF Energy full colour"></div>
+            <div class="logo-svg" data-variant="bk"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3DPBF%20Energy%2C%20Mono%3DDark.svg" alt="PBF Energy black"></div>
+            <div class="logo-svg" data-variant="wh"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3DPBF%20Energy%2C%20Mono%3DWhite.svg" alt="PBF Energy white"></div>
+            <div class="logo-svg" data-variant="grey"><img src="./04_Element/01_Client_logo/01_Asset_Owner/Client%20logos%3DPBF%20Energy%2C%20Mono%3Dgrey.svg" alt="PBF Energy grey"></div>
+          </div>
+          <div class="logo-meta">
+            <div class="logo-name">PBF Energy</div>
+            <div class="variant-row">
+              <button class="variant-chip" data-variant="fc" title="Switch &amp; copy SVG">FC</button>
+              <button class="variant-chip" data-variant="bk" title="Switch &amp; copy SVG">BK</button>
+              <button class="variant-chip" data-variant="wh" title="Switch &amp; copy SVG">WH</button>
+              <button class="variant-chip" data-variant="grey" title="Switch &amp; copy SVG">GR</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="element-category">
+        <h3>Service Providers</h3>
+        <span class="count">Coming soon</span>
+      </div>
+      <div class="element-empty">No logos uploaded yet — drop SVGs into <code>04_Element/01_Client_logo/02_Service_Provider/</code> following the <code>{id}_{name}_{variant}.svg</code> naming pattern (variants: fc, bk, wh, grey).</div>
+
+      <div class="element-category">
+        <h3>Conferences</h3>
+        <span class="count">Coming soon</span>
+      </div>
+      <div class="element-empty">No logos uploaded yet — drop SVGs into <code>04_Element/01_Client_logo/03_Conference/</code> following the same naming pattern.</div>
+
+      <div class="element-category">
+        <h3>Venture Capital</h3>
+        <span class="count">Coming soon</span>
+      </div>
+      <div class="element-empty">No logos uploaded yet — drop SVGs into <code>04_Element/01_Client_logo/04_VentureCapital/</code> following the same naming pattern.</div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- ============== USER INTERFACE GROUP ================== -->
+    <!-- ===================================================== -->
+    <div class="group-divider">
+      <div class="group-eyebrow">Group 02</div>
+      <h2 class="group-name">User Interface</h2>
+      <p class="group-desc">Visual components for <a href="https://www.kewazo.com" style="color: var(--kw-turquoise-700); border-bottom: 1px solid var(--kw-turquoise-300);">www.kewazo.com</a> and digital surfaces — organised by component type rather than by page.</p>
+    </div>
+
+    <!-- ============ BUTTONS ============ -->
+    <section id="ui-buttons">
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-lede">Pill-shaped CTAs with a trailing arrow that slides on hover. Primary turquoise drives conversion; dark for tertiary; outline for inline links; link-style for in-page navigation.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Variants</h3><span class="desc">Primary / Dark / Outline / Link</span></div>
+        <div class="preview">
+          <a class="web-btn web-btn-primary" href="#">Request a quote</a>
+          <a class="web-btn web-btn-dark" href="#">Explore LIFTBOT</a>
+          <a class="web-btn web-btn-outline" href="#">Learn more</a>
+          <a class="web-btn web-btn-link" href="#">More case studies</a>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Sizes</h3><span class="desc">Small / Default / Large</span></div>
+        <div class="preview">
+          <a class="web-btn web-btn-primary web-btn-sm" href="#">Small</a>
+          <a class="web-btn web-btn-primary" href="#">Default</a>
+          <a class="web-btn web-btn-primary web-btn-lg" href="#">Large</a>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>On dark surfaces</h3><span class="desc">For hero sections</span></div>
+        <div class="preview" style="background: var(--kw-dark-900); border-color: var(--kw-dark-800);">
+          <a class="web-btn web-btn-primary" href="#">Request a quote</a>
+          <a class="web-btn web-btn-link" style="color: white;" href="#">Case studies</a>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Icon buttons</h3><span class="desc">For media controls and inline actions</span></div>
+        <div class="preview">
+          <button class="icon-btn" aria-label="Play">▶</button>
+          <button class="icon-btn outline" aria-label="Next">→</button>
+          <button class="icon-btn outline" aria-label="Download">↓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NAVIGATION ============ -->
+    <section id="ui-navigation">
+      <h2 class="section-title">Navigation</h2>
+      <p class="section-lede">Top-of-page lockup with logo on the left, uppercase nav links centred and a turquoise pill CTA on the right. Includes breadcrumb pattern for deeper pages.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Top nav — light</h3><span class="desc">Default — over light hero sections</span></div>
+        <div class="preview col">
+          <div class="web-nav">
+            <svg class="kw-logo" style="height: 22px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+            <div class="nav-links">
+              <a href="#">Case studies</a>
+              <a href="#">Product</a>
+              <a href="#">Company</a>
+              <a href="#">FAQ</a>
+            </div>
+            <a href="#" class="nav-cta">Request a quote</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Top nav — dark</h3><span class="desc">Over Dark 900 hero sections</span></div>
+        <div class="preview col" style="background: var(--kw-dark-900); border-color: var(--kw-dark-800);">
+          <div class="web-nav dark">
+            <svg class="kw-logo" style="height: 22px; color: white;" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+            <div class="nav-links">
+              <a href="#">Case studies</a>
+              <a href="#">Product</a>
+              <a href="#">Company</a>
+              <a href="#">FAQ</a>
+            </div>
+            <a href="#" class="nav-cta">Request a quote</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Breadcrumb</h3><span class="desc">Used at top of detail pages</span></div>
+        <div class="preview">
+          <div class="web-breadcrumb">
+            <span><a href="#">Case studies</a></span>
+            <span><a href="#">Industrial plants</a></span>
+            <span class="current">Shell Chemicals Park Moerdijk</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAGS & EYEBROWS ============ -->
+    <section id="ui-tags">
+      <h2 class="section-title">Tags &amp; Eyebrows</h2>
+      <p class="section-lede">Small uppercase labels — eyebrows precede a section heading; pill tags categorise content. Both use Barlow Bold at 0.75rem with wide letter-spacing.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Eyebrow variants</h3><span class="desc">Above section headlines</span></div>
+        <div class="preview">
+          <span class="eyebrow">Product</span>
+          <span class="eyebrow muted">Testimonial</span>
+          <span style="background: var(--kw-dark-900); padding: 16px; border-radius: 8px; display: inline-block;"><span class="eyebrow on-dark">Service</span></span>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Pill tags</h3><span class="desc">For categories &amp; status</span></div>
+        <div class="preview">
+          <span class="tag-pill">Case study</span>
+          <span class="tag-pill outline">News</span>
+          <span class="tag-pill dark">Featured</span>
+          <span class="tag-pill muted">Demo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTIONS & HERO ============ -->
+    <section id="ui-sections">
+      <h2 class="section-title">Sections &amp; Hero</h2>
+      <p class="section-lede">Containers that anchor a page: full-bleed dark hero with a video preview, and the standard eyebrow + headline + lede pattern that opens every content section.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Dark hero with video preview</h3><span class="desc">Top of every landing page</span></div>
+        <div class="preview flush">
+          <div class="web-hero">
+            <div>
+              <span class="eyebrow on-dark">LIFTBOT</span>
+              <h1>Robotics and AI for industrial maintenance and construction</h1>
+              <p>Replacing cranes and manual handling with safer, faster, data-driven vertical material transport.</p>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <a class="web-btn web-btn-primary" href="#">Explore LIFTBOT</a>
+                <a class="web-btn web-btn-link" style="color: white;" href="#">Case studies</a>
+              </div>
+            </div>
+            <div class="hero-visual">Product video</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Section opener</h3><span class="desc">Eyebrow + headline + lede</span></div>
+        <div class="preview col">
+          <div>
+            <span class="eyebrow">Product</span>
+            <h2 class="web-h2">Lifting robot <span class="liftbot-font">LIFTBOT</span></h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0;">Battery-powered and remote-controlled.</p>
+          </div>
+          <div style="border-top: 1px solid var(--border); padding-top: 24px;">
+            <span class="eyebrow">Data</span>
+            <h2 class="web-h2">KEWAZO ONSITE</h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0;">Maximum transparency of on-site activities via live operational data.</p>
+          </div>
+          <div style="border-top: 1px solid var(--border); padding-top: 24px;">
+            <span class="eyebrow">Service</span>
+            <h2 class="web-h2">KEWAZO CARE</h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0;">Training, annual maintenance, emergency support, hotline, best practices.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CARDS ============ -->
+    <section id="ui-cards">
+      <h2 class="section-title">Cards</h2>
+      <p class="section-lede">Modular content blocks. Feature cards run a 3-up grid for product overviews; image cards label use-cases; both lift on hover.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Feature cards (3-up)</h3><span class="desc">Product / Data / Service triplet</span></div>
+        <div class="preview">
+          <div class="feature-grid">
+            <div class="feature-card tone-turquoise">
+              <div class="image"></div>
+              <div class="body">
+                <span class="eyebrow">Product</span>
+                <h3>Lifting robot</h3>
+                <div class="product-name liftbot-font">LIFTBOT</div>
+                <p>Battery-powered and remote controlled.</p>
+                <a class="feature-cta" href="#">How LIFTBOT works</a>
+              </div>
+            </div>
+            <div class="feature-card tone-dark">
+              <div class="image"></div>
+              <div class="body">
+                <span class="eyebrow">Data</span>
+                <h3>Data analytics platform</h3>
+                <div class="product-name">KEWAZO ONSITE</div>
+                <p>Maximum transparency of on-site activities via live operational data.</p>
+                <a class="feature-cta" href="#">Unlock your site insights</a>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="image"></div>
+              <div class="body">
+                <span class="eyebrow">Service</span>
+                <h3>Support program</h3>
+                <div class="product-name">KEWAZO CARE</div>
+                <p>Training, annual maintenance, emergency support, hotline, best practices.</p>
+                <a class="feature-cta" href="#">Maximise uptime</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Image card</h3><span class="desc">Use case &amp; payload type tiles</span></div>
+        <div class="preview">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%;">
+            <div class="image-card"><div class="img-stage"></div><div class="label">Towers</div></div>
+            <div class="image-card"><div class="img-stage" style="background: linear-gradient(135deg, var(--kw-turquoise-300), var(--kw-turquoise-500));"></div><div class="label">Tanks</div></div>
+            <div class="image-card"><div class="img-stage" style="background: linear-gradient(135deg, var(--kw-dark-300), var(--kw-dark-500));"></div><div class="label">Boilers</div></div>
+            <div class="image-card"><div class="img-stage" style="background: linear-gradient(135deg, var(--kw-bright-500), var(--kw-bright-700));"></div><div class="label">Columns</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DATA DISPLAY ============ -->
+    <section id="ui-data">
+      <h2 class="section-title">Data Display</h2>
+      <p class="section-lede">Stat callouts surface the headline outcome from a case study: figure + qualifier + category. Use a 3-up grid; promote the most important callout with the turquoise tone variant.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Stat callouts (3-up)</h3></div>
+        <div class="preview">
+          <div class="callout-grid">
+            <div class="callout">
+              <div class="label">Total savings</div>
+              <div class="figure">$988,240</div>
+              <div class="qualifier">3 months pre-turnaround</div>
+              <div class="category">Turnarounds →</div>
+            </div>
+            <div class="callout tone">
+              <div class="label">Reduced hazardous hours by</div>
+              <div class="figure">1/3</div>
+              <div class="qualifier">with continuous deployment</div>
+              <div class="category">Maintenance →</div>
+            </div>
+            <div class="callout">
+              <div class="label">Schedule saved by</div>
+              <div class="figure">22%</div>
+              <div class="qualifier">by replacing cranes</div>
+              <div class="category">Capital projects →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component">
+        <div class="component-title"><h3>Hero stat</h3><span class="desc">Single big number</span></div>
+        <div class="preview center">
+          <div style="text-align: center;">
+            <div class="t-caption" style="margin-bottom: 8px;">Hazard exposed man-hours reduced by</div>
+            <div style="font-size: 4rem; font-weight: 800; color: var(--kw-turquoise-700); letter-spacing: -0.02em; line-height: 1;">330 <span style="font-size: 1.5rem; color: var(--text-muted);">hrs</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUOTES ============ -->
+    <section id="ui-quotes">
+      <h2 class="section-title">Quotes &amp; Testimonials</h2>
+      <p class="section-lede">A pull-quote on a dark surface. One per page; attribution stays to first name + role + company.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Dark testimonial</h3></div>
+        <div class="preview">
+          <div class="testimonial">
+            <span class="eyebrow on-dark">Testimonial</span>
+            <blockquote>On 30'+ scaffolds, it's top-tier equipment. With proper team, it changes a lot in terms of safety, efficiency, and physical strain compared to manitou basket / ladderlift.</blockquote>
+            <div class="attribution">
+              <div class="avatar">M</div>
+              <div>
+                <div class="name">Michal</div>
+                <div class="role">Scaffolder, Altrad Services</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LISTS ============ -->
+    <section id="ui-lists">
+      <h2 class="section-title">Lists</h2>
+      <p class="section-lede">Date + title rows for News and Blog feeds. Hover slides the row right and turns the arrow turquoise.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>News / Blog list</h3></div>
+        <div class="preview col">
+          <div class="news-list">
+            <a class="news-item" href="#">
+              <span class="date">Apr 17, 2026</span>
+              <span class="news-title"><span class="liftbot-font">LIFTBOT</span> wins Gold at the 2026 Edison Awards</span>
+              <span class="news-arrow">→</span>
+            </a>
+            <a class="news-item" href="#">
+              <span class="date">Mar 19, 2026</span>
+              <span class="news-title">Chevron Technology Ventures, Asahi Kasei invest in KEWAZO</span>
+              <span class="news-arrow">→</span>
+            </a>
+            <a class="news-item" href="#">
+              <span class="date">Nov 1, 2025</span>
+              <span class="news-title">Talk with Colin Xander, North America Turnaround Director of INEOS Styrolution</span>
+              <span class="news-arrow">→</span>
+            </a>
+            <a class="news-item" href="#">
+              <span class="date">Aug 5, 2025</span>
+              <span class="news-title">KEWAZO Panel Discussion at SAIA 2025</span>
+              <span class="news-arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FORMS ============ -->
+    <section id="ui-forms">
+      <h2 class="section-title">Forms</h2>
+      <p class="section-lede">Contact form pattern used in the "Add LIFTBOT to your site" panel. Fields stack vertically; required marker (*) sits inline with the label; submit button uses the primary pill.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Contact form</h3></div>
+        <div class="preview">
+          <form class="form-grid" onsubmit="event.preventDefault();">
+            <div class="field-row">
+              <div class="field"><label>Name *</label><input type="text" placeholder="Full name"></div>
+              <div class="field"><label>Position *</label><input type="text" placeholder="Job title"></div>
+            </div>
+            <div class="field"><label>Company *</label><input type="text" placeholder="Company"></div>
+            <div class="field-row">
+              <div class="field"><label>Email *</label><input type="email" placeholder="you@company.com"></div>
+              <div class="field"><label>Mobile</label><input type="tel" placeholder="+1 ..."></div>
+            </div>
+            <div class="field"><label>Message *</label><textarea placeholder="Tell us about your project"></textarea></div>
+            <button class="web-btn web-btn-primary" type="submit" style="align-self: flex-start;">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <section id="ui-footer">
+      <h2 class="section-title">Footer</h2>
+      <p class="section-lede">Dark site-wide footer. Office addresses on the left, link columns on the right, copyright and social icons at the bottom.</p>
+
+      <div class="component">
+        <div class="preview flush">
+          <div class="web-footer">
+            <div class="footer-top">
+              <div>
+                <svg class="kw-logo" style="height: 24px; color: white; margin-bottom: 16px;" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+                <h4>KEWAZO GmbH</h4>
+                <p>Lichtenbergstraße 8<br>85748 Garching, Germany</p>
+                <h4 style="margin-top: 16px;">KEWAZO Inc.</h4>
+                <p>5301 Polk St Bldg 14<br>Houston, TX 77023, USA</p>
+              </div>
+              <div>
+                <h4>Case studies</h4>
+                <a href="#">Industrial plants</a><br>
+                <a href="#">Commercial sites</a>
+              </div>
+              <div>
+                <h4>Product</h4>
+                <a href="#">LIFTBOT</a><br>
+                <a href="#">Data analytics</a><br>
+                <a href="#">Services</a><br>
+                <a href="#">FAQ</a>
+              </div>
+              <div>
+                <h4>Company</h4>
+                <a href="#">About us</a><br>
+                <a href="#">Career</a><br>
+                <a href="#">Media Kit</a><br>
+                <a href="#">News &amp; Blog</a>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <span>© 2026 KEWAZO GmbH. All rights reserved.</span>
+              <span style="display: flex; gap: 14px;">
+                <a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">TikTok</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- ========== PRESENTATION MATERIALS GROUP ============== -->
+    <!-- ===================================================== -->
+    <div class="group-divider">
+      <div class="group-eyebrow">Group 03</div>
+      <h2 class="group-name">Presentation Materials</h2>
+      <p class="group-desc">Components for sales enablement, case studies, proposals and one-pagers. Stat blocks, comparison cards and report templates that look polished in PDF and pitch decks. <em style="color: var(--text-subtle);">Expanding — more components coming soon.</em></p>
+    </div>
+
+    <section id="pres-buttons">
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-lede">Squarer corners, denser padding. Designed for printed PDFs, slide decks, and embedded CTAs in case studies.</p>
+      <div class="component">
+        <div class="component-title"><h3>Variants</h3><span class="desc">Primary / Secondary / Outline / Ghost</span></div>
+        <div class="preview">
+          <button class="btn btn-primary">Request a quote</button>
+          <button class="btn btn-secondary">Download PDF</button>
+          <button class="btn btn-outline">Learn more</button>
+          <button class="btn btn-ghost">View all cases →</button>
+        </div>
+      </div>
+      <div class="component">
+        <div class="component-title"><h3>Sizes</h3><span class="desc">Small / Default / Large</span></div>
+        <div class="preview">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-stats">
+      <h2 class="section-title">Stat blocks</h2>
+      <p class="section-lede">Big-number stat blocks anchor every case study. Use 4-up grids on landing pages and 2-up on proposal slides.</p>
+      <div class="component">
+        <div class="component-title"><h3>4-up grid</h3><span class="desc">Use on case study covers</span></div>
+        <div class="preview">
+          <div class="stat-grid">
+            <div class="stat-cell"><div class="label">Total loads</div><div class="value">92,885 <span class="unit">kg</span></div></div>
+            <div class="stat-cell"><div class="label">Operating time</div><div class="value">216 <span class="unit">hrs</span></div></div>
+            <div class="stat-cell"><div class="label">Completed cycles</div><div class="value">1,176 <span class="unit">×</span></div></div>
+            <div class="stat-cell"><div class="label">Most efficient day</div><div class="value">6,200 <span class="unit">kg</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-cards">
+      <h2 class="section-title">Cards</h2>
+      <div class="component">
+        <div class="component-title"><h3>Highlight box</h3><span class="desc">Project highlights overlay</span></div>
+        <div class="preview">
+          <div class="highlight-box">
+            <span class="tag">HIGHLIGHTS</span>
+            <ul>
+              <li>Project accomplished in storm-season</li>
+              <li>Reduced man-hours and increased safety, ergonomics, and efficiency by eliminating crane work</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="component">
+        <div class="component-title"><h3>Cost comparison card</h3><span class="desc">Crane vs. LIFTBOT</span></div>
+        <div class="preview" style="gap: 20px">
+          <div class="compare-card">
+            <div class="h">VERTICAL MATERIAL TRANSPORT</div>
+            <div class="product" style="background: var(--kw-mono-700);">Crane</div>
+            <div class="total">$144,450</div>
+            <div class="breakdown">
+              <div><span>Man-hours</span><span class="num">2,772</span></div>
+              <div><span>Scaffolding cost</span><span class="num">109,877</span></div>
+              <div><span>Operational cost</span><span class="num">34,446</span></div>
+            </div>
+          </div>
+          <div class="compare-card" style="border-color: var(--kw-turquoise-base); border-width: 2px;">
+            <div class="h">VERTICAL MATERIAL TRANSPORT</div>
+            <div class="product"><span class="liftbot-font">LIFTBOT</span></div>
+            <div class="total" style="color: var(--kw-turquoise-700)">$27,816</div>
+            <div class="breakdown">
+              <div><span>Man-hours</span><span class="num">2,363</span></div>
+              <div><span>Scaffolding cost</span><span class="num">116,607*</span></div>
+              <div><span>Operational cost</span><span class="num">$0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-tables">
+      <h2 class="section-title">Tables</h2>
+      <p class="section-lede">Use tables for cost-savings breakdowns and equipment line items. Highlight the total row in Turquoise 500.</p>
+      <div class="component">
+        <div class="component-title"><h3>Savings breakdown</h3><span class="desc">Flint Hills Resources Corpus Christi</span></div>
+        <div class="preview">
+          <table class="kds-table">
+            <thead>
+              <tr><th>Item</th><th class="num">Cost</th><th class="num">Delta</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Crane cost savings</td><td class="num">$51,200</td><td class="num pos">+$51,200</td></tr>
+              <tr><td>Labor cost savings</td><td class="num">$12,800</td><td class="num pos">+$12,800</td></tr>
+              <tr><td><span class="liftbot-font">LIFTBOT</span> rental cost</td><td class="num">$21,000</td><td class="num neg">−$21,000</td></tr>
+              <tr class="total"><td>NET COST SAVINGS</td><td class="num">$43,000</td><td class="num">▲</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-headers">
+      <h2 class="section-title">Document Header</h2>
+      <p class="section-lede">Every customer artefact opens with a header lockup: KEWAZO on the left, partners on the right, divided by a vertical rule.</p>
+      <div class="preview col">
+        <div class="header-bar">
+          <div class="left">
+            <svg class="kw-logo" style="height: 22px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+          </div>
+          <div class="partners">
+            <span class="partner-mark">Shell</span>
+            <span class="divider" style="width: 1px; height: 28px; background: var(--kw-mono-300)"></span>
+            <span class="partner-mark red">Bilfinger</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-banners">
+      <h2 class="section-title">Savings banner</h2>
+      <p class="section-lede">Sticky callout above tables to surface the headline financial impact.</p>
+      <div class="preview">
+        <div class="savings-banner">
+          <span>NET COST SAVINGS</span>
+          <span class="amount">$43,000</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="pres-templates">
+      <h2 class="section-title">Templates</h2>
+      <p class="section-lede">Compositions assembled from the components above. Drop these into pitch decks, one-pagers, and case studies.</p>
+
+      <div class="component">
+        <div class="component-title"><h3>Case study cover</h3><span class="desc">A4 / 16:9 letterhead</span></div>
+        <div class="preview col" style="padding: 0; overflow: hidden;">
+          <div style="background: white; padding: 28px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 22px;">
+                <svg class="kw-logo" style="height: 20px; color: var(--kw-dark-800);" viewBox="0 0 107.39 16.11" aria-label="KEWAZO" fill="currentColor"><use href="#kw-logo"/></svg>
+                <span style="width: 1px; height: 24px; background: var(--kw-mono-300)"></span>
+                <span class="partner-mark">Shell</span>
+                <span class="partner-mark red">Bilfinger</span>
+              </div>
+              <h3 style="margin: 0 0 12px; font-size: 1.625rem; font-weight: 700;">Shell Chemicals Park Moerdijk</h3>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 22px;">Date period · 6 Dec 2025 – 23 Jan 2026</div>
+              <div class="stat-grid" style="grid-template-columns: 1fr 1fr; gap: 18px;">
+                <div class="stat-cell"><div class="label">Total loads</div><div class="value" style="font-size: 1.625rem;">92,885 <span class="unit" style="font-size: 0.875rem">kg</span></div></div>
+                <div class="stat-cell"><div class="label">Operating time</div><div class="value" style="font-size: 1.625rem;">216 <span class="unit" style="font-size: 0.875rem">hrs</span></div></div>
+                <div class="stat-cell"><div class="label">Completed cycles</div><div class="value" style="font-size: 1.625rem;">1,176</div></div>
+                <div class="stat-cell"><div class="label">Most efficient day</div><div class="value" style="font-size: 1.625rem;">6,200 <span class="unit" style="font-size: 0.875rem">kg</span></div></div>
+              </div>
+            </div>
+            <div>
+              <div style="background: var(--kw-dark-100); border-radius: 6px; padding: 18px; height: 220px; display: flex; align-items: end; gap: 4px;">
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 60%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 80%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 50%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 90%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 65%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 75%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 95%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 70%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 55%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 85%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 60%"></div>
+                <div style="background: var(--kw-turquoise-base); width: 14px; height: 78%"></div>
+              </div>
+              <div style="font-size: 0.6875rem; color: var(--text-muted); margin-top: 8px;">Daily loads going up (kg)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- ========= SOCIAL NETWORK MATERIALS GROUP ============= -->
+    <!-- ===================================================== -->
+    <div class="group-divider">
+      <div class="group-eyebrow">Group 04</div>
+      <h2 class="group-name">Social Network Materials</h2>
+      <p class="group-desc">Templates and post mockups for LinkedIn, Instagram and TikTok. <em style="color: var(--text-subtle);">Expanding — more templates coming soon.</em></p>
+    </div>
+
+    <section id="social-overview">
+      <h2 class="section-title">Overview</h2>
+      <p class="section-lede">Social posts inherit the Turquoise / Dark / Bright palette and the Barlow type stack. Square (1:1) for the LinkedIn feed; vertical (9:16) for Stories and TikTok.</p>
+      <div class="component">
+        <div class="component-title"><h3>Format guidelines</h3></div>
+        <div class="preview">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%;">
+            <div style="text-align: center;">
+              <div style="aspect-ratio: 1/1; background: var(--kw-dark-100); border-radius: 8px; display: grid; place-items: center; margin-bottom: 8px;"><span class="t-caption">1:1 · 1080×1080</span></div>
+              <div style="font-size: 0.8125rem; font-weight: 600;">LinkedIn / Instagram feed</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Stat callouts, news posts</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="aspect-ratio: 9/16; background: var(--kw-dark-100); border-radius: 8px; display: grid; place-items: center; margin-bottom: 8px;"><span class="t-caption">9:16 · 1080×1920</span></div>
+              <div style="font-size: 0.8125rem; font-weight: 600;">Stories / Reels / TikTok</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Behind-the-scenes, demos</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="aspect-ratio: 16/9; background: var(--kw-dark-100); border-radius: 8px; display: grid; place-items: center; margin-bottom: 8px;"><span class="t-caption">16:9 · 1920×1080</span></div>
+              <div style="font-size: 0.8125rem; font-weight: 600;">YouTube / cover</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Customer interviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="social-mocks">
+      <h2 class="section-title">Post mockups</h2>
+      <p class="section-lede">Square 1:1 posts repurpose UI stat callouts, testimonials and news headlines for the social feed.</p>
+      <div class="component">
+        <div class="component-title"><h3>1:1 feed posts</h3></div>
+        <div class="preview">
+          <div class="social-grid">
+            <div class="social-mock">
+              <div class="platform"><span style="display:inline-block;width:14px;height:14px;background:#0A66C2;border-radius:2px;"></span> LinkedIn</div>
+              <div class="surface">
+                <span class="badge">Case study</span>
+                <h4>Chevron saved $988K in 3 months pre-turnaround with <span class="liftbot-font">LIFTBOT</span></h4>
+                <div class="footer">
+                  <span style="font-weight:700; letter-spacing: 0.1em;">KEWAZO</span>
+                  <span>Read more →</span>
+                </div>
+              </div>
+            </div>
+            <div class="social-mock alt">
+              <div class="platform"><span style="display:inline-block;width:14px;height:14px;background:linear-gradient(135deg,#FFC53D,#FA3CB6,#7138EE);border-radius:3px;"></span> Instagram</div>
+              <div class="surface">
+                <span class="badge">News</span>
+                <h4><span class="liftbot-font">LIFTBOT</span> wins Gold at the 2026 Edison Awards.</h4>
+                <div class="footer">
+                  <span style="font-weight:700; letter-spacing: 0.1em;">@KEWAZO_LIFTBOT</span>
+                  <span>Apr 17, 2026</span>
+                </div>
+              </div>
+            </div>
+            <div class="social-mock bright">
+              <div class="platform"><span style="display:inline-block;width:14px;height:14px;background:#000;border-radius:2px;"></span> TikTok cover</div>
+              <div class="surface">
+                <span class="badge">Demo</span>
+                <h4>Setup in 20 minutes — performed by the workers themselves.</h4>
+                <div class="footer">
+                  <span style="font-weight:700; letter-spacing: 0.1em;">@KEWAZO_LIFTBOT</span>
+                  <span>Watch →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p style="margin: 56px 0 12px; color: var(--text-muted); font-size: 0.8125rem;">KEWAZO Design System · v1.2 · May 2026</p>
+  </main>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+  // ---- Generic clipboard helper -------------------------------------
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (_) {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+
+  // ---- Hex / token chips: data-copy="<value>" ------------------------
+  document.querySelectorAll('[data-copy]').forEach(el => {
+    el.addEventListener('click', async () => {
+      const value = el.dataset.copy;
+      await copyToClipboard(value);
+      showToast('Copied ' + value);
+    });
+  });
+
+  // ---- Signature SVGs: data-copy-svg="<id-of-svg>" ------------------
+  document.querySelectorAll('[data-copy-svg]').forEach(el => {
+    el.addEventListener('click', async () => {
+      const id = el.dataset.copySvg;
+      const svgEl = document.getElementById(id);
+      if (!svgEl) return;
+      // Resolve <use href="#..."> by inlining the referenced symbol so the
+      // copied markup is self-contained and pastes correctly into Figma etc.
+      const svgClone = svgEl.cloneNode(true);
+      svgClone.querySelectorAll('use').forEach(u => {
+        const ref = (u.getAttribute('href') || u.getAttribute('xlink:href') || '').replace('#', '');
+        const target = document.getElementById(ref);
+        if (target) {
+          // Inline all children of the symbol into the parent svg
+          target.querySelectorAll('*').forEach(child => svgClone.appendChild(child.cloneNode(true)));
+          u.remove();
+        }
+      });
+      // Ensure xmlns is set on top-level svg
+      if (!svgClone.getAttribute('xmlns')) {
+        svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      }
+      const markup = svgClone.outerHTML;
+      await copyToClipboard(markup);
+      showToast('Copied SVG · ' + id);
+    });
+  });
+
+  // ---- Element variant chips: switch active variant + copy PNG ------
+  // Fetch the SVG text at imgSrc, render to canvas at high DPI, then
+  // hand a PNG Blob to the clipboard. Loading via a same-origin object URL
+  // means the canvas is never tainted, so toBlob succeeds.
+  async function fetchSvgPngBlob(imgSrc, dpi = 4) {
+    const resp = await fetch(imgSrc);
+    if (!resp.ok) throw new Error('fetch failed: ' + resp.status);
+    const svgText = await resp.text();
+
+    // Pull dimensions from viewBox so we render at vector-native resolution.
+    let w = 240, h = 64;
+    const vbMatch = svgText.match(/viewBox=["']([\d.\-\s]+)["']/i);
+    if (vbMatch) {
+      const v = vbMatch[1].trim().split(/\s+/).map(Number);
+      if (v.length === 4 && v[2] && v[3]) { w = v[2]; h = v[3]; }
+    }
+
+    const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    try {
+      const img = new Image();
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(w * dpi);
+      canvas.height = Math.round(h * dpi);
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpi, dpi);
+      ctx.drawImage(img, 0, 0, w, h);
+      return await new Promise(r => canvas.toBlob(r, 'image/png'));
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  // Copy a card's chosen variant to the clipboard.
+  // Order of attempts: (1) PNG image to clipboard, (2) raw SVG markup as text, (3) just the path.
+  async function copyLogoVariant(card, variant) {
+    const slot = card.querySelector('.logo-svg[data-variant="' + variant + '"]');
+    if (!slot) return;
+    if (slot.dataset.missing === 'true') {
+      showToast('Variant not provided');
+      return;
+    }
+    const imgEl = slot.querySelector('img');
+    if (!imgEl) return;
+
+    const name = card.dataset.name || 'logo';
+    const label = name + ' · ' + variant.toUpperCase();
+
+    // (1) PNG to clipboard
+    try {
+      if (!('ClipboardItem' in window) || !navigator.clipboard?.write) {
+        throw new Error('clipboard image API unsupported');
+      }
+      const pngBlob = await fetchSvgPngBlob(imgEl.src);
+      if (!pngBlob) throw new Error('toBlob null');
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
+      showToast('Copied PNG · ' + label);
+      return;
+    } catch (err) { /* fall through */ }
+
+    // (2) Raw SVG markup as text
+    try {
+      const resp = await fetch(imgEl.src);
+      if (resp.ok) {
+        const svgText = await resp.text();
+        await copyToClipboard(svgText);
+        showToast('Copied SVG markup · ' + label + ' (open via local server for PNG)');
+        return;
+      }
+    } catch (_) {}
+
+    // (3) Last resort — copy the file path
+    try {
+      await copyToClipboard(imgEl.src);
+      showToast('Copied SVG path · open page via local server to enable PNG copy');
+    } catch (_) {
+      showToast('Copy failed — open page via local server');
+    }
+  }
+
+  // Variant chip click → switch active + copy PNG (ignore disabled chips)
+  document.querySelectorAll('.logo-card-asset .variant-chip').forEach(chip => {
+    chip.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if (chip.disabled) return;
+      const card = chip.closest('.logo-card-asset');
+      const variant = chip.dataset.variant;
+      card.dataset.active = variant;
+      await copyLogoVariant(card, variant);
+    });
+  });
+
+  // Logo-stage click → copy currently active variant
+  document.querySelectorAll('.logo-card-asset .logo-stage-asset').forEach(stage => {
+    stage.style.cursor = 'pointer';
+    stage.addEventListener('click', async () => {
+      const card = stage.closest('.logo-card-asset');
+      await copyLogoVariant(card, card.dataset.active || 'fc');
+    });
+  });
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 1400);
+  }
+
+  const links = document.querySelectorAll('nav.nav a');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  function syncNav() {
+    const y = window.scrollY + 120;
+    let active = sections[0]?.id;
+    for (const s of sections) { if (s.offsetTop <= y) active = s.id; }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active));
+  }
+  window.addEventListener('scroll', syncNav, { passive: true });
+  links.forEach(l => l.addEventListener('click', e => {
+    const id = l.getAttribute('href').slice(1);
+    const s = document.getElementById(id);
+    if (s) { e.preventDefault(); window.scrollTo({ top: s.offsetTop - 24, behavior: 'smooth' }); }
+  }));
+  syncNav();
+</script>
+</body>
+</html>
