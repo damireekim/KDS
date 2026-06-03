@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cost Savings Analysis — LYB La Porte Syngas Tower</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "LIFTBOT";
+      src: url("./LIFTBOT Medium.otf") format("opentype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --kw-turquoise-600: #058B8C;
+      --kw-bright-100:    #FAFCFC;
+      --kw-bright-200:    #F2F6F7;
+      --kw-dark-200:      #EAEDF3;
+      --kw-dark-300:      #D7DEE6;
+      --kw-dark-500:      #7A899C;
+      --kw-dark-900:      #1B1F24;
+    }
+
+    html, body {
+      height: 100%;
+      background: #4a4a4a;
+      font-family: "Barlow", sans-serif;
+    }
+
+    .slide-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    /* ── 1920 × 1080 slide canvas ── */
+    .slide {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
+      background: #ffffff;
+      overflow: hidden;
+      color: var(--kw-dark-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* shared utility */
+    .abs { position: absolute; }
+  </style>
+</head>
+<body>
+<div class="slide-wrapper">
+<div class="slide" id="slide">
+
+  <!-- ══════════════════════════════════════════
+       LEFT PANEL
+  ══════════════════════════════════════════ -->
+
+  <!-- Title -->
+  <div class="abs" style="left:80px;top:56px;width:605px;">
+    <h1 style="font-weight:800;font-size:80px;line-height:0.9;letter-spacing:-1.6px;text-transform:uppercase;">
+      Cost Savings<br>Analysis
+    </h1>
+    <p style="margin-top:28px;font-weight:600;font-size:32px;line-height:1.4;letter-spacing:-0.64px;white-space:nowrap;">
+      LYB La Porte Syngas tower 105-20-1
+    </p>
+  </div>
+
+  <!-- Left divider (below title / above logo) -->
+  <div class="abs" style="left:80px;top:284px;width:591px;height:1px;background:var(--kw-dark-900);"></div>
+
+  <!-- LyondellBasell logo (266 × 88) -->
+  <div class="abs" style="left:80px;top:307px;width:266px;height:88px;">
+    <!-- Main hexagon outline + field -->
+    <img src="https://www.figma.com/api/mcp/asset/488463e6-84ed-42c7-b9e3-a68ad704265f"
+         style="position:absolute;top:-1.6px;left:9.1px;right:1.6px;bottom:26.9px;width:calc(100% - 10.7px);object-fit:contain;object-position:left center;" alt="" />
+    <!-- "L" letter — masked coloured fill -->
+    <div style="position:absolute;top:32.6px;left:47.5px;right:184.3px;bottom:0.2px;
+                mask-image:url('https://www.figma.com/api/mcp/asset/c89a4811-448b-47e9-85bb-738e3a076733');
+                -webkit-mask-image:url('https://www.figma.com/api/mcp/asset/c89a4811-448b-47e9-85bb-738e3a076733');
+                mask-size:22.8px 35.2px;-webkit-mask-size:22.8px 35.2px;
+                mask-position:-0.8px -0.1px;-webkit-mask-position:-0.8px -0.1px;
+                mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;">
+      <img src="https://www.figma.com/api/mcp/asset/d8d7b5ff-e5b0-4a9c-acef-62df651ba48e"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill;" alt="" />
+    </div>
+    <!-- "Y" letter — masked coloured fill -->
+    <div style="position:absolute;top:32.6px;left:0;right:231.8px;bottom:0.2px;
+                mask-image:url('https://www.figma.com/api/mcp/asset/edf07f4b-61ba-4f1e-b320-6abe6c438bf9');
+                -webkit-mask-image:url('https://www.figma.com/api/mcp/asset/edf07f4b-61ba-4f1e-b320-6abe6c438bf9');
+                mask-size:22px 35.2px;-webkit-mask-size:22px 35.2px;
+                mask-position:0 -0.1px;-webkit-mask-position:0 -0.1px;
+                mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;">
+      <img src="https://www.figma.com/api/mcp/asset/764cbfd4-c9a5-43b2-8fcc-66acc9c6b196"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill;" alt="" />
+    </div>
+    <!-- "LyondellBasell" wordmark text -->
+    <img src="https://www.figma.com/api/mcp/asset/dfc9fa24-eda6-4784-bcbd-023889af9adc"
+         style="position:absolute;top:34.7px;left:16.1px;right:198.8px;bottom:31.5px;object-fit:contain;object-position:left center;" alt="LyondellBasell" />
+  </div>
+
+  <!-- Work Schedule Assumptions -->
+  <div class="abs" style="left:80px;top:427px;width:357px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <p style="font-weight:700;font-size:20px;line-height:1.4;letter-spacing:-0.4px;text-transform:uppercase;">
+        Work Schedule Assumptions
+      </p>
+      <p style="font-weight:500;font-size:28px;line-height:1.4;letter-spacing:-0.56px;">
+        10 hours per day<br>5 days per week
+      </p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <p style="font-weight:700;font-size:20px;line-height:1.4;letter-spacing:-0.4px;text-transform:uppercase;">
+        Duration
+      </p>
+      <p style="font-weight:500;font-size:28px;line-height:1.4;letter-spacing:-0.56px;">
+        Crane: 20 working days<br>LIFTBOT: 16 working days
+      </p>
+    </div>
+  </div>
+
+  <!-- Construction site photo -->
+  <div class="abs" style="left:80px;top:698px;width:591px;height:291px;border-radius:8px;overflow:hidden;">
+    <img src="https://www.figma.com/api/mcp/asset/d13b020d-5943-47ef-8dc6-51d11eb83ccd"
+         style="width:100%;height:100%;object-fit:cover;object-position:center bottom;" alt="Construction site" />
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       RIGHT PANEL
+  ══════════════════════════════════════════ -->
+
+  <!-- Horizontal divider under "Labor Cost Breakdown" header area -->
+  <div class="abs" style="left:706px;top:201px;width:1138px;height:1px;background:var(--kw-dark-900);"></div>
+
+  <!-- ── SECTION: LABOR COST BREAKDOWN ── -->
+  <div class="abs" style="left:706px;top:56px;width:1134px;height:47px;
+       background:var(--kw-dark-500);display:flex;align-items:center;padding:0 12px;">
+    <span style="font-weight:700;font-size:24px;line-height:1.4;letter-spacing:-0.48px;
+          text-transform:uppercase;color:var(--kw-bright-100);">Labor Cost Breakdown</span>
+  </div>
+
+  <!-- Crane column header -->
+  <div class="abs" style="left:952px;top:123px;display:flex;flex-direction:column;gap:16px;">
+    <p style="font-weight:500;font-size:20px;line-height:1.5;letter-spacing:-0.4px;color:var(--kw-dark-500);">
+      Vertical material transport
+    </p>
+    <p style="font-weight:700;font-size:40px;line-height:1.5;letter-spacing:-0.8px;">Crane</p>
+  </div>
+
+  <!-- Row: Total Labor label -->
+  <p class="abs" style="left:716px;top:228px;font-weight:500;font-size:20px;line-height:1.5;letter-spacing:-0.4px;">
+    Total Labor
+  </p>
+  <!-- Row: Total Labor values (Crane) -->
+  <div class="abs" style="left:952px;top:223px;width:444px;display:flex;flex-direction:column;gap:20px;">
+    <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$136,000</p>
+    <p style="font-weight:500;font-size:28px;line-height:1.5;letter-spacing:-0.56px;">20 days (2,400 man hours)</p>
+  </div>
+
+  <!-- Row: Total Daily Labor label -->
+  <p class="abs" style="left:716px;top:313px;font-weight:500;font-size:20px;line-height:1.5;letter-spacing:-0.4px;">
+    Total Daily Labor per day
+  </p>
+  <!-- Row: Total Daily Labor values (Crane) -->
+  <div class="abs" style="left:952px;top:315px;width:444px;display:flex;flex-direction:column;gap:16px;">
+    <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$6,800</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <!-- Breakdown row -->
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:100px;height:33px;background:var(--kw-dark-200);border-radius:4px;
+             display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-weight:600;font-size:24px;letter-spacing:-0.48px;">$4,200</span>
+        </div>
+        <span style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+          12 Laborers × $35/hr × 10 hrs
+        </span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:100px;height:33px;background:var(--kw-dark-200);border-radius:4px;
+             display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-weight:600;font-size:24px;letter-spacing:-0.48px;">$1,600</span>
+        </div>
+        <span style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+          2 Riggers × $80/hr × 10 hr
+        </span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:100px;height:33px;background:var(--kw-dark-200);border-radius:4px;
+             display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-weight:600;font-size:24px;letter-spacing:-0.48px;">$1,000</span>
+        </div>
+        <span style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+          1 Crane Operator × $100/hr × 10 hrs
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teal double-arrow graphic (between Crane data and LIFTBOT card) -->
+  <div class="abs" style="left:1325px;top:304px;width:92px;height:84px;">
+    <img src="https://www.figma.com/api/mcp/asset/f08481f6-35b8-45e1-ad21-22d3a3fbda6e"
+         style="width:100%;height:100%;object-fit:contain;" alt="" />
+  </div>
+
+  <!-- ── SECTION: EQUIPMENT & OPERATING COSTS ── -->
+  <div class="abs" style="left:706px;top:500px;width:1134px;height:47px;
+       background:var(--kw-dark-500);display:flex;align-items:center;padding:0 12px;">
+    <span style="font-weight:700;font-size:24px;line-height:1.4;letter-spacing:-0.48px;
+          text-transform:uppercase;color:var(--kw-bright-100);">Equipment &amp; Operating Costs</span>
+  </div>
+
+  <!-- Row: Total Equipment Cost label -->
+  <p class="abs" style="left:716px;top:564px;font-weight:500;font-size:20px;line-height:1.5;letter-spacing:-0.4px;">
+    Total Equipment Cost
+  </p>
+  <!-- Row: Total Equipment values (Crane) -->
+  <div class="abs" style="left:952px;top:566px;width:444px;display:flex;flex-direction:column;gap:16px;">
+    <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$60,000</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:100px;height:33px;background:var(--kw-dark-200);border-radius:4px;
+             display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-weight:600;font-size:24px;letter-spacing:-0.48px;">$50,000</span>
+        </div>
+        <span style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+          Crane Rental: $2,500/day × 20
+        </span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:100px;height:33px;background:var(--kw-dark-200);border-radius:4px;
+             display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-weight:600;font-size:24px;letter-spacing:-0.48px;">$10,000</span>
+        </div>
+        <span style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+          Fuel: $500/day × 20
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: TOTAL SAVINGS ── -->
+  <div class="abs" style="left:706px;top:698px;width:1134px;height:47px;
+       background:var(--kw-bright-200);display:flex;align-items:center;padding:0 12px;">
+    <span style="font-weight:700;font-size:24px;line-height:1.4;letter-spacing:-0.48px;
+          text-transform:uppercase;color:var(--kw-dark-900);">Total savings</span>
+  </div>
+
+  <!-- $123,600 -->
+  <p class="abs" style="left:716px;top:772px;font-weight:700;font-size:56px;line-height:1.5;
+     letter-spacing:-1.12px;white-space:nowrap;">
+    $123,600
+  </p>
+
+  <!-- 960 hazardous man hours + badge -->
+  <div class="abs" style="left:1026px;top:765px;display:flex;align-items:center;gap:16px;">
+    <p style="font-weight:700;font-size:56px;line-height:1.5;letter-spacing:-1.12px;white-space:nowrap;">
+      960 <span style="font-size:36px;font-weight:700;">hazardous man hours saved</span>
+    </p>
+    <div style="background:var(--kw-turquoise-600);padding:12px;border-radius:8px;flex-shrink:0;">
+      <p style="font-weight:700;font-size:40px;line-height:1.5;letter-spacing:-0.8px;
+         color:var(--kw-bright-100);white-space:nowrap;">40% reduction</p>
+    </div>
+  </div>
+
+  <!-- ── SECTION: FINAL CONCLUSION ── -->
+  <div class="abs" style="left:706px;top:839px;width:1134px;display:flex;flex-direction:column;gap:14px;">
+    <div style="height:47px;background:var(--kw-bright-200);display:flex;align-items:center;padding:0 12px;">
+      <span style="font-weight:700;font-size:24px;line-height:1.4;letter-spacing:-0.48px;
+            text-transform:uppercase;color:var(--kw-dark-900);">Final Conclusion</span>
+    </div>
+    <div style="padding:0 16px;">
+      <p style="font-weight:500;font-size:24px;line-height:1.4;letter-spacing:-0.48px;white-space:nowrap;">
+        Improved saving by reducing people exposed to risk and hazardous man hours<br>
+        Replaced a crane and freed up space<br>
+        Reduced cost and schedule by increasing efficiency
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       LIFTBOT FLOATING CARD (z on top)
+  ══════════════════════════════════════════ -->
+  <div class="abs" style="left:1425px;top:80px;width:407px;height:598px;
+       background:#ffffff;border:1px solid var(--kw-dark-300);border-radius:16px;
+       box-shadow:8px 12px 32px 4px rgba(122,137,156,0.20);
+       z-index:10;">
+
+    <!-- Header: Vertical material transport / LIFTBOT -->
+    <div style="position:absolute;left:40px;top:40px;display:flex;flex-direction:column;gap:16px;">
+      <p style="font-weight:500;font-size:20px;line-height:1.5;letter-spacing:-0.4px;color:var(--kw-dark-500);">
+        Vertical material transport
+      </p>
+      <p style="font-weight:700;font-size:40px;line-height:1.5;letter-spacing:-0.8px;">LIFTBOT</p>
+    </div>
+
+    <!-- Divider inside card -->
+    <div style="position:absolute;left:40px;top:122px;width:327px;height:1px;background:var(--kw-dark-300);"></div>
+
+    <!-- Total Labor (LIFTBOT): $50,400 -->
+    <div style="position:absolute;left:40px;top:146px;width:327px;display:flex;flex-direction:column;gap:20px;">
+      <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$50,400</p>
+      <p style="font-weight:500;font-size:28px;line-height:1.5;letter-spacing:-0.56px;">16 days (1,440 man hours)</p>
+    </div>
+
+    <!-- Total Daily Labor (LIFTBOT): $3,150 -->
+    <div style="position:absolute;left:40px;top:232px;width:327px;display:flex;flex-direction:column;gap:16px;padding-top:8px;">
+      <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$3,150</p>
+      <p style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+        9 Workers × $35/hr × 10 hrs
+      </p>
+    </div>
+
+    <!-- Equipment (LIFTBOT): $22,000 -->
+    <div style="position:absolute;left:39px;top:487px;width:327px;display:flex;flex-direction:column;gap:20px;">
+      <p style="font-weight:700;font-size:32px;line-height:1.5;letter-spacing:-0.64px;">$22,000</p>
+      <p style="font-weight:400;font-size:22px;line-height:1.5;letter-spacing:-0.44px;white-space:nowrap;">
+        Full month rental
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <div class="abs" style="left:80px;top:1014px;width:1760px;">
+    <div style="height:1px;background:var(--kw-dark-300);margin-bottom:6px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <p style="font-weight:500;font-size:16px;line-height:normal;letter-spacing:-0.16px;text-transform:capitalize;">
+        KEWAZO
+      </p>
+      <div style="width:25px;height:26px;">
+        <img src="https://www.figma.com/api/mcp/asset/7b272926-54c3-4a5d-804c-77ecf98d4e43"
+             style="width:100%;height:100%;object-fit:contain;" alt="K" />
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slide -->
+</div><!-- /slide-wrapper -->
+
+<script>
+  (function () {
+    const wrapper = document.querySelector('.slide-wrapper');
+    const slide   = document.getElementById('slide');
+
+    function scale() {
+      const availW = wrapper.clientWidth  - 48;
+      const availH = window.innerHeight   - 48;
+      const s = Math.min(availW / 1920, availH / 1080, 1);
+      slide.style.transform = 'scale(' + s + ')';
+      // shift the wrapper height so the slide doesn't overflow the viewport
+      wrapper.style.minHeight = (1080 * s + 48) + 'px';
+    }
+
+    scale();
+    window.addEventListener('resize', scale);
+  })();
+</script>
+</body>
+</html>

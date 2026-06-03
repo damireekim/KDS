@@ -1,2 +1,10 @@
+# Figma source file (binary, too large)
 KDS.fig
-KDS.fig
+
+# macOS metadata
+.DS_Store
+._*
+
+# Editor / tool configs
+.cursor/
+.mcp.json
