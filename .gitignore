@@ -8,3 +8,4 @@ KDS.fig
 # Editor / tool configs
 .cursor/
 .mcp.json
+.claude/

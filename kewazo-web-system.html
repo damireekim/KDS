@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KEWAZO Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ───────────────────────────────────────────
+   KDS TOKENS
+─────────────────────────────────────────── */
+:root{
+  /* Turquoise */
+  --t900:#1F3331;--t800:#14433E;--t700:#1A5E59;--t600:#058B8C;
+  --t500:#1EA7A6;--t400:#40C0C0;--t300:#A3DADB;--t200:#D9F0F1;--t100:#F5FAFB;
+  /* Bright */
+  --b900:#263D42;--b800:#3E5A5D;--b700:#51777C;--b600:#6C979D;
+  --b500:#9FBDC1;--b400:#BAD1D4;--b300:#D8E5E7;--b200:#F2F6F7;--b100:#FAFCFC;
+  /* Dark */
+  --d900:#1B1F24;--d800:#2B3037;--d700:#414C59;--d600:#576779;
+  --d500:#7A899C;--d400:#AFB9C6;--d300:#D7DEE6;--d200:#EAEDF3;--d100:#F5F7FB;
+  /* Mono */
+  --m900:#191919;--m800:#434343;--m700:#555555;--m600:#8C8C8C;
+  --m500:#BABABB;--m400:#D9D9D9;--m300:#EEEEEE;--m200:#F4F4F4;--m100:#FFFFFF;
+  /* Accent */
+  --red:#EC1010;--red-bg:#FEF3F3;--yel:#F9EE89;--yel-lt:#F9FF93;
+  /* Print */
+  --print1:#00B2A9;--print2:#056B6C;--print3:#4CB0C0;
+  /* Semantic */
+  --text-1:#1B1F24;--text-2:#414C59;--text-3:#7A899C;--text-dis:#D7DEE6;
+  --bg-1:#FFFFFF;--bg-2:#F5F7FB;--bg-3:#EAEDF3;--bg-err:#FEF3F3;
+  --border-1:#D7DEE6;--border-2:#E6E8EB;--border-err:#EC1010;
+  --act:#40C0C0;--act-hov:#1EA7A6;--act2:#1B1F24;
+  /* Layout */
+  --gnb:64px;--side:213px;--body-w:900px;--pg:40px;--col-gap:16px;
+  --ff:'Barlow',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+/* ───────────────────────────────────────────
+   RESET
+─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--ff);background:#fff;color:var(--text-1);-webkit-font-smoothing:antialiased;line-height:1.4;}
+a,button{color:inherit;text-decoration:none;cursor:pointer;background:none;border:none;font:inherit;}
+img{display:block;max-width:100%;}
+
+/* ───────────────────────────────────────────
+   GNB  —  height:64px · px:40px
+─────────────────────────────────────────── */
+.gnb{
+  position:fixed;top:0;left:0;right:0;z-index:300;height:var(--gnb);
+  background:#fff;border-bottom:1px solid var(--border-1);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pg);
+}
+.gnb-left{display:flex;align-items:center;gap:32px;}
+
+/* Brand → landing */
+.gnb-brand{
+  display:flex;align-items:center;gap:8px;
+  font-size:16px;font-weight:700;letter-spacing:-0.32px;color:var(--text-1);
+  white-space:nowrap;
+}
+.gnb-logo{width:24px;height:24px;flex-shrink:0;fill:var(--text-1);}
+
+/* nav links */
+.gnb-nav{display:flex;align-items:center;gap:24px;}
+.gnb-nav a{
+  font-size:14px;font-weight:500;letter-spacing:-0.28px;
+  color:var(--text-3);white-space:nowrap;transition:color .15s;
+}
+.gnb-nav a:hover,.gnb-nav a.active{color:var(--text-1);}
+.gnb-nav a.active{font-weight:600;}
+
+/* right: Figma + GitHub buttons */
+.gnb-right{display:flex;align-items:center;gap:8px;}
+.gnb-icon-btn{
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  border-radius:4px;color:var(--text-3);transition:background .15s,color .15s;
+}
+.gnb-icon-btn:hover{background:var(--bg-2);color:var(--text-1);}
+.gnb-icon-btn svg{width:20px;height:20px;flex-shrink:0;}
+
+/* hamburger */
+.gnb-hamburger{
+  display:none;width:40px;height:40px;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;
+}
+.gnb-hamburger span{
+  display:block;width:22px;height:2px;background:var(--text-1);
+  transition:transform .25s,opacity .25s;border-radius:1px;
+}
+.gnb-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.gnb-hamburger.open span:nth-child(2){opacity:0;}
+.gnb-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ───────────────────────────────────────────
+   MOBILE NAV DRAWER
+─────────────────────────────────────────── */
+.mobile-drawer{
+  position:fixed;top:var(--gnb);left:0;right:0;bottom:0;z-index:200;
+  background:#fff;border-top:1px solid var(--border-1);
+  padding:24px var(--pg);overflow-y:auto;
+  display:none;flex-direction:column;gap:0;
+}
+.mobile-drawer.open{display:flex;}
+.mob-section{margin-bottom:24px;}
+.mob-section-label{
+  font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:12px;
+}
+.mob-links{display:flex;flex-direction:column;gap:12px;}
+.mob-link{
+  font-size:15px;font-weight:600;letter-spacing:-0.28px;color:var(--text-1);
+  padding:6px 0;border-bottom:1px solid var(--border-2);
+}
+.mob-link:last-child{border-bottom:none;}
+
+/* ───────────────────────────────────────────
+   PAGE SHELL
+─────────────────────────────────────────── */
+.page-wrap{padding-top:var(--gnb);}
+.page{display:none;}
+.page.active{display:block;}
+
+/* ───────────────────────────────────────────
+   LANDING
+─────────────────────────────────────────── */
+.landing{padding:0 var(--pg);}
+.landing-hero{display:flex;flex-direction:column;align-items:center;gap:40px;padding:80px 0;}
+.hero-title-group{display:flex;flex-direction:column;align-items:center;gap:24px;width:min(480px,100%);}
+.hero-title{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-0.8px;line-height:1;color:var(--text-1);text-align:center;}
+.hero-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
+.hero-version{background:var(--bg-2);border:1px solid var(--d200);padding:8px;font-size:12px;font-weight:700;letter-spacing:-0.24px;color:var(--text-1);}
+.hero-date{font-size:14px;font-weight:400;letter-spacing:-0.336px;color:var(--text-2);white-space:nowrap;}
+.hero-img{width:100%;height:clamp(160px,20vw,275px);background:var(--d200);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hero-img-bars{display:flex;gap:4px;align-items:flex-end;opacity:.3;}
+.hero-img-bars span{width:8px;border-radius:2px 2px 0 0;background:var(--d500);}
+.hero-toc{width:100%;display:flex;justify-content:center;}
+.toc-inner{display:flex;gap:clamp(20px,4vw,40px);flex-wrap:wrap;justify-content:center;}
+.toc-group{display:flex;flex-direction:column;gap:18px;min-width:80px;}
+.toc-head{font-size:14px;font-weight:700;letter-spacing:-0.28px;color:var(--text-1);}
+.toc-items{display:flex;flex-direction:column;gap:11px;}
+.toc-item{font-size:14px;font-weight:400;letter-spacing:-0.28px;color:var(--text-2);transition:color .15s;}
+.toc-item:hover{color:var(--t400);}
+
+/* ───────────────────────────────────────────
+   INTERIOR LAYOUT  — 3-column on large
+─────────────────────────────────────────── */
+.interior{display:flex;gap:var(--col-gap);padding:0 var(--pg);align-items:flex-start;}
+
+/* ─── LEFT SIDE NAV ─── */
+.side-nav{
+  width:var(--side);flex-shrink:0;
+  border-right:1px solid var(--border-1);
+  padding:40px 16px 80px 0;
+  display:flex;flex-direction:column;gap:32px;
+  align-self:stretch;
+  position:sticky;top:var(--gnb);max-height:calc(100vh - var(--gnb));overflow-y:auto;
+}
+.snav-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);line-height:1;padding:4px 8px;}
+.snav-items{display:flex;flex-direction:column;gap:4px;}
+.snav-item{font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-2);line-height:1;text-transform:uppercase;padding:10px 8px;border-radius:4px;transition:background .15s,color .15s;}
+.snav-item:hover{background:var(--bg-2);color:var(--text-1);}
+.snav-item.active{background:var(--bg-2);color:var(--text-1);}
+/* Icon tiles */
+/* ─── CLIENT LOGO PAGE ─── */
+.logo-card-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.logo-card{border:1px solid var(--border-1);overflow:hidden;display:flex;flex-direction:column;}
+.logo-card-thumb{height:160px;display:flex;align-items:center;justify-content:center;padding:24px;transition:background .15s,opacity .15s;cursor:pointer;}
+.logo-card-thumb:hover{opacity:.8;}
+.logo-card-thumb img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+.logo-card-info{padding:12px 14px;border-top:1px solid var(--border-1);display:flex;flex-direction:column;gap:10px;}
+.logo-card-name{font-size:13px;font-weight:600;color:var(--text-1);letter-spacing:-0.26px;}
+.logo-card-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.logo-pill{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--border-1);cursor:pointer;transition:background .12s,color .12s,border-color .12s;color:var(--text-2);background:transparent;}
+.logo-pill:hover{border-color:var(--t400);color:var(--t400);}
+.logo-pill.active{background:var(--t400);color:#fff;border-color:var(--t400);}
+.ico-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.ico-tile{width:40px;height:40px;background:#fff;border:1px solid var(--border-1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,border-color .15s;position:relative;flex-shrink:0;}
+.ico-tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12);border-color:var(--t400);}
+.ico-tile svg{width:24px;height:24px;display:block;pointer-events:none;}
+.ico-tile img{display:block;pointer-events:none;image-rendering:pixelated;}
+.ico-section-lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:8px;}
+/* Icon anatomy diagram */
+.ico-anatomy{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;margin-top:24px;}
+.ico-anatomy-fig{flex-shrink:0;position:relative;width:200px;height:200px;border:1px solid var(--border-1);background:#fff;overflow:hidden;}
+.ico-anatomy-spec{display:flex;flex-direction:column;gap:16px;flex:1;}
+.ico-spec-row{display:flex;gap:12px;align-items:flex-start;}
+.ico-spec-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.ico-spec-txt{font-size:14px;color:var(--text-1);font-weight:500;letter-spacing:-0.28px;line-height:1.5;}
+
+/* ─── BODY ─── */
+.body-col{
+  flex:1;min-width:0;max-width:900px;
+  padding:80px 0;display:flex;flex-direction:column;gap:80px;
+}
+.bhead{display:flex;flex-direction:column;gap:40px;width:100%;}
+.b-title{font-size:clamp(32px,4vw,48px);font-weight:700;letter-spacing:-0.96px;line-height:1;color:var(--text-1);}
+.b-sub{font-size:16px;font-weight:400;letter-spacing:-0.32px;color:var(--text-2);}
+
+.section{display:flex;flex-direction:column;gap:32px;width:100%;}
+.sh2{font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-0.64px;line-height:1;color:var(--text-1);}
+.sp{font-size:14px;font-weight:400;letter-spacing:-0.28px;line-height:1.6;color:var(--text-2);}
+.sp.muted{color:var(--text-3);}
+
+/* ─── RIGHT STICKY NAV ─── */
+.sticky-nav{
+  width:var(--side);flex:none;
+  border-left:1px solid var(--border-1);
+  display:flex;flex-direction:column;gap:8px;
+  position:sticky;top:var(--gnb);height:fit-content;padding-top:80px;
+}
+.stnav-title{padding:8px 8px 8px 16px;font-size:16px;font-weight:600;letter-spacing:-0.32px;color:var(--text-1);}
+.stnav-item{
+  padding:8px 8px 8px 40px;font-size:14px;font-weight:400;
+  letter-spacing:-0.28px;color:var(--text-3);white-space:nowrap;transition:color .15s;
+}
+.stnav-item:hover{color:var(--text-1);}
+.stnav-item.active{
+  border-left:4px solid var(--t400);padding-left:36px;
+  font-weight:600;color:var(--text-1);
+}
+
+/* ───────────────────────────────────────────
+   COLOR PALETTE v2
+─────────────────────────────────────────── */
+.palette{display:flex;flex-direction:column;gap:40px;padding:0 32px;}
+.pal-sec{display:flex;flex-direction:column;gap:40px;}
+.pal-sec-title{font-size:20px;font-weight:600;letter-spacing:-0.48px;color:#000;line-height:1;}
+.pal-group{display:flex;flex-direction:column;gap:40px;}
+.pal-row{display:flex;gap:24px;align-items:flex-start;}
+.pal-info{width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;}
+.pal-info-lbl{font-size:16px;font-weight:400;color:#2B3037;letter-spacing:-0.384px;}
+.pal-swatches{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
+/* chip pill */
+.p-chip{display:flex;align-items:center;background:#fff;border:1px solid #D8E5E7;padding:4px 8px 4px 4px;cursor:pointer;width:100%;transition:border-color .15s,box-shadow .15s;}
+.p-chip:hover{border-color:var(--t700);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.pal-chip-tile{width:24px;height:24px;flex-shrink:0;}
+.pal-chip-tile.bd{border:1px solid #D8E5E7;}
+.pal-chip-meta{display:flex;gap:8px;align-items:baseline;margin-left:12px;}
+.pal-chip-name{font-size:16px;font-weight:600;color:#2B3037;letter-spacing:-0.384px;white-space:nowrap;}
+.p-hex{font-size:13px;font-weight:500;color:#7A899C;letter-spacing:-0.26px;white-space:nowrap;}
+/* swatch squares */
+.sw-col{display:flex;flex-direction:column;gap:8px;cursor:pointer;}
+.sw-box{width:clamp(48px,6vw,80px);height:clamp(48px,6vw,80px);border-radius:0;position:relative;display:flex;align-items:center;justify-content:center;transition:transform .12s ease,box-shadow .18s ease;flex-shrink:0;}
+.sw-box.bd{border:1px solid #D8E5E7;}
+.pal-wcag{font-size:13px;font-weight:500;text-align:center;letter-spacing:-0.26px;line-height:1;white-space:nowrap;pointer-events:none;}
+.sw-info{display:flex;flex-direction:column;gap:8px;align-items:center;}
+.sw-step{font-size:14px;font-weight:700;color:#2B3037;letter-spacing:-0.28px;line-height:1;text-align:center;}
+.sw-val{font-size:13px;font-weight:500;color:#7A899C;letter-spacing:-0.26px;line-height:1;text-align:center;white-space:nowrap;}
+.sw-col:hover .sw-box{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.14);}
+/* print cards */
+.print-cards{display:flex;gap:12px;flex-wrap:wrap;}
+.print-card{width:242px;height:106px;padding:16px;display:flex;justify-content:space-between;align-items:flex-end;color:#fff;flex-shrink:0;}
+.print-card-info{display:flex;flex-direction:column;gap:24px;}
+.print-card-top{display:flex;flex-direction:column;gap:9px;}
+.print-card-pantone{font-size:14px;font-weight:700;letter-spacing:-0.28px;line-height:1;}
+.print-card-ref{font-size:13.5px;font-weight:600;letter-spacing:-0.27px;line-height:1;}
+.print-card-usage{font-size:14px;font-weight:700;letter-spacing:-0.28px;line-height:1;}
+.print-card-cmyk{font-size:9px;font-weight:500;line-height:1.5;}
+.copy-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--d900);color:#fff;padding:8px 16px;border-radius:4px;font-size:13px;font-weight:500;letter-spacing:-0.26px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:400;white-space:nowrap;}
+.copy-toast.show{opacity:1;}
+
+/* ───────────────────────────────────────────
+   TOKEN TABLE
+─────────────────────────────────────────── */
+.ttable{width:100%;border-collapse:collapse;font-size:13px;}
+.ttable th{text-align:left;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);background:var(--bg-2);border-bottom:1px solid var(--border-1);}
+.ttable td{padding:10px 12px;vertical-align:middle;border-bottom:1px solid var(--d200);color:var(--text-2);}
+.ttable tr:last-child td{border-bottom:none;}
+.ttable tr:hover td{background:var(--bg-2);}
+.tvar{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--text-1);}
+.chip-row{display:flex;align-items:center;gap:8px;}
+.chip{width:20px;height:20px;border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,.06);}
+.chex{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--text-3);}
+.ttable .tcat{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);background:var(--bg-2);padding:6px 12px;border-bottom:1px solid var(--border-1);}
+
+/* ───────────────────────────────────────────
+   GUIDELINE — code blocks, rules
+─────────────────────────────────────────── */
+.code-block{background:var(--d900);border-radius:4px;padding:20px 24px;overflow-x:auto;}
+.code-block code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.9;color:rgba(255,255,255,.8);white-space:pre;display:block;}
+.c-cmt{color:var(--t400);}
+.c-prop{color:#A3DADB;}
+.c-val{color:#F9FF93;}
+.c-kw{color:#FFB3C1;}
+
+.tok-anatomy{background:var(--bg-2);border:1px solid var(--border-1);border-radius:4px;padding:24px 28px;}
+.ta-full{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.ta-p{display:inline-block;padding:4px 8px;font-weight:700;font-size:13px;border-radius:3px;margin:2px;}
+.ta-sep{color:var(--text-dis);padding:0 2px;}
+.ta-sys{background:var(--t200);color:var(--t700);}
+.ta-tier{background:var(--d200);color:var(--d700);}
+.ta-cat{background:#FFF0F0;color:#B91010;}
+.ta-name{background:#FFF8EC;color:#7A4F00;}
+.ta-step{background:var(--b300);color:var(--b800);}
+.ta-leg{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
+.ta-li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);}
+.ta-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+.rule-list{display:flex;flex-direction:column;gap:12px;}
+.rule-item{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--text-2);letter-spacing:-0.3px;line-height:1.5;}
+.rule-n{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:var(--t400);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+
+/* ───────────────────────────────────────────
+   SPACING + RADIUS blocks
+─────────────────────────────────────────── */
+.sp-rows{display:flex;flex-direction:column;}
+.sp-row{display:grid;grid-template-columns:140px 100px 1fr;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--d200);}
+.sp-row:last-child{border-bottom:none;}
+.sp-tok{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--text-3);}
+.sp-px{font-size:12px;color:var(--text-dis);}
+.sp-bar{height:6px;border-radius:2px;background:var(--t400);}
+
+.rad-grid{display:flex;flex-wrap:wrap;gap:24px;}
+.rad-card{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.rad-box{width:56px;height:56px;background:var(--t200);border:2px solid var(--t400);}
+.rad-name{font-size:11px;font-weight:700;color:var(--text-2);text-align:center;}
+.rad-val{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--text-3);}
+
+/* ───────────────────────────────────────────
+   TYPOGRAPHY specimens
+─────────────────────────────────────────── */
+.type-row{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--d200);align-items:baseline;}
+.type-row:last-child{border-bottom:none;}
+.type-meta .name{font-size:12px;font-weight:700;color:var(--text-1);display:block;margin-bottom:4px;}
+.type-meta .spec{font-size:11px;color:var(--text-3);line-height:1.6;}
+
+/* ───────────────────────────────────────────
+   COMPONENT DEMOS (Navigation)
+─────────────────────────────────────────── */
+.demo-wrap{display:flex;flex-direction:column;gap:8px;}
+.demo-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);}
+.demo-stage{border:1px solid var(--border-1);border-radius:4px;overflow:hidden;}
+
+.demo-gnb{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:#fff;border-bottom:1px solid var(--border-1);}
+.demo-gnb.dark{background:var(--d900);border-color:var(--d800);}
+.demo-gnb-left{display:flex;align-items:center;gap:32px;}
+.demo-brand{display:flex;align-items:center;gap:8px;}
+.demo-k{width:20px;height:20px;border-radius:3px;background:var(--t400);}
+.demo-name{font-size:16px;font-weight:700;letter-spacing:-0.32px;color:var(--text-1);}
+.demo-gnb.dark .demo-name{color:#fff;}
+.demo-links{display:flex;gap:24px;}
+.demo-link{font-size:14px;font-weight:500;letter-spacing:-0.28px;color:var(--text-3);}
+.demo-gnb.dark .demo-link{color:rgba(255,255,255,.5);}
+.demo-link.act{color:var(--text-1);font-weight:600;}
+.demo-gnb.dark .demo-link.act{color:#fff;}
+.demo-r{display:flex;gap:8px;}
+.demo-rb{width:40px;height:40px;border-radius:4px;background:var(--d200);}
+.demo-gnb.dark .demo-rb{background:var(--d700);}
+
+.demo-3col{display:flex;background:#fff;min-height:200px;}
+.demo-lside{width:160px;flex-shrink:0;border-right:1px solid var(--border-1);padding:24px 0;display:flex;flex-direction:column;gap:16px;}
+.demo-slabel{font-size:14px;font-weight:500;letter-spacing:-0.56px;color:var(--text-3);padding:0 20px;}
+.demo-sitems{display:flex;flex-direction:column;gap:14px;padding:0 20px;}
+.demo-sitem{font-size:14px;font-weight:600;letter-spacing:-0.28px;color:var(--text-1);}
+.demo-sitem.act{color:var(--t400);}
+.demo-body{flex:1;padding:24px;display:flex;align-items:center;}
+.demo-ph{width:100%;height:80px;background:var(--bg-2);border-radius:4px;border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;}
+.demo-ph-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dis);}
+.demo-rside{width:160px;flex-shrink:0;border-left:1px solid var(--border-1);display:flex;flex-direction:column;gap:8px;padding:16px 0;}
+.demo-rtitle{padding:6px 6px 6px 14px;font-size:14px;font-weight:600;letter-spacing:-0.28px;color:var(--text-1);}
+.demo-ritem{padding:6px 6px 6px 36px;font-size:13px;font-weight:400;letter-spacing:-0.26px;color:var(--text-3);}
+.demo-ritem.act{border-left:4px solid var(--t400);padding-left:32px;font-weight:600;color:var(--text-1);}
+
+/* ───────────────────────────────────────────
+   COMPONENT — BUTTON
+─────────────────────────────────────────── */
+.kbtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#1B1F24;color:#fff;
+  font-family:var(--ff);font-weight:600;text-transform:uppercase;
+  cursor:pointer;transition:background .15s;border:none;white-space:nowrap;
+  text-decoration:none;flex-shrink:0;
+}
+.kbtn:hover{background:#414C59;}
+.kbtn-lg{height:56px;padding:12px 24px;font-size:1.125rem;letter-spacing:-0.0225rem;}
+.kbtn-md{height:40px;padding:12px 20px;font-size:1rem;letter-spacing:-0.02rem;}
+.kbtn-sm{height:36px;padding:12px 16px;font-size:0.875rem;letter-spacing:-0.0175rem;}
+.kbtn-shd{box-shadow:0 8px 10px rgba(38,61,66,.16);}
+.kbtn-iconr{gap:4px;}
+.kbtn-lg.kbtn-iconr{padding-right:16px;}
+.kbtn-md.kbtn-iconr,.kbtn-sm.kbtn-iconr{padding-right:8px;gap:2px;}
+.kbtn-iconl{gap:4px;}
+.kbtn-lg.kbtn-iconl{padding-left:16px;}
+.kbtn-md.kbtn-iconl,.kbtn-sm.kbtn-iconl{padding-left:8px;gap:2px;}
+.kbi{flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.kbi-24{width:24px;height:24px;}
+.kbi-20{width:20px;height:20px;}
+.kbi svg{display:block;width:100%;height:100%;fill:currentColor;stroke:none;transform:rotate(-45deg);transition:transform .25s ease;}
+.kbtn:hover .kbi svg{transform:rotate(0deg);}
+
+/* Display button */
+.kbtn-disp{
+  position:relative;display:inline-flex;overflow:hidden;
+  padding:1.5px;background:#1B1F24;cursor:pointer;text-decoration:none;
+}
+.kbtn-disp::before{
+  content:'';position:absolute;inset:-50%;
+  background:conic-gradient(from 0deg at 50% 50%,
+    transparent 0deg,rgba(64,192,192,0) 100deg,
+    rgba(64,192,192,.7) 140deg,rgba(220,248,250,.95) 180deg,
+    rgba(64,192,192,.7) 220deg,rgba(64,192,192,0) 260deg,
+    transparent 360deg);
+  animation:kbtn-sweep 3s linear infinite;
+}
+@keyframes kbtn-sweep{to{transform:rotate(360deg);}}
+.kbtn-disp-in{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 20px;background:#090c0d;
+  color:#fff;font-family:var(--ff);font-weight:600;font-size:0.875rem;
+  letter-spacing:-0.03em;text-transform:uppercase;white-space:nowrap;
+  transition:background .2s;
+}
+.kbtn-disp:hover .kbtn-disp-in{background:#1B1F24;}
+.kbtn-disp-glow{
+  position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);
+  width:16px;height:16px;
+  background:rgba(64,192,192,1);filter:blur(5px);border-radius:50%;
+  z-index:2;pointer-events:none;
+  animation:kbtn-glow 1.2s ease-in-out infinite alternate;
+}
+@keyframes kbtn-glow{
+  from{transform:translateX(-50%) scale(1);}
+  to{transform:translateX(-50%) scale(7.6);}
+}
+
+/* Button showcase layout */
+.kbtn-showcase{display:flex;flex-direction:column;gap:32px;margin:24px 0;}
+.kbtn-row{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-top:16px;}
+.kbtn-col{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+.kbtn-col-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);}
+.kbtn-state-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:4px 10px;background:var(--bg-2);border-radius:4px;border:1px solid var(--border-1);width:fit-content;}
+.kbtn-disp-demo{display:flex;gap:32px;align-items:center;flex-wrap:wrap;padding:48px 40px;background:var(--d900);border-radius:4px;margin:24px 0;}
+.kbtn-ico-grid{display:flex;flex-direction:column;gap:24px;margin:16px 0;}
+.sh3{font-size:1.0625rem;font-weight:700;letter-spacing:-0.02rem;color:var(--text-1);margin:32px 0 0;}
+
+/* ───────────────────────────────────────────
+   COMPONENT — CARD
+─────────────────────────────────────────── */
+.kcard{background:#fff;border:1px solid var(--border-1);overflow:hidden;display:flex;flex-direction:column;}
+.kcard-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--bg-2);flex-shrink:0;}
+.kcard-img-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--bg-2) 0%,var(--border-1) 100%);display:flex;align-items:center;justify-content:center;}
+.kcard-body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:8px;}
+.kcard-eyebrow{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);}
+.kcard-title{font-size:1rem;font-weight:700;letter-spacing:-0.02rem;color:var(--text-1);line-height:1.3;}
+.kcard-desc{font-size:0.875rem;font-weight:400;letter-spacing:-0.0175rem;color:var(--text-2);line-height:1.5;flex:1;}
+.kcard-footer{padding:12px 24px;border-top:1px solid var(--border-2);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.kcard-tag{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3);border:1px solid var(--border-1);padding:3px 8px;white-space:nowrap;}
+.kcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+/* Stat card */
+.kstat{background:#fff;border:1px solid var(--border-1);padding:24px;display:flex;flex-direction:column;gap:4px;}
+.kstat-val{font-size:2rem;font-weight:700;letter-spacing:-0.04rem;color:var(--text-1);line-height:1;}
+.kstat-label{font-size:13px;font-weight:500;color:var(--text-3);letter-spacing:-0.26px;}
+.kstat-change{font-size:12px;font-weight:700;letter-spacing:.02em;margin-top:12px;display:flex;align-items:center;gap:4px;}
+.kstat-change.up{color:#22C55E;}.kstat-change.dn{color:#EC1010;}
+/* Feature card */
+.kfeat{background:#fff;border:1px solid var(--border-1);padding:24px;display:flex;flex-direction:column;gap:12px;}
+.kfeat-icon{width:40px;height:40px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kfeat-icon svg{width:24px;height:24px;}
+.kfeat-title{font-size:0.9375rem;font-weight:700;letter-spacing:-0.02rem;color:var(--text-1);line-height:1.3;}
+.kfeat-desc{font-size:0.8125rem;font-weight:400;color:var(--text-2);line-height:1.5;letter-spacing:-0.013rem;}
+
+/* ───────────────────────────────────────────
+   COMPONENT — MODAL
+─────────────────────────────────────────── */
+/* Centered overlay modal */
+.kmod-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;opacity:0;pointer-events:none;transition:opacity .2s;}
+.kmod-backdrop.open{opacity:1;pointer-events:all;}
+.kmod-sheet{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);opacity:0;pointer-events:none;z-index:501;background:#fff;width:min(540px,calc(100vw - 48px));transition:opacity .2s,transform .22s;}
+.kmod-backdrop.open .kmod-sheet{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:all;}
+.kmod-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:24px 24px 0;}
+.kmod-title{font-size:1.125rem;font-weight:700;letter-spacing:-0.0225rem;color:var(--text-1);line-height:1.2;}
+.kmod-close{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);transition:color .15s,background .15s;border-radius:4px;}
+.kmod-close:hover{background:var(--bg-2);color:var(--text-1);}
+.kmod-body{padding:16px 24px 24px;}
+.kmod-body p{font-size:14px;color:var(--text-2);letter-spacing:-0.28px;line-height:1.6;}
+.kmod-actions{display:flex;gap:8px;justify-content:flex-end;padding:0 24px 24px;}
+/* Contact widget — kewazo.com landing style */
+.kmod-widget{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.kmod-widget-popup{background:#fff;border:1px solid var(--border-1);width:320px;box-shadow:0 8px 32px rgba(0,0,0,.12);transform:translateY(8px) scale(.97);opacity:0;pointer-events:none;transition:opacity .2s,transform .22s;overflow:hidden;}
+.kmod-widget.open .kmod-widget-popup{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
+.kmod-widget-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--d900);color:#fff;}
+.kmod-widget-htitle{font-size:13px;font-weight:700;letter-spacing:-0.26px;color:#fff;}
+.kmod-widget-body{padding:20px;}
+.kmod-widget-btn{height:40px;padding:0 16px;background:var(--d900);color:#fff;font-family:var(--ff);font-size:13px;font-weight:600;letter-spacing:-0.26px;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:none;transition:background .15s;flex-shrink:0;}
+.kmod-widget-btn:hover{background:#414C59;}
+.kmod-widget-trigger{width:48px;height:48px;background:var(--d900);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .15s;border:none;flex-shrink:0;}
+.kmod-widget-trigger:hover{background:#414C59;}
+.kmod-demo-wrap{background:var(--bg-2);border:1px solid var(--border-1);border-radius:4px;padding:40px;display:flex;align-items:flex-start;justify-content:flex-end;min-height:260px;position:relative;}
+/* form inputs inside modal */
+.kmod-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.kmod-field:last-of-type{margin-bottom:0;}
+.kmod-label{font-size:12px;font-weight:600;letter-spacing:-0.24px;color:var(--text-1);}
+.kmod-input{height:40px;border:1px solid var(--border-1);padding:0 12px;font-family:var(--ff);font-size:14px;color:var(--text-1);background:#fff;outline:none;transition:border-color .15s;width:100%;}
+.kmod-input:focus{border-color:var(--t400);}
+.kmod-textarea{border:1px solid var(--border-1);padding:10px 12px;font-family:var(--ff);font-size:14px;color:var(--text-1);background:#fff;outline:none;transition:border-color .15s;width:100%;resize:vertical;min-height:80px;line-height:1.5;}
+.kmod-textarea:focus{border-color:var(--t400);}
+
+/* ───────────────────────────────────────────
+   PLACEHOLDER SECTIONS (stub pages)
+─────────────────────────────────────────── */
+.stub-ph{
+  width:100%;height:200px;background:var(--bg-2);border-radius:4px;
+  border:1px dashed var(--border-1);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+}
+.stub-ph-icon{font-size:32px;opacity:.3;}
+.stub-ph-lbl{font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-3);}
+
+/* ───────────────────────────────────────────
+   RESPONSIVE  — 3 breakpoints
+─────────────────────────────────────────── */
+
+/* ≥1280: full 3-column */
+@media(min-width:1280px){
+  .sticky-nav{display:flex;}
+  .gnb-hamburger{display:none;}
+}
+
+/* 768–1279: 2-column (side nav + body, no sticky nav) */
+@media(min-width:768px) and (max-width:1279px){
+  .sticky-nav{display:none;}
+  .gnb-hamburger{display:none;}
+  .side-nav{width:180px;}
+  .b-title{font-size:36px;}
+  .sh2{font-size:24px;}
+  .palette{padding:0 8px;}
+  .pal-info{width:160px;}
+}
+
+@media(min-width:768px) and (max-width:1100px){.logo-card-grid{grid-template-columns:repeat(3,1fr);}}
+/* <768: 1-column, hamburger */
+@media(max-width:767px){
+  :root{--pg:16px;}
+  .gnb-nav{display:none;}
+  .gnb-right{display:none;}
+  .gnb-hamburger{display:flex;}
+  .gnb-brand-name{display:none;}
+  .interior{flex-direction:column;gap:0;padding:0;}
+  .side-nav{display:none;position:static;width:100%;border-right:none;border-bottom:1px solid var(--border-1);padding:16px var(--pg);max-height:none;flex-direction:row;flex-wrap:wrap;gap:16px;}
+  .side-nav.mob-open{display:flex;}
+  .snav-label{width:100%;margin-bottom:4px;}
+  .snav-items{flex-direction:row;flex-wrap:wrap;gap:12px;}
+  .snav-item{font-size:14px;}
+  .sticky-nav{display:none;}
+  .body-col{width:100%;padding:32px var(--pg);}
+  .b-title{font-size:28px;}
+  .bhead{width:100%;}
+  .sh2{font-size:22px;}
+  .sp{font-size:13px;}
+  .palette{padding:0;}
+  .pal-row{flex-direction:column;}
+  .pal-info{width:100%;}
+  .pal-swatches{width:100%;}
+  .toc-inner{gap:20px;}
+  .toc-group{min-width:calc(50% - 10px);}
+  .hero-title{font-size:28px;}
+  .type-row{grid-template-columns:1fr;gap:12px;}
+  .sp-row{grid-template-columns:120px 80px 1fr;}
+  .ttable{font-size:12px;}
+  .ttable th,.ttable td{padding:7px 8px;}
+  .landing-hero{padding:40px 0;}
+  .body-col{gap:48px;}
+  .logo-card-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:999px;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     GNB
+═══════════════════════════════════ -->
+<nav class="gnb">
+  <div class="gnb-left">
+    <!-- Brand → landing -->
+    <button class="gnb-brand" data-page="landing" aria-label="Go to home">
+      <svg class="gnb-logo" viewBox="0 0 400 400" aria-label="KEWAZO"><polygon points="81.03 235.04 81.03 72.99 110.94 72.99 110.94 212.77 268.53 73.01 313.59 73.02 214 161.34 318.97 258.48 274.94 258.48 191.51 181.28 104.47 258.48 81.03 235.04"/><rect x="81.03" y="307.92" width="237.94" height="19.09"/></svg>
+      <span class="gnb-brand-name">Design System</span>
+    </button>
+    <nav class="gnb-nav" aria-label="Main">
+      <a data-page="guideline">Guideline</a>
+      <a data-page="foundation-color">Foundation</a>
+      <a data-page="component-nav">Component</a>
+      <a data-page="case-studies">Case studies</a>
+      <a data-page="resources">Resources</a>
+    </nav>
+  </div>
+
+  <!-- hamburger (mobile) -->
+  <button class="gnb-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Figma + GitHub buttons -->
+  <div class="gnb-right">
+    <a class="gnb-icon-btn" href="https://www.figma.com/design/7FF3CWFSq7FN6cHbb0DjH6/" target="_blank" rel="noopener" aria-label="Open in Figma">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 24a4 4 0 0 0 4-4v-4H8a4 4 0 0 0 0 8z" fill="#0ACF83"/>
+        <path d="M4 12a4 4 0 0 1 4-4h4v8H8a4 4 0 0 1-4-4z" fill="#A259FF"/>
+        <path d="M4 4a4 4 0 0 1 4-4h4v8H8a4 4 0 0 1-4-4z" fill="#F24E1E"/>
+        <path d="M12 0h4a4 4 0 0 1 0 8h-4V0z" fill="#FF7262"/>
+        <path d="M20 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" fill="#1ABCFE"/>
+      </svg>
+    </a>
+    <a class="gnb-icon-btn" href="https://github.com/kewazo" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.52 11.52 0 0 1 12 6.584a11.52 11.52 0 0 1 3.004.404c2.29-1.552 3.295-1.23 3.295-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<!-- mobile drawer -->
+<div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-label="Navigation">
+  <div class="mob-section">
+    <div class="mob-section-label">Menu</div>
+    <div class="mob-links">
+      <a class="mob-link" data-page="guideline">Guideline</a>
+      <a class="mob-link" data-page="foundation-color">Foundation — Color</a>
+      <a class="mob-link" data-page="foundation-type">Foundation — Typography</a>
+      <a class="mob-link" data-page="foundation-layout">Foundation — Layout</a>
+      <a class="mob-link" data-page="foundation-radius">Foundation — Radius</a>
+      <a class="mob-link" data-page="foundation-icon">Foundation — Iconography</a>
+      <a class="mob-link" data-page="component-section-title">Component — Section Title</a>
+      <a class="mob-link" data-page="component-nav">Component — Navigation</a>
+      <a class="mob-link" data-page="component-btn">Component — Button</a>
+      <a class="mob-link" data-page="component-card">Component — Card</a>
+      <a class="mob-link" data-page="component-badge">Component — Badge</a>
+      <a class="mob-link" data-page="component-input">Component — Input Fields</a>
+      <a class="mob-link" data-page="component-table">Component — Table & Chart</a>
+      <a class="mob-link" data-page="component-footer">Component — Footer</a>
+      <a class="mob-link" data-page="case-studies-website">Case studies — Website</a>
+      <a class="mob-link" data-page="case-studies-onsite">Case studies — ONSITE</a>
+      <a class="mob-link" data-page="case-studies-internal-tools">Case studies — Internal Tools</a>
+      <a class="mob-link" data-page="case-studies-presentation-slides">Case studies — Presentation Slides</a>
+      <a class="mob-link" data-page="case-studies-sales-materials">Case studies — Sales Materials</a>
+      <a class="mob-link" data-page="resources-kewazo-ci">Resources — KEWAZO CI</a>
+      <a class="mob-link" data-page="resources-liftbot-bi">Resources — LIFTBOT BI</a>
+      <a class="mob-link" data-page="resources-google-docs">Resources — Google Docs Template</a>
+      <a class="mob-link" data-page="resources-social-media">Resources — Social Media Profile</a>
+      <a class="mob-link" data-page="resources-branded-merches">Resources — Branded Merches</a>
+      <a class="mob-link" data-page="resources-business-card">Resources — Business Card</a>
+      <a class="mob-link" data-page="resources-clients-logo">Resources — Clients' Logo</a>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<!-- ═══════════════════════════════════
+     LANDING
+═══════════════════════════════════ -->
+<div id="page-landing" class="page active">
+  <div class="landing">
+    <div class="landing-hero">
+      <div class="hero-title-group">
+        <h1 class="hero-title">KEWAZO Design System</h1>
+        <div class="hero-meta">
+          <span class="hero-version">v 2.0.1</span>
+          <span class="hero-date">Last updated 2026-06-08</span>
+        </div>
+      </div>
+      <div class="hero-img">
+        <video autoplay loop muted playsinline src="./hero.mp4" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      </div>
+      <div class="hero-toc">
+        <div class="toc-inner">
+          <div class="toc-group">
+            <div class="toc-head">Guideline</div>
+            <div class="toc-items">
+              <a class="toc-item" data-page="guideline">Overview</a>
+              <a class="toc-item" data-page="guideline">Design Token Names</a>
+              <a class="toc-item" data-page="guideline">AI Coding Instruction</a>
+            </div>
+          </div>
+          <div class="toc-group">
+            <div class="toc-head">Foundation</div>
+            <div class="toc-items">
+              <a class="toc-item" data-page="foundation-color">Colour</a>
+              <a class="toc-item" data-page="foundation-type">Typography</a>
+              <a class="toc-item" data-page="foundation-layout">Grid</a>
+              <a class="toc-item" data-page="foundation-layout">Spacing</a>
+              <a class="toc-item" data-page="foundation-radius">Radius</a>
+            </div>
+          </div>
+          <div class="toc-group">
+            <div class="toc-head">Component</div>
+            <div class="toc-items">
+              <a class="toc-item" data-page="component-section-title">Section Title</a>
+              <a class="toc-item" data-page="component-nav">Navigation</a>
+              <a class="toc-item" data-page="component-btn">Button</a>
+              <a class="toc-item" data-page="component-card">Card</a>
+              <a class="toc-item" data-page="component-filter">Filter</a>
+              <a class="toc-item" data-page="component-modal">Modal</a>
+              <a class="toc-item" data-page="component-badge">Badge</a>
+              <a class="toc-item" data-page="component-tooltip">Tooltip</a>
+              <a class="toc-item" data-page="component-input">Input Fields</a>
+              <a class="toc-item" data-page="component-table">Table and Chart</a>
+              <a class="toc-item" data-page="component-footer">Footer</a>
+            </div>
+          </div>
+          <div class="toc-group">
+            <div class="toc-head">Case studies</div>
+            <div class="toc-items">
+              <a class="toc-item" data-page="case-studies-website">Website</a>
+              <a class="toc-item" data-page="case-studies-onsite">ONSITE</a>
+              <a class="toc-item" data-page="case-studies-internal-tools">Internal Tools</a>
+              <a class="toc-item" data-page="case-studies-presentation-slides">Presentation Slides</a>
+              <a class="toc-item" data-page="case-studies-sales-materials">Sales Materials</a>
+            </div>
+          </div>
+          <div class="toc-group">
+            <div class="toc-head">Resources</div>
+            <div class="toc-items">
+              <a class="toc-item" data-page="resources-kewazo-ci">KEWAZO CI</a>
+              <a class="toc-item" data-page="resources-liftbot-bi">LIFTBOT BI</a>
+              <a class="toc-item" data-page="resources-google-docs">Google Docs Template</a>
+              <a class="toc-item" data-page="resources-social-media">Social Media Profile</a>
+              <a class="toc-item" data-page="resources-branded-merches">Branded Merches</a>
+              <a class="toc-item" data-page="resources-business-card">Business Card</a>
+              <a class="toc-item" data-page="resources-clients-logo">Clients' Logo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     GUIDELINE
+═══════════════════════════════════ -->
+<div id="page-guideline" class="page">
+  <div class="interior">
+    <div class="side-nav" id="snav-guideline">
+      <div class="snav-label">Guideline</div>
+      <div class="snav-items">
+        <a class="snav-item active" data-scroll="g-overview">Overview</a>
+        <a class="snav-item" data-scroll="g-ai">AI Coding Instruction</a>
+        <a class="snav-item" data-scroll="g-tokens">Design Token Names</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead">
+        <h1 class="b-title">Guideline</h1>
+        <span class="b-sub">Guideline</span>
+      </div>
+
+      <div class="section" id="g-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">The KEWAZO Design System (KDS) is the single source of truth for all digital products across KEWAZO's brand — kewazo.com, the LIFTBOT data platform, internal tooling, and marketing materials. It provides reusable design tokens, components, and patterns that ensure visual consistency and accelerate development.</p>
+        <p class="sp">KDS is structured in three tiers: <strong>Base tokens</strong> (raw palette values), <strong>Semantic tokens</strong> (purpose-bound aliases), and <strong>Component tokens</strong> (component-specific overrides). Always reference the highest-level token available.</p>
+      </div>
+
+      <div class="section" id="g-ai" data-sec>
+        <h2 class="sh2">AI Coding Instruction</h2>
+        <p class="sp">When implementing KDS with AI coding tools (Claude, Cursor, Copilot), follow these rules to ensure token compliance and visual fidelity.</p>
+        <div class="rule-list">
+          <div class="rule-item"><div class="rule-n">1</div><span>Always use <code>--kds-sem-*</code> semantic tokens in components. Never reference base tokens directly.</span></div>
+          <div class="rule-item"><div class="rule-n">2</div><span>Never hardcode hex values. If a token doesn't exist for your use case, raise it with the design system team first.</span></div>
+          <div class="rule-item"><div class="rule-n">3</div><span>Font family is always <code>var(--kds-font-family)</code> (Barlow). No second typeface without explicit approval.</span></div>
+          <div class="rule-item"><div class="rule-n">4</div><span>Letter-spacing defaults are negative: <code>-0.32px</code> body, <code>-0.64px</code> h2, <code>-0.96px</code> h1. Never use positive tracking in UI text.</span></div>
+          <div class="rule-item"><div class="rule-n">5</div><span>GNB is always 64px tall, 40px horizontal padding, 1px bottom border in <code>--kds-base-color-dark-300</code>.</span></div>
+          <div class="rule-item"><div class="rule-n">6</div><span>Interior pages: 213px side nav + 16px gap + flex body + 16px gap + 213px sticky nav, within 40px page margins.</span></div>
+          <div class="rule-item"><div class="rule-n">7</div><span>Active sticky nav item: 4px left border in <code>--kds-base-color-turquoise-400</code>, padding adjusted to maintain alignment.</span></div>
+        </div>
+        <div class="code-block"><code><span class="c-cmt">/* ✅ Correct */</span>
+<span class="c-prop">color</span>: <span class="c-val">var(--kds-sem-color-text-primary)</span>;
+<span class="c-prop">border-bottom</span>: <span class="c-val">1px solid var(--kds-base-color-dark-300)</span>;
+
+<span class="c-cmt">/* ❌ Wrong */</span>
+<span class="c-prop">color</span>: <span class="c-val">#1B1F24</span>;
+<span class="c-prop">border-bottom</span>: <span class="c-val">1px solid #D7DEE6</span>;</code></div>
+      </div>
+
+      <div class="section" id="g-tokens" data-sec>
+        <h2 class="sh2">Design Token Names</h2>
+        <p class="sp">All token names follow a strict anatomy. The system prefix is always <strong>kds</strong>. Never use shortened or custom prefixes.</p>
+        <div class="tok-anatomy">
+          <div class="ta-full">
+            <span class="ta-p ta-sys">kds</span><span class="ta-sep">—</span>
+            <span class="ta-p ta-tier">base</span><span class="ta-sep">—</span>
+            <span class="ta-p ta-cat">color</span><span class="ta-sep">—</span>
+            <span class="ta-p ta-name">turquoise</span><span class="ta-sep">—</span>
+            <span class="ta-p ta-step">400</span>
+          </div>
+          <div class="ta-leg">
+            <div class="ta-li"><div class="ta-dot" style="background:var(--t200)"></div>System: <strong>kds</strong></div>
+            <div class="ta-li"><div class="ta-dot" style="background:var(--d200)"></div>Tier: <strong>base</strong> or <strong>sem</strong></div>
+            <div class="ta-li"><div class="ta-dot" style="background:#FFF0F0"></div>Category: <strong>color, font, spacing, radius</strong></div>
+            <div class="ta-li"><div class="ta-dot" style="background:#FFF8EC"></div>Name: <strong>turquoise, dark, text-primary…</strong></div>
+            <div class="ta-li"><div class="ta-dot" style="background:var(--b300)"></div>Step: <strong>100–900</strong> (base) or omitted (sem)</div>
+          </div>
+        </div>
+        <div class="code-block"><code><span class="c-cmt">/* Base token */</span>
+<span class="c-kw">--kds-base-color-turquoise-400</span>: <span class="c-val">#40C0C0</span>;
+<span class="c-kw">--kds-base-color-dark-300</span>: <span class="c-val">#D7DEE6</span>;
+
+<span class="c-cmt">/* Semantic token */</span>
+<span class="c-kw">--kds-sem-color-text-primary</span>: <span class="c-val">#1B1F24</span>;    <span class="c-cmt">/* → dark-900 */</span>
+<span class="c-kw">--kds-sem-color-action-primary</span>: <span class="c-val">#40C0C0</span>;  <span class="c-cmt">/* → turquoise-400 */</span>
+<span class="c-kw">--kds-sem-color-border-primary</span>: <span class="c-val">#D7DEE6</span>;  <span class="c-cmt">/* → dark-300 */</span></code></div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Guideline</div>
+      <a class="stnav-item active" data-target="g-overview">Overview</a>
+      <a class="stnav-item" data-target="g-ai">AI Coding Instruction</a>
+      <a class="stnav-item" data-target="g-tokens">Design Token Names</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOUNDATION — COLOR
+═══════════════════════════════════ -->
+<div id="page-foundation-color" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Foundation</div>
+      <div class="snav-items">
+        <a class="snav-item active" data-page="foundation-color">Color</a>
+        <a class="snav-item" data-page="foundation-type">Typography</a>
+        <a class="snav-item" data-page="foundation-layout">Layout</a>
+        <a class="snav-item" data-page="foundation-radius">Radius</a>
+        <a class="snav-item" data-page="foundation-icon">Iconography</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead">
+        <h1 class="b-title">Color</h1>
+        <span class="b-sub">Foundation</span>
+      </div>
+
+      <div class="section" id="fc-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">A solid colour foundation streamlines design and development, enabling businesses to scale efficiently while maintaining a cohesive user experience. KDS colour is structured in two tiers: <strong>Base tokens</strong> are raw palette values (9 steps per scale, 100 = lightest, 900 = darkest). <strong>Semantic tokens</strong> are purpose-bound aliases. Always use semantic tokens in components.</p>
+      </div>
+
+      <div class="section" id="fc-tokens" data-sec>
+        <h2 class="sh2">Design Token Names</h2>
+        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components. All token names start with the system prefix <strong>kds</strong> (KEWAZO Design System).</p>
+        <div class="code-block"><code>--<span class="c-kw">kds</span>-<span class="c-prop">base</span>-<span class="c-prop">color</span>-<span class="c-val">turquoise</span>-<span class="c-kw">400</span>: <span class="c-val">#40C0C0</span>;
+--<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">text-primary</span>: <span class="c-val">#1B1F24</span>;
+--<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">action-primary</span>: <span class="c-val">#40C0C0</span>;</code></div>
+      </div>
+
+      <div class="section" id="fc-palette" data-sec>
+        <h2 class="sh2">Base Color Palette</h2>
+        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
+        <div class="palette">
+          <div class="pal-group">
+              <!-- KEWAZO Turquoise -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile" style="background:#40C0C0"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Turquoise</span><span class="p-hex">#40C0C0</span></div></div>
+                  <span class="pal-info-lbl">Turquoise-000</span>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#1F3331"><span class="pal-wcag" style="color:#fff">AAA 13:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1F3331</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#14433E"><span class="pal-wcag" style="color:#fff">AAA 11:1</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#14433E</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#1A5E59"><span class="pal-wcag" style="color:#fff">AAA 7.5:1</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#1A5E59</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#058B8C"><span class="pal-wcag" style="color:#fff">AA 4:1</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#058B8C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#1EA7A6"><span class="pal-wcag" style="color:#1B1F24">AA 4.5:1</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#1EA7A6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#40C0C0"><span class="pal-wcag" style="color:#2B3037">AA 6:1</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#40C0C0</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#A3DADB"><span class="pal-wcag" style="color:#2B3037">AAA 8.6:1</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#A3DADB</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#D9F0F1"><span class="pal-wcag" style="color:#2B3037">AAA 11.2:1</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#D9F0F1</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#F5FAFB"><span class="pal-wcag" style="color:#2B3037">AAA 12.6:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#F5FAFB</div></div></div>
+                </div>
+              </div>
+              <!-- KEWAZO Dark -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile" style="background:#2B3037"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Dark</span><span class="p-hex">#2B3037</span></div></div>
+                  <span class="pal-info-lbl">Dark-000</span>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#1B1F24"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1B1F24</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#2B3037"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#2B3037</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#414C59"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#414C59</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#576779"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#576779</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#7A899C"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#7A899C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#AFB9C6"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#AFB9C6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#D7DEE6"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D7DEE6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#EAEDF3"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#EAEDF3</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#F5F7FB"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#F5F7FB</div></div></div>
+                </div>
+              </div>
+              <!-- Base Mono (900 + 100 only) -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#FFFFFF"></div><div class="pal-chip-meta"><span class="pal-chip-name">Base mono</span><span class="p-hex">#FFFFFF</span></div></div>
+                  <span class="pal-info-lbl">Mono-000</span>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#191919"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#191919</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FFFFFF"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FFFFFF</div></div></div>
+                </div>
+              </div>
+              <!-- KEWAZO Bright -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#D8E5E7"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Bright</span><span class="p-hex">#D8E5E7</span></div></div>
+                  <span class="pal-info-lbl">Bright-000</span>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#263D42"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#263D42</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#3E5A5D"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#3E5A5D</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#51777C"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#51777C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#6C979D"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#6C979D</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#9FBDC1"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#9FBDC1</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#BAD1D4"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#BAD1D4</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#D8E5E7"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D8E5E7</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F2F6F7"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#F2F6F7</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FAFCFC"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FAFCFC</div></div></div>
+                </div>
+              </div>
+              <!-- Accent -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile" style="background:#EC1010"></div><div class="pal-chip-meta"><span class="pal-chip-name">Accent</span><span class="p-hex">#EC1010</span></div></div>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9EE89"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Yellow</div><div class="sw-val">#F9EE89</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Yellow lt</div><div class="sw-val">#F9FF93</div></div></div>
+                </div>
+              </div>
+          </div>
+          <!-- Print -->
+          <div class="pal-group" style="margin-top:40px">
+            <div class="pal-row">
+              <div class="pal-info"><h3 class="pal-sec-title" style="font-size:16px">Print</h3></div>
+              <div class="print-cards">
+                <div class="print-card" style="background:#00B2A9">
+                  <div class="print-card-info"><div class="print-card-top"><div class="print-card-pantone">Pantone 326C</div><div class="print-card-ref">#00b2a9</div></div><div class="print-card-usage">Print material -1</div></div>
+                  <div class="print-card-cmyk">C85%<br>M0%<br>Y38%<br>K0%</div>
+                </div>
+                <div class="print-card" style="background:#058B8C">
+                  <div class="print-card-info"><div class="print-card-top"><div class="print-card-pantone">Pantone (N/A)</div><div class="print-card-ref">#058B8C · Turquoise 600</div></div><div class="print-card-usage">LIFTBOT v.2</div></div>
+                  <div class="print-card-cmyk">C84%<br>M27%<br>Y45%<br>K4%</div>
+                </div>
+                <div class="print-card" style="background:#40C0C0">
+                  <div class="print-card-info"><div class="print-card-top"><div class="print-card-pantone">Pantone (N/A)</div><div class="print-card-ref">#40c0c0</div></div><div class="print-card-usage">Print material -3</div></div>
+                  <div class="print-card-cmyk">C66%<br>M0%<br>Y29%<br>K0%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="fc-semantic" data-sec>
+        <h2 class="sh2">Semantic Colours</h2>
+        <p class="sp muted">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
+        <div style="overflow-x:auto;">
+        <table class="ttable">
+          <thead><tr><th>CSS Variable</th><th>Category</th><th>Light Mode</th><th>Dark Mode</th><th>Base Token</th></tr></thead>
+          <tbody>
+            <tr><td colspan="5" class="tcat">Text</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-primary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td class="chex">dark-900</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-secondary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td class="chex">dark-700</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-tertiary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td class="chex">dark-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-disabled</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#D7DEE6"></div><span class="chex">#D7DEE6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-300</td></tr>
+            <tr><td colspan="5" class="tcat">Background</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-primary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td class="chex">mono-100</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-secondary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#F5F7FB"></div><span class="chex">#F5F7FB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2B3037"></div><span class="chex">#2B3037</span></div></td><td class="chex">dark-100</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-tertiary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-error</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FEF3F3"></div><span class="chex">#FEF3F3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2D0A0A"></div><span class="chex">#2D0A0A</span></div></td><td class="chex">accent-red-200</td></tr>
+            <tr><td colspan="5" class="tcat">Border</td></tr>
+            <tr><td class="tvar">--kds-sem-color-border-primary</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#D7DEE6"></div><span class="chex">#D7DEE6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-300</td></tr>
+            <tr><td class="tvar">--kds-sem-color-border-secondary</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#E6E8EB"></div><span class="chex">#E6E8EB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#576779"></div><span class="chex">#576779</span></div></td><td class="chex">custom</td></tr>
+            <tr><td class="tvar">--kds-sem-color-border-error</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">accent-red-500</td></tr>
+            <tr><td colspan="5" class="tcat">Action</td></tr>
+            <tr><td class="tvar">--kds-sem-color-action-primary</td><td>Action</td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td class="chex">turquoise-400</td></tr>
+            <tr><td class="tvar">--kds-sem-color-action-primary-hover</td><td>Action</td><td><div class="chip-row"><div class="chip" style="background:#1EA7A6"></div><span class="chex">#1EA7A6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1EA7A6"></div><span class="chex">#1EA7A6</span></div></td><td class="chex">turquoise-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-action-secondary</td><td>Action</td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td class="chex">dark-900</td></tr>
+            <tr><td class="tvar">--kds-sem-color-error</td><td>Error</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">accent-red-500</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="section" id="fc-darkmode" data-sec>
+        <h2 class="sh2">Light/Dark Mode Rules</h2>
+        <p class="sp muted">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
+        <div class="rule-list">
+          <div class="rule-item"><div class="rule-n">1</div><span>Backgrounds invert: <code>bg-primary</code> is #FFFFFF in light, #1B1F24 in dark.</span></div>
+          <div class="rule-item"><div class="rule-n">2</div><span>Brand colour <code>turquoise-400</code> (#40C0C0) is identical in both modes.</span></div>
+          <div class="rule-item"><div class="rule-n">3</div><span>Text primary flips: #1B1F24 (light) ↔ #FFFFFF (dark). Text tertiary (#7A899C) stays the same.</span></div>
+          <div class="rule-item"><div class="rule-n">4</div><span>Apply dark mode via <code>data-theme="dark"</code> on <code>&lt;html&gt;</code> and rebind all semantic tokens in that selector.</span></div>
+        </div>
+        <div class="code-block"><code>:root {
+  <span class="c-kw">--kds-sem-color-bg-primary</span>: <span class="c-val">#FFFFFF</span>;
+  <span class="c-kw">--kds-sem-color-text-primary</span>: <span class="c-val">#1B1F24</span>;
+  <span class="c-kw">--kds-sem-color-border-primary</span>: <span class="c-val">#D7DEE6</span>;
+}
+[data-theme="dark"] {
+  <span class="c-kw">--kds-sem-color-bg-primary</span>: <span class="c-val">#1B1F24</span>;
+  <span class="c-kw">--kds-sem-color-text-primary</span>: <span class="c-val">#FFFFFF</span>;
+  <span class="c-kw">--kds-sem-color-border-primary</span>: <span class="c-val">#414C59</span>;
+}</code></div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Colour</div>
+      <a class="stnav-item active" data-target="fc-overview">Overview</a>
+      <a class="stnav-item" data-target="fc-tokens">Design Token Names</a>
+      <a class="stnav-item" data-target="fc-palette">Base Colour Palette</a>
+      <a class="stnav-item" data-target="fc-semantic">Semantic Colours</a>
+      <a class="stnav-item" data-target="fc-darkmode">Light/Dark Mode Rules</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOUNDATION — TYPOGRAPHY
+═══════════════════════════════════ -->
+<div id="page-foundation-type" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Foundation</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="foundation-color">Color</a>
+        <a class="snav-item active">Typography</a>
+        <a class="snav-item" data-page="foundation-layout">Layout</a>
+        <a class="snav-item" data-page="foundation-radius">Radius</a>
+        <a class="snav-item" data-page="foundation-icon">Iconography</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Typography</h1><span class="b-sub">Foundation</span></div>
+      <div class="section" id="ft-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS uses <strong>Barlow</strong> as the sole typeface across all digital surfaces. Barlow is a slightly condensed, low-contrast typeface that reflects KEWAZO's industrial precision. Letter-spacing defaults to negative values throughout to maintain the brand's tight, confident voice.</p>
+      </div>
+      <div class="section" id="ft-primary" data-sec>
+        <h2 class="sh2">Type Scale</h2>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Display</span><span class="spec">Barlow 700 · 3rem<br>−0.06rem · lh 1.0</span></div>
+          <div style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;letter-spacing:-0.06rem;line-height:1;">LIFTBOT</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">H1</span><span class="spec">Barlow 700 · 2.5rem<br>−0.05rem · lh 1.05</span></div>
+          <div style="font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-0.05rem;line-height:1.05;">Automate Material Handling</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">H2</span><span class="spec">Barlow 700 · 2rem<br>−0.04rem · lh 1.0</span></div>
+          <div style="font-size:clamp(1.25rem,2.8vw,2rem);font-weight:700;letter-spacing:-0.04rem;line-height:1.0;">Base Color Palette</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">H3</span><span class="spec">Barlow 600 · 1.5rem<br>−0.03rem · lh 1.2</span></div>
+          <div style="font-size:clamp(1.125rem,2.2vw,1.5rem);font-weight:600;letter-spacing:-0.03rem;line-height:1.2;">Design Token Names</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body LG</span><span class="spec">Barlow 400 · 1rem<br>−0.02rem · lh 1.5</span></div>
+          <div style="font-size:1rem;font-weight:400;letter-spacing:-0.02rem;line-height:1.5;">KEWAZO automates and digitizes on-site material handling with robotics and data analytics.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body</span><span class="spec">Barlow 400 · 0.875rem<br>−0.0175rem · lh 1.5</span></div>
+          <div style="font-size:0.875rem;font-weight:400;letter-spacing:-0.0175rem;line-height:1.5;color:var(--text-2);">Reduces hazardous exposure hours by one third with continuous deployment across turnarounds and capital projects.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Caption</span><span class="spec">Barlow 600 · 0.75rem<br>0.04em · lh 1.0 · CAPS</span></div>
+          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.04em;line-height:1;text-transform:uppercase;color:var(--text-3);">Case Study · Industrial</div>
+        </div>
+      </div>
+      <!-- UI Text Styles -->
+      <div class="section" id="ft-ui" data-sec>
+        <h2 class="sh2">UI Text Styles</h2>
+        <p class="sp">All text roles actively used across the KDS Design System interface — page structure, navigation, body content, and labels.</p>
+
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Page Title</span><span class="spec">.b-title<br>700 · 48px (clamp)<br>−0.96px · lh 1.0</span></div>
+          <div style="font-size:clamp(24px,3.5vw,48px);font-weight:700;letter-spacing:-0.96px;line-height:1;color:var(--text-1);">Iconography</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Page Sub</span><span class="spec">.b-sub<br>400 · 16px<br>−0.32px</span></div>
+          <div style="font-size:16px;font-weight:400;letter-spacing:-0.32px;color:var(--text-2);">Foundation</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Section H2</span><span class="spec">.sh2<br>700 · 32px (clamp)<br>−0.64px · lh 1.0</span></div>
+          <div style="font-size:clamp(20px,2.5vw,32px);font-weight:700;letter-spacing:-0.64px;line-height:1;color:var(--text-1);">Base Colour Palette</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Section H3</span><span class="spec">.sh3<br>700 · 17px<br>−0.02rem</span></div>
+          <div style="font-size:17px;font-weight:700;letter-spacing:-0.02rem;color:var(--text-1);">Icon Left</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body</span><span class="spec">.sp<br>400 · 14px<br>−0.28px · lh 1.6</span></div>
+          <div style="font-size:14px;font-weight:400;letter-spacing:-0.28px;line-height:1.6;color:var(--text-2);">KDS uses Barlow as the sole typeface. Letter-spacing defaults to negative values throughout to maintain the brand's tight, confident voice.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Nav Label</span><span class="spec">.snav-label<br>500 · 16px<br>−0.64px</span></div>
+          <div style="font-size:16px;font-weight:500;letter-spacing:-0.64px;color:var(--text-3);">Foundation</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Nav Item</span><span class="spec">.snav-item<br>600 · 14px · CAPS<br>−0.28px · lh 1.0</span></div>
+          <div style="font-size:14px;font-weight:600;letter-spacing:-0.28px;text-transform:uppercase;color:var(--text-1);">Iconography</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">GNB Link</span><span class="spec">500 · 14px<br>−0.28px</span></div>
+          <div style="font-size:14px;font-weight:500;letter-spacing:-0.28px;color:var(--text-3);">Foundation</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Label / Caption</span><span class="spec">700 · 12px · CAPS<br>+0.06em</span></div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);">Icon · General</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Code</span><span class="spec">Monospace<br>500 · 12px · lh 1.9</span></div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:500;line-height:1.9;color:var(--text-1);">--kds-sem-color-text-primary: #1B1F24;</div>
+        </div>
+      </div>
+
+      <!-- Interactive / Button Text -->
+      <div class="section" id="ft-interactive" data-sec>
+        <h2 class="sh2">Interactive Text</h2>
+        <p class="sp">Button labels use Barlow SemiBold, all-caps, with tight negative letter-spacing. Size scales with the button variant.</p>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button LG</span><span class="spec">.kbtn-lg<br>600 · 18px · CAPS<br>−0.36px</span></div>
+          <button class="kbtn kbtn-lg" style="pointer-events:none">Button text</button>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button MD</span><span class="spec">.kbtn-md<br>600 · 16px · CAPS<br>−0.32px</span></div>
+          <button class="kbtn kbtn-md" style="pointer-events:none">Button text</button>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button SM</span><span class="spec">.kbtn-sm<br>600 · 14px · CAPS<br>−0.28px</span></div>
+          <button class="kbtn kbtn-sm" style="pointer-events:none">Button text</button>
+        </div>
+      </div>
+
+      <div class="section" id="ft-tokens" data-sec>
+        <h2 class="sh2">Design Token Names</h2>
+        <div class="code-block"><code><span class="c-cmt">/* Typeface */</span>
+<span class="c-kw">--kds-font-family</span>: <span class="c-val">'Barlow'</span>, -apple-system, sans-serif;
+
+<span class="c-cmt">/* Type scale */</span>
+<span class="c-kw">--kds-font-size-display</span>: <span class="c-val">3rem</span>;       <span class="c-cmt">/* 48px */</span>
+<span class="c-kw">--kds-font-size-h1</span>: <span class="c-val">2.5rem</span>;          <span class="c-cmt">/* 40px */</span>
+<span class="c-kw">--kds-font-size-h2</span>: <span class="c-val">2rem</span>;            <span class="c-cmt">/* 32px */</span>
+<span class="c-kw">--kds-font-size-h3</span>: <span class="c-val">1.5rem</span>;          <span class="c-cmt">/* 24px */</span>
+<span class="c-kw">--kds-font-size-body-lg</span>: <span class="c-val">1rem</span>;       <span class="c-cmt">/* 16px */</span>
+<span class="c-kw">--kds-font-size-body</span>: <span class="c-val">0.875rem</span>;      <span class="c-cmt">/* 14px */</span>
+<span class="c-kw">--kds-font-size-caption</span>: <span class="c-val">0.75rem</span>;    <span class="c-cmt">/* 12px */</span>
+
+<span class="c-cmt">/* UI roles */</span>
+<span class="c-kw">--kds-font-size-page-title</span>: <span class="c-val">48px</span>;   <span class="c-cmt">/* .b-title — clamp(32px,4vw,48px) */</span>
+<span class="c-kw">--kds-font-size-section-h2</span>: <span class="c-val">32px</span>;   <span class="c-cmt">/* .sh2 — clamp(22px,3vw,32px) */</span>
+<span class="c-kw">--kds-font-size-body-ui</span>: <span class="c-val">14px</span>;      <span class="c-cmt">/* .sp — body paragraphs */</span>
+<span class="c-kw">--kds-font-size-nav</span>: <span class="c-val">14px</span>;          <span class="c-cmt">/* .snav-item */</span>
+<span class="c-kw">--kds-font-size-label</span>: <span class="c-val">12px</span>;        <span class="c-cmt">/* captions, eyebrows, uppercase labels */</span>
+<span class="c-kw">--kds-font-size-code</span>: <span class="c-val">12px</span>;         <span class="c-cmt">/* monospace code blocks */</span>
+
+<span class="c-cmt">/* Button sizes */</span>
+<span class="c-kw">--kds-btn-font-lg</span>: <span class="c-val">1.125rem</span>;        <span class="c-cmt">/* 18px */</span>
+<span class="c-kw">--kds-btn-font-md</span>: <span class="c-val">1rem</span>;            <span class="c-cmt">/* 16px */</span>
+<span class="c-kw">--kds-btn-font-sm</span>: <span class="c-val">0.875rem</span>;        <span class="c-cmt">/* 14px */</span></code></div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Typography</div>
+      <a class="stnav-item active" data-target="ft-overview">Overview</a>
+      <a class="stnav-item" data-target="ft-primary">Type Scale</a>
+      <a class="stnav-item" data-target="ft-ui">UI Text Styles</a>
+      <a class="stnav-item" data-target="ft-interactive">Interactive</a>
+      <a class="stnav-item" data-target="ft-tokens">Design Token Names</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOUNDATION — LAYOUT
+═══════════════════════════════════ -->
+<div id="page-foundation-layout" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Foundation</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="foundation-color">Color</a>
+        <a class="snav-item" data-page="foundation-type">Typography</a>
+        <a class="snav-item active">Layout</a>
+        <a class="snav-item" data-page="foundation-radius">Radius</a>
+        <a class="snav-item" data-page="foundation-icon">Iconography</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Layout</h1><span class="b-sub">Foundation</span></div>
+      <div class="section" id="fl-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS uses a fixed 1440px canvas with 40px horizontal margins, giving a 1360px content area. The interior 3-column layout divides that into: 213px side nav + 16px gap + flexible body (≥902px) + 16px gap + 213px sticky nav.</p>
+      </div>
+      <div class="section" id="fl-breakpoint" data-sec>
+        <h2 class="sh2">Breakpoint for responsive web</h2>
+        <div style="overflow-x:auto;">
+        <table class="ttable">
+          <thead><tr><th>Breakpoint</th><th>Width</th><th>Layout</th><th>Side Nav</th><th>Sticky Nav</th></tr></thead>
+          <tbody>
+            <tr><td>Desktop</td><td>≥ 1280px</td><td>3-column</td><td>213px fixed</td><td>213px fixed</td></tr>
+            <tr><td>Tablet</td><td>768–1279px</td><td>2-column</td><td>180px fixed</td><td>Hidden</td></tr>
+            <tr><td>Mobile</td><td>≤ 767px</td><td>1-column</td><td>Drawer (hamburger)</td><td>Hidden</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="section" id="fl-grid" data-sec>
+        <h2 class="sh2">Grid</h2>
+        <p class="sp">Page horizontal padding: <strong>40px</strong>. Column gap: <strong>16px</strong>. The body column is fluid between the two fixed sidebars. On mobile, padding reduces to <strong>16px</strong>.</p>
+      </div>
+      <div class="section" id="fl-spacing" data-sec>
+        <h2 class="sh2">Spacing</h2>
+        <p class="sp">4px base unit. All spacing values are multiples of 4.</p>
+        <div class="sp-rows">
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-1</span><span class="sp-px">4 px</span><div class="sp-bar" style="width:4px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-2</span><span class="sp-px">8 px</span><div class="sp-bar" style="width:8px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-4</span><span class="sp-px">16 px · Column gap</span><div class="sp-bar" style="width:16px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-6</span><span class="sp-px">24 px</span><div class="sp-bar" style="width:24px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-8</span><span class="sp-px">32 px</span><div class="sp-bar" style="width:32px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-10</span><span class="sp-px">40 px · Page margin</span><div class="sp-bar" style="width:40px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-16</span><span class="sp-px">64 px · GNB height</span><div class="sp-bar" style="width:64px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-spacing-20</span><span class="sp-px">80 px · Page top padding</span><div class="sp-bar" style="width:80px"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Layout</div>
+      <a class="stnav-item active" data-target="fl-overview">Overview</a>
+      <a class="stnav-item" data-target="fl-breakpoint">Breakpoint for responsive web</a>
+      <a class="stnav-item" data-target="fl-grid">Grid</a>
+      <a class="stnav-item" data-target="fl-spacing">Spacing</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOUNDATION — RADIUS
+═══════════════════════════════════ -->
+<div id="page-foundation-radius" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Foundation</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="foundation-color">Color</a>
+        <a class="snav-item" data-page="foundation-type">Typography</a>
+        <a class="snav-item" data-page="foundation-layout">Layout</a>
+        <a class="snav-item active">Radius</a>
+        <a class="snav-item" data-page="foundation-icon">Iconography</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Radius</h1><span class="b-sub">Foundation</span></div>
+      <div class="section" id="fr-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS keeps border-radius minimal and purposeful. The default UI radius is 4px. Components such as swatches, input fields, and cards use 4px. Pill-shaped elements (CTAs, tags) use 36px. Badge/chip elements use 999px for a fully rounded appearance.</p>
+      </div>
+      <div class="section" id="fr-tokens" data-sec>
+        <h2 class="sh2">Design Token Names</h2>
+        <div class="code-block"><code><span class="c-kw">--kds-radius-none</span>: <span class="c-val">0px</span>;
+<span class="c-kw">--kds-radius-sm</span>:   <span class="c-val">4px</span>;   <span class="c-cmt">/* UI default: chips, swatches, inputs */</span>
+<span class="c-kw">--kds-radius-md</span>:   <span class="c-val">8px</span>;
+<span class="c-kw">--kds-radius-lg</span>:   <span class="c-val">12px</span>;  <span class="c-cmt">/* Cards, panels */</span>
+<span class="c-kw">--kds-radius-pill</span>: <span class="c-val">36px</span>;  <span class="c-cmt">/* Buttons, CTAs */</span>
+<span class="c-kw">--kds-radius-full</span>: <span class="c-val">999px</span>; <span class="c-cmt">/* Badges */</span></code></div>
+      </div>
+      <div class="section" id="fr-radius" data-sec>
+        <h2 class="sh2">Radius</h2>
+        <div class="rad-grid">
+          <div class="rad-card"><div class="rad-box" style="border-radius:0"></div><div class="rad-name">None</div><div class="rad-val">0px</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:4px"></div><div class="rad-name">SM</div><div class="rad-val">4px — UI default</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:8px"></div><div class="rad-name">MD</div><div class="rad-val">8px</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:12px"></div><div class="rad-name">LG</div><div class="rad-val">12px — Cards</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:36px"></div><div class="rad-name">Pill</div><div class="rad-val">36px — Buttons</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:999px"></div><div class="rad-name">Full</div><div class="rad-val">999px — Badges</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Radius</div>
+      <a class="stnav-item active" data-target="fr-overview">Overview</a>
+      <a class="stnav-item" data-target="fr-tokens">Design Token Names</a>
+      <a class="stnav-item" data-target="fr-radius">Radius</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOUNDATION — ICONOGRAPHY
+═══════════════════════════════════ -->
+<div id="page-foundation-icon" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Foundation</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="foundation-color">Color</a>
+        <a class="snav-item" data-page="foundation-type">Typography</a>
+        <a class="snav-item" data-page="foundation-layout">Layout</a>
+        <a class="snav-item" data-page="foundation-radius">Radius</a>
+        <a class="snav-item active">Iconography</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Iconography</h1><span class="b-sub">Foundation</span></div>
+
+      <!-- Overview -->
+      <div class="section" id="fi-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS uses a curated icon set aligned to the brand's industrial, precise visual language. Icon graphic is always <strong>24×24px</strong> with a <strong>40×40px</strong> touch area. Colour follows semantic tokens — default icons use <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:3px;">--kds-sem-color-ico-primary</code>. Click any icon to download the SVG file.</p>
+      </div>
+
+      <!-- Icon set -->
+      <div class="section" id="fi-set" data-sec>
+        <h2 class="sh2">Icon set</h2>
+
+        <div class="ico-section-lbl">Icon · General</div>
+        <div class="ico-grid">
+          <div class="ico-tile" title="ico_hamburger" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_hamburger.svg','ico_hamburger')">
+            <img src="./04_Element/02_icon/icon=ico_hamburger.svg" width="24" height="24" alt="hamburger" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_add" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_add.svg','ico_add')">
+            <img src="./04_Element/02_icon/icon=ico_add.svg" width="24" height="24" alt="add" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_close" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_close.svg','ico_close')">
+            <img src="./04_Element/02_icon/icon=ico_close.svg" width="24" height="24" alt="close" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_download" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_download.svg','ico_download')">
+            <img src="./04_Element/02_icon/icon=ico_download.svg" width="24" height="24" alt="download" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_arrow_upright" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_arrow_upright.svg','ico_arrow_upright')">
+            <img src="./04_Element/02_icon/icon=ico_arrow_upright.svg" width="24" height="24" alt="arrow up-right" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_arrow_left" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_arrow_left.svg','ico_arrow_left')">
+            <img src="./04_Element/02_icon/icon=ico_arrow_left.svg" width="24" height="24" alt="arrow left" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_arrow_right" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_arrow_right.svg','ico_arrow_right')">
+            <img src="./04_Element/02_icon/icon=ico_arrow_right.svg" width="24" height="24" alt="arrow right" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_arrow_up" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_arrow_up.svg','ico_arrow_up')">
+            <img src="./04_Element/02_icon/icon=ico_arrow_up.svg" width="24" height="24" alt="arrow up" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_arrow_down" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_arrow_down.svg','ico_arrow_down')">
+            <img src="./04_Element/02_icon/icon=ico_arrow_down.svg" width="24" height="24" alt="arrow down" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_chevron_left" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_chevron_left.svg','ico_chevron_left')">
+            <img src="./04_Element/02_icon/icon=ico_chevron_left.svg" width="24" height="24" alt="chevron left" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_chevron_right" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_chevron_right.svg','ico_chevron_right')">
+            <img src="./04_Element/02_icon/icon=ico_chevron_right.svg" width="24" height="24" alt="chevron right" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_chevron_up" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_chevron_up.svg','ico_chevron_up')">
+            <img src="./04_Element/02_icon/icon=ico_chevron_up.svg" width="24" height="24" alt="chevron up" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_chevron_down" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_chevron_down.svg','ico_chevron_down')">
+            <img src="./04_Element/02_icon/icon=ico_chevron_down.svg" width="24" height="24" alt="chevron down" draggable="false">
+          </div>
+        </div>
+
+        <div class="ico-section-lbl" style="margin-top:40px">Icon · Construction Industry</div>
+        <div class="ico-grid">
+          <div class="ico-tile" style="width:64px;height:64px" title="ico_truck" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_truck.svg','ico_truck')">
+            <img src="./04_Element/02_icon/icon=ico_truck.svg" width="40" height="40" alt="truck" draggable="false">
+          </div>
+        </div>
+      </div>
+
+      <!-- Formative anatomy -->
+      <div class="section" id="fi-anatomy" data-sec>
+        <h2 class="sh2">Formative anatomy</h2>
+        <p class="sp">KDS icons are drawn on a <strong>40×40px</strong> artboard using filled paths (no stroke). The effective graphic area follows the KDS icon bounds. Below, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">ico_hamburger</code> is shown at 5× scale with construction guides.</p>
+
+        <div class="ico-anatomy">
+          <!-- SVG diagram -->
+          <svg width="200" height="200" viewBox="0 0 200 200" style="flex-shrink:0;border:1px solid var(--border-1);background:#fff;" xmlns="http://www.w3.org/2000/svg">
+            <!-- grid lines -->
+            <defs><pattern id="ico-grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M10 0H0V10" fill="none" stroke="#e8edf2" stroke-width="0.5"/></pattern></defs>
+            <rect width="200" height="200" fill="url(#ico-grid)"/>
+            <!-- diagonal guides -->
+            <line x1="0" y1="0" x2="200" y2="200" stroke="#dce4ec" stroke-width="0.5"/>
+            <line x1="200" y1="0" x2="0" y2="200" stroke="#dce4ec" stroke-width="0.5"/>
+            <!-- circle guide -->
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#dce4ec" stroke-width="0.5"/>
+            <!-- 40px touch area (200px → scale 200/40 = 5) -->
+            <rect x="0" y="0" width="200" height="200" fill="none" stroke="#40C0C0" stroke-width="1" stroke-dasharray="6 3"/>
+            <!-- 24px icon area (200 × 24/40 = 120px, offset 40px) -->
+            <rect x="40" y="40" width="120" height="120" fill="rgba(64,192,192,0.04)" stroke="#40C0C0" stroke-width="1"/>
+            <!-- ico_hamburger 5× scale: 40×40 viewBox → 200×200 canvas -->
+            <rect x="38" y="63" width="124" height="17" fill="#1B1F24"/>
+            <rect x="38" y="91" width="124" height="17" fill="#1B1F24"/>
+            <rect x="38" y="120" width="124" height="17" fill="#1B1F24"/>
+            <!-- center crosshair -->
+            <line x1="97" y1="0" x2="97" y2="200" stroke="#dce4ec" stroke-width="0.5"/>
+            <line x1="0" y1="97" x2="200" y2="97" stroke="#dce4ec" stroke-width="0.5"/>
+          </svg>
+
+          <!-- Spec list -->
+          <div class="ico-anatomy-spec">
+            <div class="ico-spec-row">
+              <div class="ico-spec-dot" style="background:rgba(64,192,192,0.15);border:1.5px solid #40C0C0;"></div>
+              <div class="ico-spec-txt"><strong>Icon Graphic — 24×24px</strong><br>The drawable canvas. All strokes and shapes are constrained within this boundary. Stroke weight: 1.5px.</div>
+            </div>
+            <div class="ico-spec-row">
+              <div class="ico-spec-dot" style="background:rgba(64,192,192,0.05);border:1.5px dashed #40C0C0;"></div>
+              <div class="ico-spec-txt"><strong>Touch Area — 40×40px</strong><br>Outer interaction target. Ensures minimum touch accessibility (WCAG 2.5.5). The icon is always centered within this area.</div>
+            </div>
+            <div class="ico-spec-row">
+              <div class="ico-spec-dot" style="background:#E8EDF2;border:1px solid #D7DEE6;"></div>
+              <div class="ico-spec-txt"><strong>Grid</strong><br>8px major grid, 4px minor grid. Construction industry icons may scale up to 64×64px while keeping the 40×40 touch area standard.</div>
+            </div>
+            <div class="code-block" style="margin-top:8px"><code>--kds-icon-md: 24px;   /* graphic size */
+--kds-icon-touch: 40px; /* touch target */
+--kds-icon-stroke: 1.5px;</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Iconography</div>
+      <a class="stnav-item active" data-target="fi-overview">Overview</a>
+      <a class="stnav-item" data-target="fi-set">Icon set</a>
+      <a class="stnav-item" data-target="fi-anatomy">Formative anatomy</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     COMPONENT — NAVIGATION
+═══════════════════════════════════ -->
+<div id="page-component-nav" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Component</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="component-section-title">Section Title</a>
+        <a class="snav-item active">Navigation</a>
+        <a class="snav-item" data-page="component-btn">Button</a>
+        <a class="snav-item" data-page="component-card">Card</a>
+        <a class="snav-item" data-page="component-filter">Filter</a>
+        <a class="snav-item" data-page="component-modal">Modal</a>
+        <a class="snav-item" data-page="component-badge">Badge</a>
+        <a class="snav-item" data-page="component-tooltip">Tooltip</a>
+        <a class="snav-item" data-page="component-input">Input Fields</a>
+        <a class="snav-item" data-page="component-table">Table and Chart</a>
+        <a class="snav-item" data-page="component-footer">Footer</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Navigation</h1><span class="b-sub">Component</span></div>
+
+      <div class="section" id="cn-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">A solid foundation in a design system streamlines both the design and development processes, enabling businesses to scale efficiently while maintaining a cohesive and effective user experience.</p>
+        <p class="sp">KDS Navigation consists of six patterns: Global Navigation Bar (GNB), Side Navigation, Tabs, Breadcrumbs, Pagination, and Sticky In-Page Navigation.</p>
+      </div>
+
+      <div class="section" id="cn-global" data-sec>
+        <h2 class="sh2">Global Navigation</h2>
+        <p class="sp">The GNB is always 64px tall with 40px horizontal padding. The brand button always navigates to the landing page.</p>
+        <div class="demo-wrap">
+          <div class="demo-lbl">GNB — Light Mode</div>
+          <div class="demo-stage">
+            <div class="demo-gnb">
+              <div class="demo-gnb-left">
+                <div class="demo-brand"><div class="demo-k"></div><span class="demo-name">Design System</span></div>
+                <div class="demo-links">
+                  <span class="demo-link act">Foundation</span>
+                  <span class="demo-link">Component</span>
+                  <span class="demo-link">Case studies</span>
+                  <span class="demo-link">Resources</span>
+                </div>
+              </div>
+              <div class="demo-r"><div class="demo-rb"></div><div class="demo-rb"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-wrap">
+          <div class="demo-lbl">GNB — Dark Mode</div>
+          <div class="demo-stage">
+            <div class="demo-gnb dark">
+              <div class="demo-gnb-left">
+                <div class="demo-brand"><div class="demo-k"></div><span class="demo-name">Design System</span></div>
+                <div class="demo-links">
+                  <span class="demo-link act">Foundation</span>
+                  <span class="demo-link">Component</span>
+                  <span class="demo-link">Case studies</span>
+                  <span class="demo-link">Resources</span>
+                </div>
+              </div>
+              <div class="demo-r"><div class="demo-rb"></div><div class="demo-rb"></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;"><table class="ttable">
+          <thead><tr><th>Element</th><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>GNB</td><td>Height</td><td class="tvar">64px</td></tr>
+            <tr><td>GNB</td><td>Horizontal padding</td><td class="tvar">40px</td></tr>
+            <tr><td>GNB</td><td>Logo ↔ nav gap</td><td class="tvar">32px</td></tr>
+            <tr><td>GNB</td><td>Nav link gap</td><td class="tvar">24px</td></tr>
+            <tr><td>GNB</td><td>Nav link font</td><td>Barlow Medium 14px, −0.28px</td></tr>
+            <tr><td>GNB</td><td>Brand font</td><td>Barlow Bold 16px, −0.32px</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="section" id="cn-sidenav" data-sec>
+        <h2 class="sh2">Side Navigation</h2>
+        <p class="sp">Width 213px · <code>border-right: 1px solid dark-300</code> · Section label: Medium 16px / −0.64px / tertiary · Items: SemiBold 16px / −0.32px / primary · Gap between items: 24px</p>
+        <div class="demo-stage">
+          <div class="demo-3col">
+            <div class="demo-lside">
+              <div class="demo-slabel">Foundation</div>
+              <div class="demo-sitems">
+                <span class="demo-sitem act">Color</span>
+                <span class="demo-sitem">Typography</span>
+                <span class="demo-sitem">Layout</span>
+                <span class="demo-sitem">Radius</span>
+                <span class="demo-sitem">Iconography</span>
+              </div>
+            </div>
+            <div class="demo-body"><div class="demo-ph"><span class="demo-ph-lbl">Content area</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="cn-tabs" data-sec>
+        <h2 class="sh2">Tabs</h2>
+        <div class="stub-ph"><div class="stub-ph-icon">📐</div><div class="stub-ph-lbl">Navigation — Tabs</div></div>
+      </div>
+
+      <div class="section" id="cn-breadcrumbs" data-sec>
+        <h2 class="sh2">Breadcrumbs</h2>
+        <div class="stub-ph"><div class="stub-ph-icon">📐</div><div class="stub-ph-lbl">Navigation — Breadcrumbs</div></div>
+      </div>
+
+      <div class="section" id="cn-pagination" data-sec>
+        <h2 class="sh2">Pagination</h2>
+        <div class="stub-ph"><div class="stub-ph-icon">📐</div><div class="stub-ph-lbl">Navigation — Pagination</div></div>
+      </div>
+
+      <div class="section" id="cn-sticky" data-sec>
+        <h2 class="sh2">In-page Navigation</h2>
+        <p class="sp">Width 213px · <code>border-left: 1px solid dark-300</code> · Active: 4px solid turquoise-400, pl-36 · Inactive: Regular 14px / −0.28px / tertiary</p>
+        <div class="demo-stage">
+          <div class="demo-3col">
+            <div class="demo-body"><div class="demo-ph"><span class="demo-ph-lbl">Content area</span></div></div>
+            <div class="demo-rside">
+              <div class="demo-rtitle">Colour</div>
+              <div class="demo-ritem act">Overview</div>
+              <div class="demo-ritem">Design Token Names</div>
+              <div class="demo-ritem">Base Colour Palette</div>
+              <div class="demo-ritem">Semantic Colours</div>
+            </div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;"><table class="ttable">
+          <thead><tr><th>Element</th><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Side nav</td><td>Width</td><td class="tvar">213px</td></tr>
+            <tr><td>Side nav</td><td>Top padding</td><td class="tvar">80px</td></tr>
+            <tr><td>Side nav</td><td>Item gap</td><td class="tvar">24px</td></tr>
+            <tr><td>Sticky nav</td><td>Width</td><td class="tvar">213px</td></tr>
+            <tr><td>Sticky nav</td><td>Item gap</td><td class="tvar">8px</td></tr>
+            <tr><td>Sticky nav</td><td>Active border</td><td class="tvar">4px solid turquoise-400</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Navigation</div>
+      <a class="stnav-item active" data-target="cn-overview">Overview</a>
+      <a class="stnav-item" data-target="cn-global">Global Navigation</a>
+      <a class="stnav-item" data-target="cn-sidenav">Side Navigation</a>
+      <a class="stnav-item" data-target="cn-tabs">Tabs</a>
+      <a class="stnav-item" data-target="cn-breadcrumbs">Breadcrumbs</a>
+      <a class="stnav-item" data-target="cn-pagination">Pagination</a>
+      <a class="stnav-item" data-target="cn-sticky">In-page Navigation</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ COMPONENT — CARD ══════════════════════ -->
+<div id="page-component-card" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Component</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="component-section-title">Section Title</a>
+        <a class="snav-item" data-page="component-nav">Navigation</a>
+        <a class="snav-item" data-page="component-btn">Button</a>
+        <a class="snav-item active">Card</a>
+        <a class="snav-item" data-page="component-filter">Filter</a>
+        <a class="snav-item" data-page="component-modal">Modal</a>
+        <a class="snav-item" data-page="component-badge">Badge</a>
+        <a class="snav-item" data-page="component-tooltip">Tooltip</a>
+        <a class="snav-item" data-page="component-input">Input Fields</a>
+        <a class="snav-item" data-page="component-table">Table and Chart</a>
+        <a class="snav-item" data-page="component-footer">Footer</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Card</h1><span class="b-sub">Component</span></div>
+
+      <!-- Overview -->
+      <div class="section" id="cc-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS cards are sharp-edged containers with a 1px border. They group related content — image, body copy, metadata, and actions — in a consistent structure. Cards never use border-radius by default.</p>
+      </div>
+
+      <!-- Content Card -->
+      <div class="section" id="cc-content" data-sec>
+        <h2 class="sh2">Content Card</h2>
+        <p class="sp">Standard card with cover image, eyebrow, title, description, and a footer row.</p>
+        <div class="kcard-grid">
+          <div class="kcard">
+            <div class="kcard-img-ph" style="background:linear-gradient(135deg,#1B1F24 0%,#263D42 100%)">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="kcard-body">
+              <div class="kcard-eyebrow">Case Study · Industrial</div>
+              <div class="kcard-title">Automating Scaffold Transport on Turnaround Projects</div>
+              <div class="kcard-desc">KEWAZO's LIFTBOT reduced hazardous exposure hours by one third during a major refinery shutdown.</div>
+            </div>
+            <div class="kcard-footer">
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="kcard-tag">LIFTBOT</span><span class="kcard-tag">Safety</span></div>
+              <button class="kbtn kbtn-sm kbtn-iconr" style="flex-shrink:0">Read<span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span></button>
+            </div>
+          </div>
+          <div class="kcard">
+            <div class="kcard-img-ph" style="background:linear-gradient(135deg,#058B8C 0%,#40C0C0 100%)">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="kcard-body">
+              <div class="kcard-eyebrow">Update · Product</div>
+              <div class="kcard-title">ONSITE 3.0 — Live Data Analytics for Every Lift</div>
+              <div class="kcard-desc">Real-time dashboards give project managers instant visibility into cycle times, payload data, and equipment status.</div>
+            </div>
+            <div class="kcard-footer">
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="kcard-tag">ONSITE</span><span class="kcard-tag">Analytics</span></div>
+              <button class="kbtn kbtn-sm kbtn-iconr" style="flex-shrink:0">Read<span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span></button>
+            </div>
+          </div>
+          <div class="kcard">
+            <div class="kcard-img-ph" style="background:linear-gradient(135deg,#2B3037 0%,#414C59 100%)">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="kcard-body">
+              <div class="kcard-eyebrow">Guide · Design</div>
+              <div class="kcard-title">KDS Colour System — Tokens and Semantic Roles</div>
+              <div class="kcard-desc">How base colour tokens map to semantic roles, and how to apply them correctly across light and dark mode.</div>
+            </div>
+            <div class="kcard-footer">
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="kcard-tag">KDS</span><span class="kcard-tag">Colour</span></div>
+              <button class="kbtn kbtn-sm kbtn-iconr" style="flex-shrink:0">Read<span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:24px"><code>&lt;div class="kcard"&gt;
+  &lt;div class="kcard-img-ph"&gt;...&lt;/div&gt;
+  &lt;div class="kcard-body"&gt;
+    &lt;div class="kcard-eyebrow"&gt;Category&lt;/div&gt;
+    &lt;div class="kcard-title"&gt;Title&lt;/div&gt;
+    &lt;div class="kcard-desc"&gt;Description&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="kcard-footer"&gt;
+    &lt;span class="kcard-tag"&gt;Tag&lt;/span&gt;
+    &lt;button class="kbtn kbtn-sm"&gt;CTA&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></div>
+      </div>
+
+      <!-- Stat Card -->
+      <div class="section" id="cc-stat" data-sec>
+        <h2 class="sh2">Stat Card</h2>
+        <p class="sp">Highlight KPIs and metrics. Use the <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">.up</code> / <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">.dn</code> modifier for trend direction.</p>
+        <div class="kcard-grid">
+          <div class="kstat">
+            <div class="kstat-label">Total Lift Cycles</div>
+            <div class="kstat-val">24,891</div>
+            <div class="kstat-change up">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              +12% vs last month
+            </div>
+          </div>
+          <div class="kstat">
+            <div class="kstat-label">Active Sites</div>
+            <div class="kstat-val">7</div>
+            <div class="kstat-change up">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              +2 new this quarter
+            </div>
+          </div>
+          <div class="kstat">
+            <div class="kstat-label">Avg. Payload (kg)</div>
+            <div class="kstat-val">186</div>
+            <div class="kstat-change dn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              −3% vs last month
+            </div>
+          </div>
+          <div class="kstat">
+            <div class="kstat-label">Hazard Hours Saved</div>
+            <div class="kstat-val">1,340</div>
+            <div class="kstat-change up">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              All-time high
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Card -->
+      <div class="section" id="cc-feature" data-sec>
+        <h2 class="sh2">Feature Card</h2>
+        <p class="sp">Icon + title + description. Use for product features, capabilities, or technical highlights.</p>
+        <div class="kcard-grid">
+          <div class="kfeat">
+            <div class="kfeat-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#1B1F24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="kfeat-title">Automated Vertical Transport</div>
+            <div class="kfeat-desc">LIFTBOT handles scaffold material automatically — no manual carry, no exposure on ladders.</div>
+          </div>
+          <div class="kfeat">
+            <div class="kfeat-icon">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7.5" width="18" height="1.5" rx="0.5" fill="#1B1F24"/><rect x="3" y="11.25" width="18" height="1.5" rx="0.5" fill="#1B1F24"/><rect x="3" y="15" width="18" height="1.5" rx="0.5" fill="#1B1F24"/></svg>
+            </div>
+            <div class="kfeat-title">Real-time ONSITE Analytics</div>
+            <div class="kfeat-desc">Every cycle, payload, and event captured in live dashboards accessible from any device.</div>
+          </div>
+          <div class="kfeat">
+            <div class="kfeat-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#1B1F24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="kfeat-title">Rapid Site Deployment</div>
+            <div class="kfeat-desc">LIFTBOT is operational within hours. Modular design adapts to confined and complex structures.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Card</div>
+      <a class="stnav-item active" data-target="cc-overview">Overview</a>
+      <a class="stnav-item" data-target="cc-content">Content Card</a>
+      <a class="stnav-item" data-target="cc-stat">Stat Card</a>
+      <a class="stnav-item" data-target="cc-feature">Feature Card</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ COMPONENT — MODAL ══════════════════════ -->
+<div id="page-component-modal" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Component</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="component-section-title">Section Title</a>
+        <a class="snav-item" data-page="component-nav">Navigation</a>
+        <a class="snav-item" data-page="component-btn">Button</a>
+        <a class="snav-item" data-page="component-card">Card</a>
+        <a class="snav-item" data-page="component-filter">Filter</a>
+        <a class="snav-item active">Modal</a>
+        <a class="snav-item" data-page="component-badge">Badge</a>
+        <a class="snav-item" data-page="component-tooltip">Tooltip</a>
+        <a class="snav-item" data-page="component-input">Input Fields</a>
+        <a class="snav-item" data-page="component-table">Table and Chart</a>
+        <a class="snav-item" data-page="component-footer">Footer</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Modal</h1><span class="b-sub">Component</span></div>
+
+      <!-- Overview -->
+      <div class="section" id="cm-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KDS provides two modal patterns: a <strong>centered overlay</strong> for confirmations and forms, and a <strong>contact widget</strong> fixed to the bottom-right viewport corner — matching the interaction on the KEWAZO.com landing page. The close icon uses <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">ico_close</code> from the KDS icon set.</p>
+      </div>
+
+      <!-- Centered Modal -->
+      <div class="section" id="cm-overlay" data-sec>
+        <h2 class="sh2">Centered Overlay</h2>
+        <p class="sp">Full-screen backdrop with a centered panel. Click the button to trigger. Close with the X icon or press Escape.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+          <button class="kbtn kbtn-md" onclick="kdsOpenModal('kmod-basic')">Open Modal</button>
+          <button class="kbtn kbtn-sm kbtn-iconr" onclick="kdsOpenModal('kmod-form')">Form Modal<span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span></button>
+        </div>
+        <div class="code-block" style="margin-top:24px"><code>&lt;div class="kmod-backdrop" id="myModal"&gt;
+  &lt;div class="kmod-sheet"&gt;
+    &lt;div class="kmod-head"&gt;
+      &lt;div class="kmod-title"&gt;Modal Title&lt;/div&gt;
+      &lt;button class="kmod-close" onclick="kdsCloseModal('myModal')"&gt;
+        [ico_close svg]
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="kmod-body"&gt;Content&lt;/div&gt;
+    &lt;div class="kmod-actions"&gt;
+      &lt;button class="kbtn kbtn-sm"&gt;Confirm&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></div>
+      </div>
+
+      <!-- Contact Widget -->
+      <div class="section" id="cm-widget" data-sec>
+        <h2 class="sh2">Contact Widget</h2>
+        <p class="sp">Fixed bottom-right panel. References the <a href="https://kewazo.com" target="_blank" style="color:var(--t400)">kewazo.com</a> landing page CTA widget — a compact floating button that expands into a contact form. Active on this page only.</p>
+        <div class="kmod-demo-wrap">
+          <div class="kmod-widget" id="kmod-widget-demo">
+            <div class="kmod-widget-popup">
+              <div class="kmod-widget-header">
+                <div class="kmod-widget-htitle">Request a quote</div>
+                <button class="kmod-close" style="color:rgba(255,255,255,.6)" onclick="kdsToggleWidget('kmod-widget-demo')">
+                  <svg width="16" height="16" viewBox="0 0 40 40" fill="none"><path d="M27.5 14.7437L22.2432 20L27.5 25.2563L25.2563 27.5L20 22.2432L14.7437 27.5L12.5 25.2563L17.7568 20L12.5 14.7437L14.7437 12.5L20 17.7568L25.2563 12.5L27.5 14.7437Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="kmod-widget-body">
+                <div class="kmod-field">
+                  <div class="kmod-label">Name</div>
+                  <input class="kmod-input" type="text" placeholder="Your name">
+                </div>
+                <div class="kmod-field">
+                  <div class="kmod-label">Company</div>
+                  <input class="kmod-input" type="text" placeholder="Company name">
+                </div>
+                <div class="kmod-field">
+                  <div class="kmod-label">Message</div>
+                  <textarea class="kmod-textarea" placeholder="Tell us about your project…"></textarea>
+                </div>
+                <button class="kmod-widget-btn" style="width:100%;justify-content:center;margin-top:16px">
+                  Send Request
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+            <button class="kmod-widget-trigger" onclick="kdsToggleWidget('kmod-widget-demo')">
+              <svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M27.5 25.294H24.4538V17.6999L14.6537 27.5L12.5 25.3464L22.3001 15.5462H14.7061V12.5H27.5V25.294Z" fill="white"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Modal</div>
+      <a class="stnav-item active" data-target="cm-overview">Overview</a>
+      <a class="stnav-item" data-target="cm-overlay">Centered Overlay</a>
+      <a class="stnav-item" data-target="cm-widget">Contact Widget</a>
+    </div>
+  </div>
+
+  <!-- Basic Modal -->
+  <div class="kmod-backdrop" id="kmod-basic" onclick="if(event.target===this)kdsCloseModal('kmod-basic')">
+    <div class="kmod-sheet">
+      <div class="kmod-head">
+        <div class="kmod-title">Confirm action</div>
+        <button class="kmod-close" onclick="kdsCloseModal('kmod-basic')">
+          <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M27.5 14.7437L22.2432 20L27.5 25.2563L25.2563 27.5L20 22.2432L14.7437 27.5L12.5 25.2563L17.7568 20L12.5 14.7437L14.7437 12.5L20 17.7568L25.2563 12.5L27.5 14.7437Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="kmod-body">
+        <p>Are you sure you want to proceed? This action cannot be undone. Please review the details before confirming.</p>
+      </div>
+      <div class="kmod-actions">
+        <button class="kbtn kbtn-sm" style="background:transparent;color:var(--text-2);border:1px solid var(--border-1)" onclick="kdsCloseModal('kmod-basic')">Cancel</button>
+        <button class="kbtn kbtn-sm" onclick="kdsCloseModal('kmod-basic')">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Modal -->
+  <div class="kmod-backdrop" id="kmod-form" onclick="if(event.target===this)kdsCloseModal('kmod-form')">
+    <div class="kmod-sheet">
+      <div class="kmod-head">
+        <div class="kmod-title">Request a quote</div>
+        <button class="kmod-close" onclick="kdsCloseModal('kmod-form')">
+          <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M27.5 14.7437L22.2432 20L27.5 25.2563L25.2563 27.5L20 22.2432L14.7437 27.5L12.5 25.2563L17.7568 20L12.5 14.7437L14.7437 12.5L20 17.7568L25.2563 12.5L27.5 14.7437Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="kmod-body" style="padding-bottom:0">
+        <div class="kmod-field">
+          <div class="kmod-label">Full name</div>
+          <input class="kmod-input" type="text" placeholder="Your full name">
+        </div>
+        <div class="kmod-field">
+          <div class="kmod-label">Company</div>
+          <input class="kmod-input" type="text" placeholder="Company name">
+        </div>
+        <div class="kmod-field">
+          <div class="kmod-label">Email</div>
+          <input class="kmod-input" type="email" placeholder="you@company.com">
+        </div>
+        <div class="kmod-field">
+          <div class="kmod-label">Message</div>
+          <textarea class="kmod-textarea" placeholder="Describe your project or question…"></textarea>
+        </div>
+      </div>
+      <div class="kmod-actions" style="padding-top:16px">
+        <button class="kbtn kbtn-sm" style="background:transparent;color:var(--text-2);border:1px solid var(--border-1)" onclick="kdsCloseModal('kmod-form')">Cancel</button>
+        <button class="kbtn kbtn-sm kbtn-iconr">Send<span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ COMPONENT — BUTTON ══════════════════════ -->
+<div id="page-component-btn" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Component</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="component-section-title">Section Title</a>
+        <a class="snav-item" data-page="component-nav">Navigation</a>
+        <a class="snav-item active">Button</a>
+        <a class="snav-item" data-page="component-card">Card</a>
+        <a class="snav-item" data-page="component-filter">Filter</a>
+        <a class="snav-item" data-page="component-modal">Modal</a>
+        <a class="snav-item" data-page="component-badge">Badge</a>
+        <a class="snav-item" data-page="component-tooltip">Tooltip</a>
+        <a class="snav-item" data-page="component-input">Input Fields</a>
+        <a class="snav-item" data-page="component-table">Table and Chart</a>
+        <a class="snav-item" data-page="component-footer">Footer</a>
+      </div>
+    </div>
+
+    <div class="body-col">
+      <div class="bhead">
+        <h1 class="b-title">Button</h1>
+        <span class="b-sub">Component</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="section" id="cb-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">KEWAZO buttons are zero-radius, SemiBold uppercase, and precision-spaced. They come in three sizes — SM, MD, LG — with a Shadow variant for high-emphasis hero placements, and icon variants for directional CTAs. The Display button extends this system with a teal border-sweep animation for primary landing page actions.</p>
+      </div>
+
+      <!-- Basic -->
+      <div class="section" id="cb-basic" data-sec>
+        <h2 class="sh2">Basic</h2>
+        <p class="sp">Four configurations. Hover directly on each button to see the state change — fill shifts from Midnight <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">#1B1F24</code> to Slate <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">#414C59</code>.</p>
+        <div class="kbtn-row" style="align-items:flex-end">
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">Shadow LG</div>
+            <button class="kbtn kbtn-lg kbtn-shd">Button text</button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">LG</div>
+            <button class="kbtn kbtn-lg">Button text</button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">MD</div>
+            <button class="kbtn kbtn-md">Button text</button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">SM</div>
+            <button class="kbtn kbtn-sm">Button text</button>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:24px"><code>.kbtn           { background: #1B1F24; color: #fff; font-weight: 600; text-transform: uppercase; }
+.kbtn:hover     { background: #414C59; }
+.kbtn.kbtn-lg   { height: 56px; padding: 12px 24px; font-size: 1.125rem; }
+.kbtn.kbtn-md   { height: 40px; padding: 12px 20px; font-size: 1rem; }
+.kbtn.kbtn-sm   { height: 36px; padding: 12px 16px; font-size: 0.875rem; }
+.kbtn.kbtn-shd  { box-shadow: 0 8px 10px rgba(38,61,66,.16); }</code></div>
+      </div>
+
+      <!-- Icon -->
+      <div class="section" id="cb-icon" data-sec>
+        <h2 class="sh2">Icon</h2>
+        <p class="sp">Arrow icon naturally rotates 45° from ↗ to → on hover. Available in Icon Left (icon before text) and Icon Right (icon after text) layouts. Hover to interact.</p>
+
+        <h3 class="sh3">Icon Left</h3>
+        <div class="kbtn-row" style="align-items:flex-end">
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">LG</div>
+            <button class="kbtn kbtn-lg kbtn-iconl">
+              <span class="kbi kbi-24"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+              Button text
+            </button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">MD</div>
+            <button class="kbtn kbtn-md kbtn-iconl">
+              <span class="kbi kbi-24"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+              Button text
+            </button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">SM</div>
+            <button class="kbtn kbtn-sm kbtn-iconl">
+              <span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+              Button text
+            </button>
+          </div>
+        </div>
+
+        <h3 class="sh3">Icon Right</h3>
+        <div class="kbtn-row" style="align-items:flex-end">
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">LG</div>
+            <button class="kbtn kbtn-lg kbtn-iconr">
+              Button text
+              <span class="kbi kbi-24"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+            </button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">MD</div>
+            <button class="kbtn kbtn-md kbtn-iconr">
+              Button text
+              <span class="kbi kbi-24"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+            </button>
+          </div>
+          <div class="kbtn-col">
+            <div class="kbtn-col-lbl">SM</div>
+            <button class="kbtn kbtn-sm kbtn-iconr">
+              Button text
+              <span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M21.436 29.375L19.2482 27.2173L24.7024 21.8381L10.6251 21.8381L10.625 18.787L24.7024 18.7869L19.2482 13.4077L21.4361 11.25L30.625 20.3125L21.436 29.375Z" fill="currentColor"/></svg></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:24px"><code>&lt;!-- Icon Left: icon before text —— rotates ↗→→ on hover --&gt;
+&lt;button class="kbtn kbtn-lg kbtn-iconl"&gt;
+  &lt;span class="kbi kbi-24"&gt;[arrow-right svg]&lt;/span&gt;
+  Button text
+&lt;/button&gt;
+
+&lt;!-- Icon Right: icon after text --&gt;
+&lt;button class="kbtn kbtn-lg kbtn-iconr"&gt;
+  Button text
+  &lt;span class="kbi kbi-24"&gt;[arrow-right svg]&lt;/span&gt;
+&lt;/button&gt;</code></div>
+      </div>
+
+      <!-- Display -->
+      <div class="section" id="cb-display" data-sec>
+        <h2 class="sh2">Display</h2>
+        <p class="sp">High-emphasis CTA for hero sections. A soft teal light sweeps around the border using a rotating conic-gradient layer clipped by <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:3px;">overflow:hidden</code>. A pulsing teal glow dot anchors the bottom edge.</p>
+        <div class="kbtn-disp-demo">
+          <a class="kbtn-disp" href="#">
+            <span class="kbtn-disp-glow"></span>
+            <span class="kbtn-disp-in">Request a quote</span>
+          </a>
+          <a class="kbtn-disp" href="#">
+            <span class="kbtn-disp-glow"></span>
+            <span class="kbtn-disp-in">
+              Get started
+              <span class="kbi kbi-20"><svg viewBox="0 0 40 40" fill="none"><path d="M27.5 25.294H24.4538V17.6999L14.6537 27.5L12.5 25.3464L22.3001 15.5462H14.7061V12.5H27.5V25.294Z" fill="currentColor"/></svg></span>
+            </span>
+          </a>
+        </div>
+        <div class="code-block"><code>&lt;a class="kbtn-disp" href="#"&gt;
+  &lt;span class="kbtn-disp-glow"&gt;&lt;/span&gt;   &lt;!-- pulsing bottom glow --&gt;
+  &lt;span class="kbtn-disp-in"&gt;Request a quote&lt;/span&gt;
+&lt;/a&gt;
+
+/* ::before on .kbtn-disp handles the rotating conic-gradient sweep.
+   overflow:hidden on .kbtn-disp clips the 200%×200% rotating layer.
+   .kbtn-disp-in sits at z-index:1 above both animated layers. */</code></div>
+      </div>
+    </div><!-- /body-col -->
+
+    <div class="sticky-nav">
+      <div class="stnav-title">Button</div>
+      <a class="stnav-item active" data-target="cb-overview">Overview</a>
+      <a class="stnav-item" data-target="cb-basic">Basic</a>
+      <a class="stnav-item" data-target="cb-icon">Icon</a>
+      <a class="stnav-item" data-target="cb-display">Display</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ RESOURCES — CLIENTS' LOGO ══════════════════════ -->
+<div id="page-resources-clients-logo" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Resources</div>
+      <div class="snav-items">
+        <a class="snav-item" data-page="resources-kewazo-ci">KEWAZO CI</a>
+        <a class="snav-item" data-page="resources-liftbot-bi">LIFTBOT BI</a>
+        <a class="snav-item" data-page="resources-google-docs">Google Docs Template</a>
+        <a class="snav-item" data-page="resources-social-media">Social Media Profile</a>
+        <a class="snav-item" data-page="resources-branded-merches">Branded Merches</a>
+        <a class="snav-item" data-page="resources-business-card">Business Card</a>
+        <a class="snav-item active">Clients' Logo</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">Clients' Logo</h1><span class="b-sub">Resources</span></div>
+
+      <div class="section" id="rcl-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">Approved client logos for use in KEWAZO materials. Each logo is provided in four mono variants — Full Colour, Dark, White, and Grey — to ensure correct application across digital and print surfaces. Click any tile to download the SVG.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;background:var(--border-1);border:1px solid var(--border-1);margin-top:8px">
+          <div style="background:#fff;padding:16px 20px;display:flex;flex-direction:column;gap:4px"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)">Full Colour</div><div class="sp" style="font-size:13px">Original brand colour</div></div>
+          <div style="background:#fff;padding:16px 20px;display:flex;flex-direction:column;gap:4px"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)">Dark</div><div class="sp" style="font-size:13px">Black/dark on light bg</div></div>
+          <div style="background:#1B1F24;padding:16px 20px;display:flex;flex-direction:column;gap:4px"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4)">White</div><div style="font-size:13px;color:rgba(255,255,255,.6)">White version for dark bg</div></div>
+          <div style="background:#F5F7FB;padding:16px 20px;display:flex;flex-direction:column;gap:4px"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)">Grey</div><div class="sp" style="font-size:13px">Neutral monochrome</div></div>
+        </div>
+      </div>
+
+      <div class="section" id="rcl-asset" data-sec>
+        <h2 class="sh2">Asset owners' logo</h2>
+        <p class="sp">Logos of KEWAZO's asset owner clients — refineries, chemical plants, and industrial operators. Used in case studies, proposals, and presentations with client approval.</p>
+        <div class="logo-companies" id="rcl-asset-grid" style="margin-top:8px"></div>
+      </div>
+
+      <div class="section" id="rcl-service" data-sec>
+        <h2 class="sh2">Service providers' logo</h2>
+        <p class="sp">Logos of scaffolding contractors and service providers. Files will be added as assets are collected and approved.</p>
+        <div style="padding:32px;background:var(--bg-2);border:1px dashed var(--border-1);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:13px;font-weight:500;letter-spacing:-0.26px">No assets yet — coming soon</div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">Clients' Logo</div>
+      <a class="stnav-item active" data-target="rcl-overview">Overview</a>
+      <a class="stnav-item" data-target="rcl-asset">Asset owners</a>
+      <a class="stnav-item" data-target="rcl-service">Service providers</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STUB COMPONENT PAGES ═══ -->
+<script>
+const STUBS=[
+  // Components
+  ['component-section-title','Section Title','Overview,Section Title'],
+  ['component-filter','Filter','Overview,Calendar,Search'],
+  ['component-badge','Badge','Overview,Badge'],
+  ['component-tooltip','Tooltip','Overview,Tooltip'],
+  ['component-input','Input Fields','Overview,Input Fields,Contact Form'],
+  ['component-table','Table and Chart','Overview,DataTable,Graph Charts'],
+  ['component-footer','Footer','Overview,Footer,Contact Information'],
+  // Case Studies
+  ['case-studies-website','Website','Overview,KEWAZO Official Website,Version History'],
+  ['case-studies-onsite','ONSITE','Overview,Data analytics platform ONSITE,Version History'],
+  ['case-studies-internal-tools','Internal Tools','Overview,Operations'],
+  ['case-studies-presentation-slides','Presentation Slides','Overview,Presentation Slides - Internal,Presentation Slides - Sales'],
+  ['case-studies-sales-materials','Sales Materials','Overview,LIFTBOT One-pager,Case study report'],
+  // Resources
+  ['resources-kewazo-ci','KEWAZO Corporate Identity','Overview,Signature,LIFTBOT Typelogo,Video Intro and Outtro,Etc.'],
+  ['resources-liftbot-bi','LIFTBOT BI','Overview'],
+  ['resources-google-docs','Google Docs Template','Overview,Google Docs Template,Version History'],
+  ['resources-social-media','Social Media Profile','Overview,Social Media Profile'],
+  ['resources-branded-merches','Branded Merches','Overview,Suit Pin,T-shirts,Pullover,Stickers,Embroidery Patch,Beer Labels,Trucker Cap'],
+  ['resources-business-card','Business Card','Overview,Business Card Anatomy'],
+];
+
+const COMP_NAV=`<a class="snav-item" data-page="component-section-title">Section Title</a><a class="snav-item" data-page="component-nav">Navigation</a><a class="snav-item" data-page="component-btn">Button</a><a class="snav-item" data-page="component-card">Card</a><a class="snav-item" data-page="component-filter">Filter</a><a class="snav-item" data-page="component-modal">Modal</a><a class="snav-item" data-page="component-badge">Badge</a><a class="snav-item" data-page="component-tooltip">Tooltip</a><a class="snav-item" data-page="component-input">Input Fields</a><a class="snav-item" data-page="component-table">Table and Chart</a><a class="snav-item" data-page="component-footer">Footer</a>`;
+
+const CASE_NAV=`<a class="snav-item" data-page="case-studies-website">Website</a><a class="snav-item" data-page="case-studies-onsite">ONSITE</a><a class="snav-item" data-page="case-studies-internal-tools">Internal Tools</a><a class="snav-item" data-page="case-studies-presentation-slides">Presentation Slides</a><a class="snav-item" data-page="case-studies-sales-materials">Sales Materials</a>`;
+
+const RES_NAV=`<a class="snav-item" data-page="resources-kewazo-ci">KEWAZO CI</a><a class="snav-item" data-page="resources-liftbot-bi">LIFTBOT BI</a><a class="snav-item" data-page="resources-google-docs">Google Docs Template</a><a class="snav-item" data-page="resources-social-media">Social Media Profile</a><a class="snav-item" data-page="resources-branded-merches">Branded Merches</a><a class="snav-item" data-page="resources-business-card">Business Card</a><a class="snav-item" data-page="resources-clients-logo">Clients' Logo</a>`;
+
+STUBS.forEach(([id,title,sects])=>{
+  if(document.getElementById('page-'+id)) return;
+  const isComp=id.startsWith('component');
+  const isCase=id.startsWith('case-studies');
+  const isRes=id.startsWith('resources');
+  let snLabel, baseNav;
+  if(isComp){ snLabel='Component'; baseNav=COMP_NAV; }
+  else if(isCase){ snLabel='Case studies'; baseNav=CASE_NAV; }
+  else if(isRes){ snLabel='Resources'; baseNav=RES_NAV; }
+  else { snLabel=title; baseNav=`<a class="snav-item active">${title}</a>`; }
+  const navItems=(isComp||isCase||isRes)
+    ? baseNav.replace(`data-page="${id}"`,`class="snav-item active" data-page="${id}"`)
+    : baseNav;
+  const sections=sects.split(',').map((s,i)=>`
+    <div class="section" id="${id}-s${i}" data-sec>
+      <h2 class="sh2">${s}</h2>
+      <div class="stub-ph">
+        <div class="stub-ph-icon">📐</div>
+        <div class="stub-ph-lbl">${title} — ${s}</div>
+      </div>
+    </div>`).join('');
+  const stnavItems=sects.split(',').map((s,i)=>`<a class="stnav-item${i===0?' active':''}" data-target="${id}-s${i}">${s}</a>`).join('');
+  const el=document.createElement('div');
+  el.id=`page-${id}`;el.className='page';
+  el.innerHTML=`<div class="interior">
+    <div class="side-nav"><div class="snav-label">${snLabel}</div><div class="snav-items">${navItems}</div></div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">${title}</h1><span class="b-sub">${snLabel}</span></div>
+      ${sections}
+    </div>
+    <div class="sticky-nav"><div class="stnav-title">${title}</div>${stnavItems}</div>
+  </div>`;
+  document.querySelector('.page-wrap').appendChild(el);
+});
+</script>
+
+</div><!-- /page-wrap -->
+
+<script>
+(function(){
+/* ── Page map ── */
+const MAP={
+  landing:'page-landing',
+  guideline:'page-guideline',
+  'foundation-color':'page-foundation-color',
+  'foundation-type':'page-foundation-type',
+  'foundation-layout':'page-foundation-layout',
+  'foundation-radius':'page-foundation-radius',
+  'foundation-icon':'page-foundation-icon',
+  'component-section-title':'page-component-section-title',
+  'component-nav':'page-component-nav',
+  'component-btn':'page-component-btn',
+  'component-card':'page-component-card',
+  'component-filter':'page-component-filter',
+  'component-modal':'page-component-modal',
+  'component-badge':'page-component-badge',
+  'component-tooltip':'page-component-tooltip',
+  'component-input':'page-component-input',
+  'component-table':'page-component-table',
+  'component-footer':'page-component-footer',
+  // Case studies (GNB fallback + individual pages)
+  'case-studies':'page-case-studies-website',
+  'case-studies-website':'page-case-studies-website',
+  'case-studies-onsite':'page-case-studies-onsite',
+  'case-studies-internal-tools':'page-case-studies-internal-tools',
+  'case-studies-presentation-slides':'page-case-studies-presentation-slides',
+  'case-studies-sales-materials':'page-case-studies-sales-materials',
+  // Resources (GNB fallback + individual pages)
+  resources:'page-resources-kewazo-ci',
+  'resources-kewazo-ci':'page-resources-kewazo-ci',
+  'resources-liftbot-bi':'page-resources-liftbot-bi',
+  'resources-google-docs':'page-resources-google-docs',
+  'resources-social-media':'page-resources-social-media',
+  'resources-branded-merches':'page-resources-branded-merches',
+  'resources-business-card':'page-resources-business-card',
+  'resources-clients-logo':'page-resources-clients-logo',
+};
+
+/* GNB active link groups */
+const GNB_GROUP={
+  guideline:'guideline',
+  'foundation-color':'foundation-color',
+  'foundation-type':'foundation-color',
+  'foundation-layout':'foundation-color',
+  'foundation-radius':'foundation-color',
+  'foundation-icon':'foundation-color',
+  'component-section-title':'component-nav',
+  'component-nav':'component-nav',
+  'component-btn':'component-nav',
+  'component-card':'component-nav',
+  'component-filter':'component-nav',
+  'component-modal':'component-nav',
+  'component-badge':'component-nav',
+  'component-tooltip':'component-nav',
+  'component-input':'component-nav',
+  'component-table':'component-nav',
+  'component-footer':'component-nav',
+  'case-studies':'case-studies',
+  'case-studies-website':'case-studies',
+  'case-studies-onsite':'case-studies',
+  'case-studies-internal-tools':'case-studies',
+  'case-studies-presentation-slides':'case-studies',
+  'case-studies-sales-materials':'case-studies',
+  resources:'resources',
+  'resources-kewazo-ci':'resources',
+  'resources-liftbot-bi':'resources',
+  'resources-google-docs':'resources',
+  'resources-social-media':'resources',
+  'resources-branded-merches':'resources',
+  'resources-business-card':'resources',
+  'resources-clients-logo':'resources',
+};
+
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.gnb-nav a').forEach(a=>a.classList.remove('active'));
+
+  const targetId=MAP[page]||'page-landing';
+  const targetEl=document.getElementById(targetId);
+  if(targetEl) targetEl.classList.add('active');
+
+  const gnbKey=GNB_GROUP[page]||page;
+  document.querySelector(`.gnb-nav a[data-page="${gnbKey}"]`)?.classList.add('active');
+
+  window.scrollTo({top:0,behavior:'instant'});
+  closeMobile();
+  document.dispatchEvent(new Event('page-changed'));
+}
+
+/* click delegation on [data-page] */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-page]');
+  if(el){e.preventDefault();navigate(el.dataset.page);}
+});
+
+/* ── Hamburger ── */
+const ham=document.getElementById('hamburger');
+const drawer=document.getElementById('mobile-drawer');
+function closeMobile(){
+  ham.classList.remove('open');
+  ham.setAttribute('aria-expanded','false');
+  drawer.classList.remove('open');
+  document.body.style.overflow='';
+}
+ham.addEventListener('click',()=>{
+  const open=drawer.classList.toggle('open');
+  ham.classList.toggle('open',open);
+  ham.setAttribute('aria-expanded',String(open));
+  document.body.style.overflow=open?'hidden':'';
+});
+
+/* ── Scroll-based sticky nav highlight ── */
+function initObserver(pageId){
+  const page=document.getElementById(pageId);
+  if(!page) return;
+  const secs=page.querySelectorAll('[data-sec]');
+  const items=page.querySelectorAll('.stnav-item[data-target]');
+  if(!secs.length||!items.length) return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        items.forEach(i=>i.classList.remove('active'));
+        page.querySelector(`.stnav-item[data-target="${e.target.id}"]`)?.classList.add('active');
+      }
+    });
+  },{rootMargin:'-60px 0px -60% 0px',threshold:0});
+  secs.forEach(s=>obs.observe(s));
+}
+
+/* observe after stub pages are injected */
+requestAnimationFrame(()=>{
+  Object.values(MAP).forEach(initObserver);
+});
+
+/* ── sticky nav click → scroll ── */
+document.addEventListener('click',e=>{
+  const item=e.target.closest('.stnav-item[data-target]');
+  if(!item) return;
+  e.preventDefault();
+  const target=document.getElementById(item.dataset.target);
+  if(!target) return;
+  const gnbH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gnb'))||64;
+  const rect=target.getBoundingClientRect();
+  window.scrollTo({top:window.scrollY+rect.top-gnbH-8,behavior:'smooth'});
+  item.closest('.sticky-nav')?.querySelectorAll('.stnav-item').forEach(i=>i.classList.remove('active'));
+  item.classList.add('active');
+});
+
+/* ── data-scroll links in side nav ── */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-scroll]');
+  if(!el) return;
+  e.preventDefault();
+  document.getElementById(el.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'});
+  el.closest('.side-nav')?.querySelectorAll('.snav-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+});
+
+})();
+</script>
+
+
+<!-- Clients' Logo grid renderer -->
+<script>
+(function(){
+  const BASE='./04_Element/01_Client_logo/01_Asset_Owner/';
+  /* [displayName, fileKey, variants[]] — fileKey is the part after "Client logos=" in the filename */
+  const ASSET_OWNERS=[
+    ['bp',              '200_bp',                ['FullColour']],
+    ['Shell',           '200_shell',             ['FullColour','Dark','White','grey']],
+    ['BASF',            '210_BASF',              ['FullColour','Dark','White','grey']],
+    ['Borealis',        '210_Borealis',          ['FullColour','Dark','White','grey']],
+    ['Chevron',         '210_Chevron',           ['FullColour','Dark','White','grey']],
+    ['CPchem',          '210_CPchem',            ['FullColour','Dark','White','grey']],
+    ['DOW',             '210_DOW',               ['FullColour','Dark','White','grey']],
+    ['ExxonMobil',      '210_ExxonMobil',        ['FullColour','White','grey']],
+    ['Flint Hills Resources','210_FlintHillsResources',['FullColour','Dark','White','grey']],
+    ['Intel',           '210_Intel',             ['FullColour','Dark','White','grey']],
+    ['LyondellBasell',  '210_LyondellBasell',    ['FullColour','Dark','White','grey']],
+    ['PBF Energy',      'PBF Energy',            ['FullColour','Dark','White','grey']],
+    ['Syensqo',         '210_Syensqo',           ['FullColour','Dark','White','grey']],
+    ['Syncrude',        '210_Syncrude',          ['FullColour','Dark','White','grey']],
+    ['Ternium',         '210_Ternium',           ['FullColour','Dark','White','grey']],
+  ];
+  const THUMB_BG={FullColour:'#fff',Dark:'#fff',White:'#1B1F24',grey:'#F5F7FB'};
+  const PILL_LBL={FullColour:'FC',Dark:'BK',White:'WH',grey:'GR'};
+  const VARIANT_LABEL={FullColour:'Full Colour',Dark:'Dark',White:'White',grey:'Grey'};
+
+  function logoSrc(key,variant){
+    const fname='Client logos='+key+', Mono='+variant+'.svg';
+    return BASE+fname.split('').map(function(c){
+      return c===' '?'%20':c===','?'%2C':c;
+    }).join('');
+  }
+
+  function renderGrid(){
+    var grid=document.getElementById('rcl-asset-grid');
+    if(!grid||grid.dataset.rendered) return;
+    grid.dataset.rendered='1';
+    var html='<div class="logo-card-grid">';
+    ASSET_OWNERS.forEach(function(entry){
+      var name=entry[0],key=entry[1],variants=entry[2];
+      var defV=variants[0];
+      var defSrc=logoSrc(key,defV);
+      var defBg=THUMB_BG[defV]||'#fff';
+      var cid='lc-'+key.replace(/\W/g,'_');
+      html+='<div class="logo-card" id="'+cid+'">';
+      html+='<div class="logo-card-thumb" style="background:'+defBg+'" onclick="kdsLogoCopy(this,\''+name+'\',\''+PILL_LBL[defV]+'\')"><img src="'+defSrc+'" loading="lazy" alt="'+name+' '+defV+'" onerror="this.style.opacity=\'0.3\'"></div>';
+      html+='<div class="logo-card-info"><div class="logo-card-name">'+name+'</div><div class="logo-card-pills">';
+      variants.forEach(function(v,i){
+        var src=logoSrc(key,v);
+        var bg=THUMB_BG[v]||'#fff';
+        var lbl=PILL_LBL[v]||v.substring(0,2).toUpperCase();
+        html+='<button class="logo-pill'+(i===0?' active':'')+'" data-src="'+src+'" data-bg="'+bg+'" data-card="'+cid+'" data-name="'+name+'" data-lbl="'+lbl+'" onclick="kdsLogoPill(this)">'+lbl+'</button>';
+      });
+      html+='</div></div></div>';
+    });
+    html+='</div>';
+    grid.innerHTML=html;
+  }
+
+  /* run when page becomes visible */
+  document.addEventListener('page-changed', renderGrid);
+  /* also try immediately and after stubs inject */
+  renderGrid();
+  setTimeout(renderGrid,200);
+})();
+</script>
+
+<!-- Icon SVG download -->
+<script>
+function kdsDownloadIcon(name, pathData){
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">${pathData}</svg>`;
+  const blob=new Blob([svg],{type:'image/svg+xml'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name+'.svg';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+function kdsDownloadFile(url, name){
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=name+'.svg';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);
+}
+function kdsLogoPill(btn){
+  var card=document.getElementById(btn.dataset.card);
+  if(!card) return;
+  var thumb=card.querySelector('.logo-card-thumb');
+  var img=thumb.querySelector('img');
+  thumb.style.background=btn.dataset.bg;
+  img.src=btn.dataset.src;
+  var n=btn.dataset.name,l=btn.dataset.lbl;
+  thumb.onclick=function(){kdsLogoCopy(thumb,n,l);};
+  card.querySelectorAll('.logo-pill').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+}
+function kdsLogoCopy(thumb,name,lbl){
+  var src=thumb.querySelector('img').src;
+  var toast=document.getElementById('copy-toast');
+  function show(msg){if(!toast)return;toast.textContent=msg;toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}
+  fetch(src).then(function(r){return r.text();}).then(function(svg){
+    navigator.clipboard.writeText(svg).then(function(){show('Copied SVG markup · '+name+' · '+lbl);});
+  }).catch(function(){show('Copy failed — open via local server');});
+}
+function kdsOpenModal(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function kdsCloseModal(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.remove('open');
+  document.body.style.overflow='';
+}
+function kdsToggleWidget(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.toggle('open');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.kmod-backdrop.open').forEach(function(m){
+      m.classList.remove('open');
+    });
+    document.body.style.overflow='';
+  }
+});
+</script>
+
+<div class="copy-toast" id="copy-toast"></div>
+<script>
+(function(){
+  const toast=document.getElementById('copy-toast');
+  let timer;
+  function showToast(hex){
+    toast.textContent=hex+' copied';
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer=setTimeout(()=>toast.classList.remove('show'),1500);
+  }
+  document.addEventListener('click',e=>{
+    const swCol=e.target.closest('.sw-col');
+    if(swCol){
+      const hex=swCol.querySelector('.sw-val')?.textContent.trim();
+      if(hex) navigator.clipboard.writeText(hex).then(()=>showToast(hex));
+      return;
+    }
+    const chip=e.target.closest('.p-chip');
+    if(chip){
+      const hex=chip.querySelector('.p-hex')?.textContent.trim();
+      if(hex) navigator.clipboard.writeText(hex).then(()=>showToast(hex));
+    }
+  });
+})();
+</script>
+</body>
+</html>
