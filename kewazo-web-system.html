@@ -229,24 +229,24 @@ img{display:block;max-width:100%;}
 /* ───────────────────────────────────────────
    COLOR PALETTE v2
 ─────────────────────────────────────────── */
-.palette{display:flex;flex-direction:column;gap:40px;padding:0 32px;}
-.pal-sec{display:flex;flex-direction:column;gap:40px;}
-.pal-sec-title{font-size:20px;font-weight:600;letter-spacing:-0.48px;color:#000;line-height:1;}
-.pal-group{display:flex;flex-direction:column;gap:40px;}
-.pal-row{display:flex;gap:24px;align-items:flex-start;}
-.pal-info{width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;}
-.pal-info-lbl{font-size:16px;font-weight:400;color:#2B3037;letter-spacing:-0.384px;}
+.palette{display:flex;flex-direction:column;gap:32px;padding:0;}
+.pal-sec{display:flex;flex-direction:column;gap:32px;}
+.pal-sec-title{font-size:16px;font-weight:600;letter-spacing:-0.024em;color:#000;line-height:1;}
+.pal-group{display:flex;flex-direction:column;gap:32px;}
+.pal-row{display:flex;gap:20px;align-items:flex-start;}
+.pal-info{width:172px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+.pal-info-lbl{font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0.02em;}
 .pal-swatches{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
 /* chip pill */
-.p-chip{display:flex;align-items:center;background:#fff;border:1px solid #D8E5E7;padding:4px 8px 4px 4px;cursor:pointer;width:100%;transition:border-color .15s,box-shadow .15s,background .15s;}
+.p-chip{display:flex;align-items:center;background:#fff;border:1px solid #D8E5E7;padding:3px 8px 3px 3px;cursor:pointer;width:100%;transition:border-color .15s,box-shadow .15s,background .15s;}
 .p-chip:hover{border-color:var(--t700);box-shadow:0 2px 8px rgba(0,0,0,.06);}
 .p-chip.copied{border-color:var(--t400);background:var(--t200);}
 .p-chip.copied .pal-chip-name{color:var(--t700);}
-.pal-chip-tile{width:24px;height:24px;flex-shrink:0;}
+.pal-chip-tile{width:20px;height:20px;flex-shrink:0;border-radius:3px;}
 .pal-chip-tile.bd{border:1px solid #D8E5E7;}
-.pal-chip-meta{display:flex;flex-direction:column;gap:2px;margin-left:10px;min-width:0;}
-.pal-chip-name{font-size:14px;font-weight:600;color:#2B3037;letter-spacing:-0.28px;white-space:nowrap;}
-.p-hex{font-size:11px;font-weight:500;color:#7A899C;letter-spacing:.01em;white-space:nowrap;}
+.pal-chip-meta{display:flex;flex-direction:column;gap:1px;margin-left:8px;min-width:0;}
+.pal-chip-name{font-size:12px;font-weight:600;color:#2B3037;letter-spacing:-0.01em;white-space:nowrap;}
+.p-hex{font-size:10px;font-weight:500;color:#7A899C;letter-spacing:.02em;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
 /* swatch squares */
 .sw-col{display:flex;flex-direction:column;gap:8px;cursor:pointer;}
 .sw-box{width:clamp(48px,6vw,80px);height:clamp(48px,6vw,80px);border-radius:0;position:relative;display:flex;align-items:center;justify-content:center;transition:transform .12s ease,box-shadow .18s ease;flex-shrink:0;}
@@ -533,10 +533,9 @@ img{display:block;max-width:100%;}
   .side-nav{width:180px;}
   .b-title{font-size:36px;}
   .sh2{font-size:24px;}
-  .palette{padding:0 8px;}
-  .pal-row{flex-direction:column;gap:16px;}
+  .pal-row{flex-direction:column;gap:12px;}
   .pal-info{width:100%;}
-  .p-chip{max-width:260px;}
+  .p-chip{max-width:220px;}
 }
 
 @media(min-width:768px) and (max-width:1100px){.logo-card-grid{grid-template-columns:repeat(3,1fr);}}
@@ -559,10 +558,9 @@ img{display:block;max-width:100%;}
   .bhead{width:100%;}
   .sh2{font-size:22px;}
   .sp{font-size:13px;}
-  .palette{padding:0;}
   .pal-row{flex-direction:column;gap:12px;}
   .pal-info{width:100%;}
-  .p-chip{max-width:260px;}
+  .p-chip{max-width:220px;}
   .pal-swatches{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;}
   .toc-inner{gap:20px;}
   .toc-group{min-width:calc(50% - 10px);}
@@ -1026,12 +1024,11 @@ img{display:block;max-width:100%;}
 
       <div class="section" id="fc-tokens" data-sec>
         <h2 class="sh2">Design Token Names</h2>
-        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components. All token names start with the system prefix <strong>kds</strong> (KEWAZO Design System).</p>
+        <p class="sp">Since KEWAZO clearly values accessibility, the contrast ratio should be 4.5:1 or higher according to WCAG. You can copy the hex code clicking on the swatch. But when you build a digital product,please do not use hard-coded hex colours in components. Instead, use the design tokens below as CSS variables.</p>
         <div class="code-block"><code>--<span class="c-kw">kds</span>-<span class="c-prop">base</span>-<span class="c-prop">color</span>-<span class="c-val">turquoise</span>-<span class="c-kw">400</span>: <span class="c-val">#40C0C0</span>;
 --<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">text-primary</span>: <span class="c-val">#1B1F24</span>;
 --<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">action-primary</span>: <span class="c-val">#40C0C0</span>;</code></div>
       </div>
-
       <div class="section" id="fc-palette" data-sec>
         <h2 class="sh2">Base Color Palette</h2>
         <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
@@ -1044,12 +1041,12 @@ img{display:block;max-width:100%;}
                   <span class="pal-info-lbl">Turquoise-000</span>
                 </div>
                 <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#1F3331"><span class="pal-wcag" style="color:#fff">AAA 13:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1F3331</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#14433E"><span class="pal-wcag" style="color:#fff">AAA 11:1</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#14433E</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#1F3331"><span class="pal-wcag" style="color:#fff">AAA 13.3:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1F3331</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#14433E"><span class="pal-wcag" style="color:#fff">AAA 11.0:1</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#14433E</div></div></div>
                   <div class="sw-col"><div class="sw-box" style="background:#1A5E59"><span class="pal-wcag" style="color:#fff">AAA 7.5:1</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#1A5E59</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#058B8C"><span class="pal-wcag" style="color:#fff">AA 4:1</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#058B8C</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#1EA7A6"><span class="pal-wcag" style="color:#1B1F24">AA 4.5:1</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#1EA7A6</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#40C0C0"><span class="pal-wcag" style="color:#2B3037">AA 6:1</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#40C0C0</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#058B8C"><span class="pal-wcag" style="color:#fff">AA+ 4.1:1</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#058B8C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#1EA7A6"><span class="pal-wcag" style="color:#1B1F24">AA 5.6:1</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#1EA7A6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#40C0C0"><span class="pal-wcag" style="color:#2B3037">AA 6.0:1</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#40C0C0</div></div></div>
                   <div class="sw-col"><div class="sw-box" style="background:#A3DADB"><span class="pal-wcag" style="color:#2B3037">AAA 8.6:1</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#A3DADB</div></div></div>
                   <div class="sw-col"><div class="sw-box" style="background:#D9F0F1"><span class="pal-wcag" style="color:#2B3037">AAA 11.2:1</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#D9F0F1</div></div></div>
                   <div class="sw-col"><div class="sw-box bd" style="background:#F5FAFB"><span class="pal-wcag" style="color:#2B3037">AAA 12.6:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#F5FAFB</div></div></div>
@@ -1062,15 +1059,34 @@ img{display:block;max-width:100%;}
                   <span class="pal-info-lbl">Dark-000</span>
                 </div>
                 <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#1B1F24"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1B1F24</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#2B3037"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#2B3037</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#414C59"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#414C59</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#576779"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#576779</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#7A899C"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#7A899C</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#AFB9C6"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#AFB9C6</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#D7DEE6"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D7DEE6</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#EAEDF3"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#EAEDF3</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#F5F7FB"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#F5F7FB</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#1B1F24"><span class="pal-wcag" style="color:#fff">AAA 16.6:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#1B1F24</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#2B3037"><span class="pal-wcag" style="color:#fff">AAA 13.3:1</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#2B3037</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#414C59"><span class="pal-wcag" style="color:#fff">AAA 8.7:1</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#414C59</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#576779"><span class="pal-wcag" style="color:#fff">AA 5.8:1</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#576779</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#7A899C"><span class="pal-wcag" style="color:#fff">AA+ 3.6:1</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#7A899C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#AFB9C6"><span class="pal-wcag" style="color:#2B3037">AA 6.7:1</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#AFB9C6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#D7DEE6"><span class="pal-wcag" style="color:#2B3037">AAA 9.8:1</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D7DEE6</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#EAEDF3"><span class="pal-wcag" style="color:#2B3037">AAA 11.3:1</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#EAEDF3</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#F5F7FB"><span class="pal-wcag" style="color:#2B3037">AAA 12.4:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#F5F7FB</div></div></div>
+                </div>
+              </div>
+            
+              <!-- KEWAZO Bright -->
+              <div class="pal-row">
+                <div class="pal-info">
+                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#D8E5E7"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Bright</span><span class="p-hex">#D8E5E7</span></div></div>
+                  <span class="pal-info-lbl">Bright-300</span>
+                </div>
+                <div class="pal-swatches">
+                  <div class="sw-col"><div class="sw-box" style="background:#263D42"><span class="pal-wcag" style="color:#fff">AAA 11.5:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#263D42</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#3E5A5D"><span class="pal-wcag" style="color:#fff">AAA 7.4:1</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#3E5A5D</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#51777C"><span class="pal-wcag" style="color:#fff">AA 4.9:1</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#51777C</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#6C979D"><span class="pal-wcag" style="color:#fff">AA+ 3.2:1</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#6C979D</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#9FBDC1"><span class="pal-wcag" style="color:#1B1F24">AAA 8.3:1</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#9FBDC1</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#BAD1D4"><span class="pal-wcag" style="color:#2B3037">AAA 8.3:1</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#BAD1D4</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#D8E5E7"><span class="pal-wcag" style="color:#2B3037">AAA 10.3:1</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D8E5E7</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F2F6F7"><span class="pal-wcag" style="color:#2B3037">AAA 12.2:1</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#F2F6F7</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FAFCFC"><span class="pal-wcag" style="color:#2B3037">AAA 12.9:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FAFCFC</div></div></div>
                 </div>
               </div>
               <!-- Base Mono (900 + 100 only) -->
@@ -1080,26 +1096,8 @@ img{display:block;max-width:100%;}
                   <span class="pal-info-lbl">Mono-000</span>
                 </div>
                 <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#191919"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#191919</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FFFFFF"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FFFFFF</div></div></div>
-                </div>
-              </div>
-              <!-- KEWAZO Bright -->
-              <div class="pal-row">
-                <div class="pal-info">
-                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#D8E5E7"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Bright</span><span class="p-hex">#D8E5E7</span></div></div>
-                  <span class="pal-info-lbl">Bright-000</span>
-                </div>
-                <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#263D42"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#263D42</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#3E5A5D"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">800</div><div class="sw-val">#3E5A5D</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#51777C"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">700</div><div class="sw-val">#51777C</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#6C979D"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">600</div><div class="sw-val">#6C979D</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#9FBDC1"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">500</div><div class="sw-val">#9FBDC1</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#BAD1D4"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">400</div><div class="sw-val">#BAD1D4</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#D8E5E7"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">300</div><div class="sw-val">#D8E5E7</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F2F6F7"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">200</div><div class="sw-val">#F2F6F7</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FAFCFC"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FAFCFC</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#191919"><span class="pal-wcag" style="color:#fff">AAA 17.6:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#191919</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FFFFFF"><span class="pal-wcag" style="color:#2B3037">AAA 13.3:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FFFFFF</div></div></div>
                 </div>
               </div>
               <!-- Accent -->
@@ -1108,10 +1106,10 @@ img{display:block;max-width:100%;}
                   <div class="p-chip"><div class="pal-chip-tile" style="background:#EC1010"></div><div class="pal-chip-meta"><span class="pal-chip-name">Accent</span><span class="p-hex">#EC1010</span></div></div>
                 </div>
                 <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F9EE89"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Yellow</div><div class="sw-val">#F9EE89</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#2B3037">AA</span></div><div class="sw-info"><div class="sw-step">Yellow lt</div><div class="sw-val">#F9FF93</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA 4.5:1</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#2B3037">AAA 12.2:1</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9EE89"><span class="pal-wcag" style="color:#2B3037">AAA 11.1:1</span></div><div class="sw-info"><div class="sw-step">Yellow</div><div class="sw-val">#F9EE89</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#2B3037">AAA 12.5:1</span></div><div class="sw-info"><div class="sw-step">Yellow lt</div><div class="sw-val">#F9FF93</div></div></div>
                 </div>
               </div>
           </div>
