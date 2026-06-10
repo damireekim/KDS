@@ -580,6 +580,176 @@ img{display:block;max-width:100%;}
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:999px;}
+
+/* ═══════════════════════════════════════════════════════════
+   PEEC-INSPIRED DESIGN REFRESH
+   — radius system, shadow elevation, letter-spacing (−2.4% base)
+   — colours & Barlow font unchanged
+═══════════════════════════════════════════════════════════ */
+
+/* ── Radius & Shadow tokens ──────────────────────────────── */
+:root{
+  --r-xs:4px;--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;--r-pill:999px;
+  --sh-xs:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --sh-sm:0 2px 6px rgba(12,10,9,.08),0 0 0 1px rgba(27,31,36,.04);
+  --sh-md:0 4px 12px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);
+  --sh-lg:0 12px 32px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.06);
+  --sh-xl:0 24px 64px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.07),0 2px 6px rgba(0,0,0,.04);
+}
+
+/* ── Letter-spacing: −0.024em base, scale proportionally ── */
+/* All major text elements re-mapped to em-based tracking */
+.b-title{letter-spacing:-0.028em;}
+.sh2{letter-spacing:-0.026em;}
+.sh3{letter-spacing:-0.024em;}
+.sp{letter-spacing:-0.018em;}
+.gnb-brand{letter-spacing:-0.024em;}
+.gnb-nav a{letter-spacing:-0.02em;}
+.snav-item{letter-spacing:-0.02em;}
+.kcard-title{letter-spacing:-0.024em;}
+.kcard-desc{letter-spacing:-0.018em;}
+.kstat-val{letter-spacing:-0.04em;}
+.kfeat-title{letter-spacing:-0.024em;}
+.kmod-title{letter-spacing:-0.026em;}
+.kmod-body p{letter-spacing:-0.018em;}
+.kbtn-lg{letter-spacing:-0.024em;}
+.kbtn-md{letter-spacing:-0.022em;}
+.kbtn-sm{letter-spacing:-0.02em;}
+
+/* ── GNB ─────────────────────────────────────────────────── */
+.gnb{box-shadow:var(--sh-xs);}
+.gnb-icon-btn{border-radius:var(--r-sm);}
+
+/* ── Side-nav items ──────────────────────────────────────── */
+.snav-item{border-radius:var(--r-sm);}
+
+/* ── Copy toast ──────────────────────────────────────────── */
+.copy-toast{border-radius:var(--r-sm);}
+
+/* ── BUTTON ──────────────────────────────────────────────── */
+.kbtn{
+  border-radius:var(--r-md);
+  box-shadow:var(--sh-sm);
+}
+.kbtn:hover{
+  background:linear-gradient(180deg,#414C59 0%,#2B3037 100%);
+  box-shadow:var(--sh-md);
+}
+/* Primary teal variant */
+.kbtn.teal{background:var(--t400);color:#fff;}
+.kbtn.teal:hover{background:linear-gradient(180deg,var(--t400) 0%,var(--t500) 100%);}
+/* Ghost variant */
+.kbtn.ghost{background:transparent;color:var(--text-1);border:1.5px solid var(--border-1);box-shadow:var(--sh-xs);}
+.kbtn.ghost:hover{background:var(--bg-2);border-color:var(--d300);box-shadow:var(--sh-sm);}
+/* Display button inner radius */
+.kbtn-disp{border-radius:var(--r-md);}
+.kbtn-disp-in{border-radius:calc(var(--r-md) - 2px);}
+/* State label badge */
+.kbtn-state-lbl{border-radius:var(--r-sm);}
+
+/* ── CARD ────────────────────────────────────────────────── */
+.kcard{
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-xs);
+  border:1px solid var(--border-2);
+  transition:box-shadow .2s,transform .18s;
+}
+.kcard:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.kcard-img,.kcard-img-ph{border-radius:var(--r-lg) var(--r-lg) 0 0;}
+.kcard-tag{border-radius:var(--r-xs);}
+
+/* Stat card */
+.kstat{
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-xs);
+  border:1px solid var(--border-2);
+  transition:box-shadow .18s;
+}
+.kstat:hover{box-shadow:var(--sh-sm);}
+
+/* Feature card */
+.kfeat{
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-xs);
+  border:1px solid var(--border-2);
+  transition:box-shadow .18s,transform .18s;
+}
+.kfeat:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.kfeat-icon{border-radius:var(--r-sm);}
+
+/* ── MODAL ───────────────────────────────────────────────── */
+.kmod-sheet{
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-xl);
+}
+.kmod-close{border-radius:var(--r-xs);}
+
+/* Widget popup */
+.kmod-widget-popup{
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-xl);
+  overflow:hidden;
+}
+.kmod-widget-header{border-radius:var(--r-lg) var(--r-lg) 0 0;}
+.kmod-widget-btn{border-radius:var(--r-sm);}
+.kmod-widget-trigger{border-radius:var(--r-md);}
+
+/* Form inputs */
+.kmod-input{
+  border-radius:var(--r-sm);
+  transition:border-color .15s,box-shadow .15s;
+}
+.kmod-input:focus{
+  border-color:var(--t400);
+  box-shadow:0 0 0 3px rgba(64,192,192,.12);
+}
+.kmod-textarea{
+  border-radius:var(--r-sm);
+  transition:border-color .15s,box-shadow .15s;
+}
+.kmod-textarea:focus{
+  border-color:var(--t400);
+  box-shadow:0 0 0 3px rgba(64,192,192,.12);
+}
+
+/* ── DEMO STAGE / NAVIGATION DEMO ───────────────────────── */
+.demo-stage{border-radius:var(--r-md);border-color:var(--border-2);}
+.demo-rb{border-radius:var(--r-sm);}
+.kbtn-disp-demo{border-radius:var(--r-md);}
+.kmod-demo-wrap{border-radius:var(--r-md);}
+.stub-ph{border-radius:var(--r-md);}
+
+/* ── ICON TILES ──────────────────────────────────────────── */
+.ico-tile{border-radius:var(--r-sm);}
+
+/* ── LOGO CARDS / PILLS ──────────────────────────────────── */
+.logo-card{border-radius:var(--r-md);overflow:hidden;}
+.logo-pill{border-radius:var(--r-xs);}
+
+/* ── COLOUR CHIPS & SWATCHES ─────────────────────────────── */
+.p-chip{border-radius:var(--r-sm);}
+.pal-chip-tile{border-radius:var(--r-xs);}
+
+/* ── TOKEN ANATOMY TAGS ──────────────────────────────────── */
+.ta-p{border-radius:var(--r-xs);}
+.tok-anatomy{border-radius:var(--r-md);}
+.code-block{border-radius:var(--r-sm);}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero-version{border-radius:var(--r-xs);}
+.hero-img{border-radius:var(--r-lg);overflow:hidden;}
+
+/* ── SPACING / RADIUS reference cards ───────────────────── */
+.rad-box{border-radius:var(--r-xs);}
+
+/* ── TOC items hover ─────────────────────────────────────── */
+.toc-item{border-radius:var(--r-xs);padding:2px 4px;margin:-2px -4px;}
+
+/* ── Table ───────────────────────────────────────────────── */
+.ttable{border-radius:var(--r-sm);overflow:hidden;}
+
+/* ── Landing hero img (video) ────────────────────────────── */
+.hero-img video{border-radius:var(--r-lg);}
 </style>
 </head>
 <body>
