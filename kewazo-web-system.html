@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+@font-face {
+  font-family: 'LIFTBOT';
+  src: url('./03_Font/LIFTBOT Medium v2.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 /* ───────────────────────────────────────────
    KDS TOKENS
 ─────────────────────────────────────────── */
@@ -36,6 +43,7 @@
   /* Layout */
   --gnb:64px;--side:213px;--body-w:900px;--pg:40px;--col-gap:16px;
   --ff:'Barlow',-apple-system,BlinkMacSystemFont,sans-serif;
+  --ff-display:'LIFTBOT','Barlow',-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
 /* ───────────────────────────────────────────
@@ -157,16 +165,78 @@ img{display:block;max-width:100%;}
 .side-nav{
   width:var(--side);flex-shrink:0;
   border-right:1px solid var(--border-1);
-  padding:40px 16px 80px 0;
-  display:flex;flex-direction:column;gap:32px;
+  padding:32px 12px 80px 0;
+  display:flex;flex-direction:column;gap:24px;
   align-self:stretch;
   position:sticky;top:var(--gnb);max-height:calc(100vh - var(--gnb));overflow-y:auto;
+  transition:width .22s ease,padding .22s ease;
+  overflow-x:hidden;
 }
-.snav-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);line-height:1;padding:4px 8px;}
+/* ── collapse toggle button ── */
+.snav-toggle-btn{
+  display:flex;align-items:center;justify-content:flex-end;
+  width:100%;padding:0 6px 0 0;background:none;border:none;cursor:pointer;
+  color:var(--text-3);transition:color .15s;flex-shrink:0;
+  margin-bottom:-8px;
+}
+.snav-toggle-btn:hover{color:var(--text-1);}
+.snav-toggle-btn svg{display:block;transition:transform .22s ease;}
+/* ── label ── */
+.snav-label{
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-3);line-height:1;padding:4px 8px;
+  white-space:nowrap;overflow:hidden;
+  transition:opacity .15s,height .22s;
+}
+/* ── items ── */
 .snav-items{display:flex;flex-direction:column;gap:4px;}
-.snav-item{font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-2);line-height:1;text-transform:uppercase;padding:10px 8px;border-radius:4px;transition:background .15s,color .15s;}
+.snav-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-2);
+  line-height:1;text-transform:uppercase;
+  padding:10px 8px;border-radius:4px;
+  transition:background .15s,color .15s,padding .22s;
+  white-space:nowrap;overflow:hidden;
+}
 .snav-item:hover{background:var(--bg-2);color:var(--text-1);}
 .snav-item.active{background:var(--bg-2);color:var(--text-1);}
+/* abbreviation chip (shows in collapsed mode) */
+.snav-abbr{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;flex-shrink:0;
+  background:var(--bg-2);border-radius:4px;
+  font-size:9px;font-weight:800;letter-spacing:.03em;
+  color:var(--text-2);text-transform:uppercase;
+  transition:background .15s,color .15s;
+}
+.snav-item.active .snav-abbr{background:var(--t400);color:#fff;}
+.snav-item:hover .snav-abbr{color:var(--text-1);}
+/* collapsed text — everything after the abbr chip */
+.snav-item-label{white-space:nowrap;transition:opacity .18s,max-width .22s;max-width:200px;overflow:hidden;}
+
+/* ──────────────────────────────────────────
+   COLLAPSED SIDE-NAV
+────────────────────────────────────────── */
+body.snav-collapsed .side-nav{
+  width:52px;
+  padding-left:8px;
+  padding-right:8px;
+  gap:20px;
+}
+body.snav-collapsed .snav-toggle-btn{
+  justify-content:center;
+  padding:0;
+}
+body.snav-collapsed .snav-toggle-btn svg{transform:rotate(180deg);}
+body.snav-collapsed .snav-label{opacity:0;height:0;padding-top:0;padding-bottom:0;margin:0;}
+body.snav-collapsed .snav-item{
+  padding:8px;
+  justify-content:center;
+  gap:0;
+}
+body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
+
+/* ─── RIGHT STICKY NAV ─── */
 /* Icon tiles */
 /* ─── CLIENT LOGO PAGE ─── */
 .logo-card-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
@@ -210,19 +280,24 @@ img{display:block;max-width:100%;}
 
 /* ─── RIGHT STICKY NAV ─── */
 .sticky-nav{
-  width:var(--side);flex:none;
+  width:156px;flex:none;
   border-left:1px solid var(--border-1);
-  display:flex;flex-direction:column;gap:8px;
-  position:sticky;top:var(--gnb);height:fit-content;padding-top:80px;
+  display:flex;flex-direction:column;gap:2px;
+  position:sticky;top:var(--gnb);height:fit-content;padding-top:48px;padding-left:16px;
 }
-.stnav-title{padding:8px 8px 8px 16px;font-size:16px;font-weight:600;letter-spacing:-0.32px;color:var(--text-1);}
+.stnav-title{
+  padding:4px 0 8px 0;
+  font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-3);line-height:1;
+}
 .stnav-item{
-  padding:8px 8px 8px 40px;font-size:14px;font-weight:400;
-  letter-spacing:-0.28px;color:var(--text-3);white-space:nowrap;transition:color .15s;
+  padding:5px 4px 5px 12px;font-size:12px;font-weight:400;
+  letter-spacing:-0.24px;color:var(--text-3);white-space:nowrap;transition:color .15s;
+  border-left:1.5px solid transparent;margin-left:-1.5px;
 }
 .stnav-item:hover{color:var(--text-1);}
 .stnav-item.active{
-  border-left:4px solid var(--t400);padding-left:36px;
+  border-left-color:var(--t400);
   font-weight:600;color:var(--text-1);
 }
 
@@ -232,30 +307,62 @@ img{display:block;max-width:100%;}
 .palette{display:flex;flex-direction:column;gap:32px;padding:0;}
 .pal-sec{display:flex;flex-direction:column;gap:32px;}
 .pal-sec-title{font-size:16px;font-weight:600;letter-spacing:-0.024em;color:#000;line-height:1;}
-.pal-group{display:flex;flex-direction:column;gap:32px;}
-.pal-row{display:flex;gap:20px;align-items:flex-start;}
-.pal-info{width:172px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+.pal-group{display:flex;flex-direction:column;gap:16px;}
+.pal-row{display:flex;gap:16px;align-items:flex-start;}
+.pal-info{width:auto;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
 .pal-info-lbl{font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0.02em;}
-.pal-swatches{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;}
-/* chip pill */
-.p-chip{display:flex;align-items:center;background:#fff;border:1px solid #D8E5E7;padding:3px 8px 3px 3px;cursor:pointer;width:100%;transition:border-color .15s,box-shadow .15s,background .15s;}
-.p-chip:hover{border-color:var(--t700);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.pal-swatches{display:flex;gap:8px;align-items:flex-start;flex:1 0 0;min-width:0;overflow:hidden;}
+
+/* ── Colour label chip (Figma: KDS_Foundation_Color chip) ── */
+.p-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid #E6E8EB;
+  padding:8px 24px 8px 8px;
+  cursor:pointer;white-space:nowrap;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.p-chip:hover{border-color:var(--t400);box-shadow:0 2px 8px rgba(0,0,0,.06);}
 .p-chip.copied{border-color:var(--t400);background:var(--t200);}
 .p-chip.copied .pal-chip-name{color:var(--t700);}
-.pal-chip-tile{width:20px;height:20px;flex-shrink:0;border-radius:3px;}
-.pal-chip-tile.bd{border:1px solid #D8E5E7;}
-.pal-chip-meta{display:flex;flex-direction:column;gap:1px;margin-left:8px;min-width:0;}
-.pal-chip-name{font-size:12px;font-weight:600;color:#2B3037;letter-spacing:-0.01em;white-space:nowrap;}
-.p-hex{font-size:10px;font-weight:500;color:#7A899C;letter-spacing:.02em;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
-/* swatch squares */
-.sw-col{display:flex;flex-direction:column;gap:8px;cursor:pointer;}
-.sw-box{width:clamp(48px,6vw,80px);height:clamp(48px,6vw,80px);border-radius:0;position:relative;display:flex;align-items:center;justify-content:center;transition:transform .12s ease,box-shadow .18s ease;flex-shrink:0;}
-.sw-box.bd{border:1px solid #D8E5E7;}
-.pal-wcag{font-size:13px;font-weight:500;text-align:center;letter-spacing:-0.26px;line-height:1;white-space:nowrap;pointer-events:none;}
-.sw-info{display:flex;flex-direction:column;gap:8px;align-items:center;}
-.sw-step{font-size:14px;font-weight:700;color:#2B3037;letter-spacing:-0.28px;line-height:1;text-align:center;}
-.sw-val{font-size:13px;font-weight:500;color:#7A899C;letter-spacing:-0.26px;line-height:1;text-align:center;white-space:nowrap;}
+/* tile: 28×28, 4px rounded (Figma: size-[28px] rounded-[4px]) */
+.pal-chip-tile{width:28px;height:28px;flex-shrink:0;border-radius:4px;}
+.pal-chip-tile.bd{border:1px solid #E6E8EB;}
+/* desc: stacked name + hex (Figma: flex-col gap-[2px] items-start whitespace-nowrap) */
+.pal-chip-meta{display:flex;flex-direction:column;gap:2px;white-space:nowrap;}
+/* name: 12px Bold text-primary (Figma: Barlow:Bold text-[12px] text-primary) */
+.pal-chip-name{font-size:12px;font-weight:700;color:#1B1F24;white-space:nowrap;}
+/* hex: 11px Regular text-tertiary (Figma: Barlow:Regular text-[11px] text-tertiary) */
+.p-hex{font-size:11px;font-weight:400;color:#7A899C;white-space:nowrap;}
+
+/* ── Square swatch column (Figma: flex-[1_0_0] flex-col gap-[8px]) ── */
+.sw-col{display:flex;flex-direction:column;gap:8px;cursor:pointer;flex:1 0 0;min-width:0;}
+/* tile: aspect-square, 4px rounded (Figma: aspect-[68/68] rounded-[4px]) */
+.sw-box{
+  width:100%;aspect-ratio:1;
+  border-radius:4px;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  transition:transform .12s ease,box-shadow .18s ease;
+  overflow:hidden;
+}
+.sw-box.bd{border:1px solid #E6E8EB;}
+/* WCAG label: hidden by default, shown on hover */
+.pal-wcag{
+  font-size:9px;font-weight:700;text-align:center;line-height:1;
+  white-space:nowrap;pointer-events:none;
+  opacity:0;transition:opacity .15s;
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.32);
+}
+.sw-col:hover .pal-wcag{opacity:1;}
+/* desc below tile (Figma: items-start, 8px gap included in col gap) */
+.sw-info{display:flex;flex-direction:column;gap:4px;align-items:flex-start;}
+/* step: 10px Bold text-primary (Figma: Barlow:Bold text-[10px] text-[#1b1f24]) */
+.sw-step{font-size:10px;font-weight:700;color:#1B1F24;line-height:1;}
+/* hex: 9px Regular dark-500 #6B7280 (Figma: Barlow:Regular text-[9px] text-[#6b7280]) */
+.sw-val{font-size:9px;font-weight:400;color:#6B7280;line-height:1;white-space:nowrap;}
 .sw-col:hover .sw-box{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.14);}
+/* Status swatches: allow wrap, align top-left */
+.pal-swatches[style*="flex-wrap"] .sw-col{flex:1 0 0;min-width:56px;}
 /* print cards */
 .print-cards{display:flex;gap:12px;flex-wrap:wrap;}
 .print-card{width:242px;height:106px;padding:16px;display:flex;justify-content:space-between;align-items:flex-end;color:#fff;flex-shrink:0;}
@@ -531,11 +638,11 @@ img{display:block;max-width:100%;}
   .sticky-nav{display:none;}
   .gnb-hamburger{display:none;}
   .side-nav{width:180px;}
+  body.snav-collapsed .side-nav{width:52px;}
   .b-title{font-size:36px;}
   .sh2{font-size:24px;}
   .pal-row{flex-direction:column;gap:12px;}
   .pal-info{width:100%;}
-  .p-chip{max-width:220px;}
 }
 
 @media(min-width:768px) and (max-width:1100px){.logo-card-grid{grid-template-columns:repeat(3,1fr);}}
@@ -547,11 +654,13 @@ img{display:block;max-width:100%;}
   .gnb-hamburger{display:flex;}
   .gnb-brand-name{display:none;}
   .interior{flex-direction:column;gap:0;padding:0;}
-  .side-nav{display:none;position:static;width:100%;border-right:none;border-bottom:1px solid var(--border-1);padding:16px var(--pg);max-height:none;flex-direction:row;flex-wrap:wrap;gap:16px;}
+  .side-nav{display:none;position:static;width:100%!important;border-right:none;border-bottom:1px solid var(--border-1);padding:16px var(--pg);max-height:none;flex-direction:row;flex-wrap:wrap;gap:16px;}
   .side-nav.mob-open{display:flex;}
   .snav-label{width:100%;margin-bottom:4px;}
   .snav-items{flex-direction:row;flex-wrap:wrap;gap:12px;}
   .snav-item{font-size:14px;}
+  .snav-item-label{max-width:none!important;opacity:1!important;}
+  .snav-toggle-btn{display:none;}
   .sticky-nav{display:none;}
   .body-col{width:100%;padding:32px var(--pg);}
   .b-title{font-size:28px;}
@@ -560,8 +669,9 @@ img{display:block;max-width:100%;}
   .sp{font-size:13px;}
   .pal-row{flex-direction:column;gap:12px;}
   .pal-info{width:100%;}
-  .p-chip{max-width:220px;}
-  .pal-swatches{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;}
+  .pal-swatches{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;}
+  .sw-col{flex:0 0 48px;min-width:48px;}
+  .sw-box{width:48px;height:48px;aspect-ratio:auto;}
   .toc-inner{gap:20px;}
   .toc-group{min-width:calc(50% - 10px);}
   .hero-title{font-size:28px;}
@@ -943,7 +1053,7 @@ img{display:block;max-width:100%;}
         <div class="rule-list">
           <div class="rule-item"><div class="rule-n">1</div><span>Always use <code>--kds-sem-*</code> semantic tokens in components. Never reference base tokens directly.</span></div>
           <div class="rule-item"><div class="rule-n">2</div><span>Never hardcode hex values. If a token doesn't exist for your use case, raise it with the design system team first.</span></div>
-          <div class="rule-item"><div class="rule-n">3</div><span>Font family is always <code>var(--kds-font-family)</code> (Barlow). No second typeface without explicit approval.</span></div>
+          <div class="rule-item"><div class="rule-n">3</div><span>Display text uses <code>var(--kds-font-family-display)</code> (LIFTBOT Medium). All other text uses <code>var(--kds-font-family)</code> (Barlow). Never use a third typeface.</span></div>
           <div class="rule-item"><div class="rule-n">4</div><span>Letter-spacing defaults are negative: <code>-0.32px</code> body, <code>-0.64px</code> h2, <code>-0.96px</code> h1. Never use positive tracking in UI text.</span></div>
           <div class="rule-item"><div class="rule-n">5</div><span>GNB is always 64px tall, 40px horizontal padding, 1px bottom border in <code>--kds-base-color-dark-300</code>.</span></div>
           <div class="rule-item"><div class="rule-n">6</div><span>Interior pages: 213px side nav + 16px gap + flex body + 16px gap + 213px sticky nav, within 40px page margins.</span></div>
@@ -1019,19 +1129,31 @@ img{display:block;max-width:100%;}
 
       <div class="section" id="fc-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">A solid colour foundation streamlines design and development, enabling businesses to scale efficiently while maintaining a cohesive user experience. KDS colour is structured in two tiers: <strong>Base tokens</strong> are raw palette values (9 steps per scale, 100 = lightest, 900 = darkest). <strong>Semantic tokens</strong> are purpose-bound aliases. Always use semantic tokens in components.</p>
+        <p class="sp">A solid foundation in a design system streamlines both the design and development processes, enabling businesses to scale efficiently while maintaining a cohesive and effective user experience.</p>
       </div>
 
       <div class="section" id="fc-tokens" data-sec>
         <h2 class="sh2">Design Token Names</h2>
-        <p class="sp">Since KEWAZO clearly values accessibility, the contrast ratio should be 4.5:1 or higher according to WCAG. You can copy the hex code clicking on the swatch. But when you build a digital product,please do not use hard-coded hex colours in components. Instead, use the design tokens below as CSS variables.</p>
-        <div class="code-block"><code>--<span class="c-kw">kds</span>-<span class="c-prop">base</span>-<span class="c-prop">color</span>-<span class="c-val">turquoise</span>-<span class="c-kw">400</span>: <span class="c-val">#40C0C0</span>;
---<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">text-primary</span>: <span class="c-val">#1B1F24</span>;
---<span class="c-kw">kds</span>-<span class="c-prop">sem</span>-<span class="c-prop">color</span>-<span class="c-val">action-primary</span>: <span class="c-val">#40C0C0</span>;</code></div>
+        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
+        <div class="code-block"><code><span class="c-cmt">/* Base token */</span>
+<span class="c-kw">--kds-base-color-turquoise-400</span>: <span class="c-val">#40C0C0</span>;
+<span class="c-kw">--kds-base-color-dark-900</span>:      <span class="c-val">#1B1F24</span>;
+
+<span class="c-cmt">/* Semantic colour tokens */</span>
+<span class="c-kw">--kds-sem-color-text-primary</span>:    <span class="c-val">#1B1F24</span>;  <span class="c-cmt">/* → dark-900 */</span>
+<span class="c-kw">--kds-sem-color-text-highlight</span>:  <span class="c-val">#40C0C0</span>;  <span class="c-cmt">/* → turquoise-400 */</span>
+<span class="c-kw">--kds-sem-color-action-primary</span>:  <span class="c-val">#40C0C0</span>;  <span class="c-cmt">/* → turquoise-400 */</span>
+<span class="c-kw">--kds-sem-color-border-primary</span>:  <span class="c-val">#D7DEE6</span>;  <span class="c-cmt">/* → dark-300 */</span>
+<span class="c-kw">--kds-sem-color-ico-primary</span>:     <span class="c-val">#1B1F24</span>;  <span class="c-cmt">/* → dark-900 */</span>
+
+<span class="c-cmt">/* Shadow tokens */</span>
+<span class="c-kw">--kds-sem-shadow-xs</span>:      <span class="c-val">0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)</span>;
+<span class="c-kw">--kds-sem-shadow-lg</span>:      <span class="c-val">0 12px 32px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06)</span>;
+<span class="c-kw">--kds-sem-shadow-display</span>: <span class="c-val">0 24px 64px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.07)</span>;</code></div>
       </div>
       <div class="section" id="fc-palette" data-sec>
         <h2 class="sh2">Base Color Palette</h2>
-        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components.</p>
+        <p class="sp">Please use the design tokens below as CSS variables. Do not use hard-coded hex colours in components. All token names in a design system start with the system name, KDS (KEWAZO Design System). Hover over a swatch to see its WCAG contrast rating. Click to copy the hex code.</p>
         <div class="palette">
           <div class="pal-group">
               <!-- KEWAZO Turquoise -->
@@ -1055,7 +1177,7 @@ img{display:block;max-width:100%;}
               <!-- KEWAZO Dark -->
               <div class="pal-row">
                 <div class="pal-info">
-                  <div class="p-chip"><div class="pal-chip-tile" style="background:#2B3037"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Dark</span><span class="p-hex">#2B3037</span></div></div>
+                  <div class="p-chip"><div class="pal-chip-tile" style="background:#2B3037"></div><div class="pal-chip-meta"><span class="pal-chip-name">Midnight Steel</span><span class="p-hex">#2B3037</span></div></div>
                   <span class="pal-info-lbl">Dark-000</span>
                 </div>
                 <div class="pal-swatches">
@@ -1074,7 +1196,7 @@ img{display:block;max-width:100%;}
               <!-- KEWAZO Bright -->
               <div class="pal-row">
                 <div class="pal-info">
-                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#D8E5E7"></div><div class="pal-chip-meta"><span class="pal-chip-name">KEWAZO Bright</span><span class="p-hex">#D8E5E7</span></div></div>
+                  <div class="p-chip"><div class="pal-chip-tile bd" style="background:#D8E5E7"></div><div class="pal-chip-meta"><span class="pal-chip-name">Frosted Teal</span><span class="p-hex">#D8E5E7</span></div></div>
                   <span class="pal-info-lbl">Bright-300</span>
                 </div>
                 <div class="pal-swatches">
@@ -1089,27 +1211,35 @@ img{display:block;max-width:100%;}
                   <div class="sw-col"><div class="sw-box bd" style="background:#FAFCFC"><span class="pal-wcag" style="color:#2B3037">AAA 12.9:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FAFCFC</div></div></div>
                 </div>
               </div>
-              <!-- Base Mono (900 + 100 only) -->
+              <!-- Base Mono (900 + 100 only) — fixed-width to match swatch size in other rows -->
               <div class="pal-row">
                 <div class="pal-info">
                   <div class="p-chip"><div class="pal-chip-tile bd" style="background:#FFFFFF"></div><div class="pal-chip-meta"><span class="pal-chip-name">Base mono</span><span class="p-hex">#FFFFFF</span></div></div>
                   <span class="pal-info-lbl">Mono-000</span>
                 </div>
-                <div class="pal-swatches">
-                  <div class="sw-col"><div class="sw-box" style="background:#191919"><span class="pal-wcag" style="color:#fff">AAA 17.6:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#191919</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FFFFFF"><span class="pal-wcag" style="color:#2B3037">AAA 13.3:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FFFFFF</div></div></div>
+                <div class="pal-swatches" style="flex:none;">
+                  <div class="sw-col" style="flex:0 0 64px;width:64px;"><div class="sw-box" style="background:#191919;width:64px;height:64px;aspect-ratio:auto;"><span class="pal-wcag" style="color:#fff">AAA 17.6:1</span></div><div class="sw-info"><div class="sw-step">900</div><div class="sw-val">#191919</div></div></div>
+                  <div class="sw-col" style="flex:0 0 64px;width:64px;"><div class="sw-box bd" style="background:#FFFFFF;width:64px;height:64px;aspect-ratio:auto;"><span class="pal-wcag" style="color:#2B3037">AAA 13.3:1</span></div><div class="sw-info"><div class="sw-step">100</div><div class="sw-val">#FFFFFF</div></div></div>
                 </div>
               </div>
-              <!-- Accent -->
+              <!-- Status colours (Green / Blue / Red / Yellow) -->
               <div class="pal-row">
                 <div class="pal-info">
-                  <div class="p-chip"><div class="pal-chip-tile" style="background:#EC1010"></div><div class="pal-chip-meta"><span class="pal-chip-name">Accent</span><span class="p-hex">#EC1010</span></div></div>
+                  <div class="p-chip"><div class="pal-chip-tile" style="background:#EC1010"></div><div class="pal-chip-meta"><span class="pal-chip-name">Status</span><span class="p-hex">#EC1010</span></div></div>
                 </div>
-                <div class="pal-swatches">
+                <div class="pal-swatches" style="flex-wrap:wrap;row-gap:16px;">
+                  <div class="sw-col"><div class="sw-box" style="background:#0E5908"><span class="pal-wcag" style="color:#fff">AAA 7.9:1</span></div><div class="sw-info"><div class="sw-step">Green 700</div><div class="sw-val">#0E5908</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#10AC44"><span class="pal-wcag" style="color:#1B1F24">AA 5.4:1</span></div><div class="sw-info"><div class="sw-step">Green 500</div><div class="sw-val">#10AC44</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#E1F4DF"><span class="pal-wcag" style="color:#1B1F24">AAA 13.4:1</span></div><div class="sw-info"><div class="sw-step">Green 200</div><div class="sw-val">#E1F4DF</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#171975"><span class="pal-wcag" style="color:#fff">AAA 14.3:1</span></div><div class="sw-info"><div class="sw-step">Blue 700</div><div class="sw-val">#171975</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#4347CB"><span class="pal-wcag" style="color:#fff">AA 6.9:1</span></div><div class="sw-info"><div class="sw-step">Blue 500</div><div class="sw-val">#4347CB</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#DDEAFF"><span class="pal-wcag" style="color:#1B1F24">AAA 12.7:1</span></div><div class="sw-info"><div class="sw-step">Blue 200</div><div class="sw-val">#DDEAFF</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#BA1315"><span class="pal-wcag" style="color:#fff">AA 6.4:1</span></div><div class="sw-info"><div class="sw-step">Red 700</div><div class="sw-val">#BA1315</div></div></div>
                   <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA 4.5:1</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#2B3037">AAA 12.2:1</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F9EE89"><span class="pal-wcag" style="color:#2B3037">AAA 11.1:1</span></div><div class="sw-info"><div class="sw-step">Yellow</div><div class="sw-val">#F9EE89</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#2B3037">AAA 12.5:1</span></div><div class="sw-info"><div class="sw-step">Yellow lt</div><div class="sw-val">#F9FF93</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#1B1F24">AAA 14.2:1</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#FFF06B"><span class="pal-wcag" style="color:#1B1F24">AAA 13.1:1</span></div><div class="sw-info"><div class="sw-step">Yellow 400</div><div class="sw-val">#FFF06B</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#1B1F24">AAA 12.5:1</span></div><div class="sw-info"><div class="sw-step">Yellow 300</div><div class="sw-val">#F9FF93</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FBF8E4"><span class="pal-wcag" style="color:#1B1F24">AAA 13.9:1</span></div><div class="sw-info"><div class="sw-step">Yellow 200</div><div class="sw-val">#FBF8E4</div></div></div>
                 </div>
               </div>
           </div>
@@ -1146,17 +1276,32 @@ img{display:block;max-width:100%;}
             <tr><td colspan="5" class="tcat">Text</td></tr>
             <tr><td class="tvar">--kds-sem-color-text-primary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td class="chex">dark-900</td></tr>
             <tr><td class="tvar">--kds-sem-color-text-secondary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td class="chex">dark-700</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-tertiary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td class="chex">dark-500</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-disabled</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#D7DEE6"></div><span class="chex">#D7DEE6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-300</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-teriary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td class="chex">dark-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-highlight</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td class="chex">turquoise-400</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-red</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">red-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-blue</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#4347CB"></div><span class="chex">#4347CB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#4347CB"></div><span class="chex">#4347CB</span></div></td><td class="chex">blue-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-green</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#10AC44"></div><span class="chex">#10AC44</span></div></td><td><div class="chip-row"><div class="chip" style="background:#10AC44"></div><span class="chex">#10AC44</span></div></td><td class="chex">green-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-yellow</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#B8860B"></div><span class="chex">#B8860B</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFF06B"></div><span class="chex">#FFF06B</span></div></td><td class="chex">yellow-700</td></tr>
             <tr><td colspan="5" class="tcat">Background</td></tr>
             <tr><td class="tvar">--kds-sem-color-bg-primary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td class="chex">mono-100</td></tr>
             <tr><td class="tvar">--kds-sem-color-bg-secondary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#F5F7FB"></div><span class="chex">#F5F7FB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2B3037"></div><span class="chex">#2B3037</span></div></td><td class="chex">dark-100</td></tr>
-            <tr><td class="tvar">--kds-sem-color-bg-tertiary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-200</td></tr>
-            <tr><td class="tvar">--kds-sem-color-bg-error</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FEF3F3"></div><span class="chex">#FEF3F3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2D0A0A"></div><span class="chex">#2D0A0A</span></div></td><td class="chex">accent-red-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-teriary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-red</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FEF3F3"></div><span class="chex">#FEF3F3</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2D0A0A"></div><span class="chex">#2D0A0A</span></div></td><td class="chex">red-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-blue</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#DDEAFF"></div><span class="chex">#DDEAFF</span></div></td><td><div class="chip-row"><div class="chip" style="background:#0A0D2D"></div><span class="chex">#0A0D2D</span></div></td><td class="chex">blue-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-green</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#E1F4DF"></div><span class="chex">#E1F4DF</span></div></td><td><div class="chip-row"><div class="chip" style="background:#081A07"></div><span class="chex">#081A07</span></div></td><td class="chex">green-200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-bg-yellow</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FBF8E4"></div><span class="chex">#FBF8E4</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1A1700"></div><span class="chex">#1A1700</span></div></td><td class="chex">yellow-200</td></tr>
             <tr><td colspan="5" class="tcat">Border</td></tr>
             <tr><td class="tvar">--kds-sem-color-border-primary</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#D7DEE6"></div><span class="chex">#D7DEE6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td class="chex">dark-300</td></tr>
             <tr><td class="tvar">--kds-sem-color-border-secondary</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#E6E8EB"></div><span class="chex">#E6E8EB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#576779"></div><span class="chex">#576779</span></div></td><td class="chex">custom</td></tr>
-            <tr><td class="tvar">--kds-sem-color-border-error</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">accent-red-500</td></tr>
+            <tr><td class="tvar">--kds-sem-color-border-error</td><td>Border</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">red-500</td></tr>
+            <tr><td colspan="5" class="tcat">Icon</td></tr>
+            <tr><td class="tvar">--kds-sem-color-ico-primary</td><td>Icon</td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td class="chex">dark-900</td></tr>
+            <tr><td class="tvar">--kds-sem-color-ico-secondary</td><td>Icon</td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td class="chex">dark-700</td></tr>
+            <tr><td class="tvar">--kds-sem-color-ico-teriary</td><td>Icon</td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td class="chex">dark-500</td></tr>
+            <tr><td colspan="5" class="tcat">Shadow</td></tr>
+            <tr><td class="tvar">--kds-sem-shadow-display</td><td>Shadow</td><td colspan="2"><span style="font-size:12px;color:var(--text-2)">0 24px 64px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.07)</span></td><td class="chex">display / overlay</td></tr>
+            <tr><td class="tvar">--kds-sem-shadow-lg</td><td>Shadow</td><td colspan="2"><span style="font-size:12px;color:var(--text-2)">0 12px 32px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06)</span></td><td class="chex">cards / panels</td></tr>
+            <tr><td class="tvar">--kds-sem-shadow-xs</td><td>Shadow</td><td colspan="2"><span style="font-size:12px;color:var(--text-2)">0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)</span></td><td class="chex">subtle elements</td></tr>
             <tr><td colspan="5" class="tcat">Action</td></tr>
             <tr><td class="tvar">--kds-sem-color-action-primary</td><td>Action</td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td class="chex">turquoise-400</td></tr>
             <tr><td class="tvar">--kds-sem-color-action-primary-hover</td><td>Action</td><td><div class="chip-row"><div class="chip" style="background:#1EA7A6"></div><span class="chex">#1EA7A6</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1EA7A6"></div><span class="chex">#1EA7A6</span></div></td><td class="chex">turquoise-500</td></tr>
@@ -1218,37 +1363,105 @@ img{display:block;max-width:100%;}
       <div class="bhead"><h1 class="b-title">Typography</h1><span class="b-sub">Foundation</span></div>
       <div class="section" id="ft-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">KDS uses <strong>Barlow</strong> as the sole typeface across all digital surfaces. Barlow is a slightly condensed, low-contrast typeface that reflects KEWAZO's industrial precision. Letter-spacing defaults to negative values throughout to maintain the brand's tight, confident voice.</p>
+        <p class="sp">KDS uses two typefaces: <strong>LIFTBOT Medium</strong> for Display-level text (hero headings and brand statements) and <strong>Barlow</strong> for all other UI text. Both typefaces reflect KEWAZO's industrial precision. Letter-spacing defaults to <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">−2%</code> throughout (except Display which uses 0%) to maintain the brand's tight, confident voice. There are <strong>24 type roles</strong> across 5 categories.</p>
       </div>
       <div class="section" id="ft-primary" data-sec>
         <h2 class="sh2">Type Scale</h2>
+
+        <!-- Display — LIFTBOT Medium -->
         <div class="type-row">
-          <div class="type-meta"><span class="name">Display</span><span class="spec">Barlow 700 · 3rem<br>−0.06rem · lh 1.0</span></div>
-          <div style="font-size:clamp(1.75rem,4vw,3rem);font-weight:700;letter-spacing:-0.06rem;line-height:1;">LIFTBOT</div>
+          <div class="type-meta"><span class="name">Display / 2XL</span><span class="spec">LIFTBOT Medium · 4.5rem<br>LS 0% · lh 100%<br><code style="font-size:10px">--kds-sem-typography-display-2xl</code></span></div>
+          <div style="font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:500;letter-spacing:0;line-height:1;">LIFTING ROBOT</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">H1</span><span class="spec">Barlow 700 · 2.5rem<br>−0.05rem · lh 1.05</span></div>
-          <div style="font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-0.05rem;line-height:1.05;">Automate Material Handling</div>
+          <div class="type-meta"><span class="name">Display / XL</span><span class="spec">LIFTBOT Medium · 3.75rem<br>LS 0% · lh 100%<br><code style="font-size:10px">--kds-sem-typography-display-xl</code></span></div>
+          <div style="font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.75rem);font-weight:500;letter-spacing:0;line-height:1;">LIFTING ROBOT</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">H2</span><span class="spec">Barlow 700 · 2rem<br>−0.04rem · lh 1.0</span></div>
-          <div style="font-size:clamp(1.25rem,2.8vw,2rem);font-weight:700;letter-spacing:-0.04rem;line-height:1.0;">Base Color Palette</div>
+          <div class="type-meta"><span class="name">Display / LG</span><span class="spec">LIFTBOT Medium · 3rem<br>LS 0% · lh 110%<br><code style="font-size:10px">--kds-sem-typography-display-lg</code></span></div>
+          <div style="font-family:var(--ff-display);font-size:clamp(1.75rem,3.5vw,3rem);font-weight:500;letter-spacing:0;line-height:1.1;">LIFTBOT</div>
+        </div>
+
+        <!-- Heading — Barlow Bold/SemiBold -->
+        <div class="type-row">
+          <div class="type-meta"><span class="name">H1</span><span class="spec">Barlow Bold · 2.5rem<br>LS −2% · lh 110%<br><code style="font-size:10px">--kds-sem-typography-heading-h1</code></span></div>
+          <div style="font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-0.02em;line-height:1.1;">Automate Material Handling</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">H3</span><span class="spec">Barlow 600 · 1.5rem<br>−0.03rem · lh 1.2</span></div>
-          <div style="font-size:clamp(1.125rem,2.2vw,1.5rem);font-weight:600;letter-spacing:-0.03rem;line-height:1.2;">Design Token Names</div>
+          <div class="type-meta"><span class="name">H2</span><span class="spec">Barlow Bold · 2rem<br>LS −2% · lh 120%<br><code style="font-size:10px">--kds-sem-typography-heading-h2</code></span></div>
+          <div style="font-size:clamp(1.25rem,2.8vw,2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2;">Base Color Palette</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">Body LG</span><span class="spec">Barlow 400 · 1rem<br>−0.02rem · lh 1.5</span></div>
-          <div style="font-size:1rem;font-weight:400;letter-spacing:-0.02rem;line-height:1.5;">KEWAZO automates and digitizes on-site material handling with robotics and data analytics.</div>
+          <div class="type-meta"><span class="name">H3</span><span class="spec">Barlow SemiBold · 1.75rem<br>LS −2% · lh 120%<br><code style="font-size:10px">--kds-sem-typography-heading-h3</code></span></div>
+          <div style="font-size:clamp(1.25rem,2.5vw,1.75rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;">Design Token Names</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">Body</span><span class="spec">Barlow 400 · 0.875rem<br>−0.0175rem · lh 1.5</span></div>
-          <div style="font-size:0.875rem;font-weight:400;letter-spacing:-0.0175rem;line-height:1.5;color:var(--text-2);">Reduces hazardous exposure hours by one third with continuous deployment across turnarounds and capital projects.</div>
+          <div class="type-meta"><span class="name">H4</span><span class="spec">Barlow SemiBold · 1.5rem<br>LS −2% · lh 130%<br><code style="font-size:10px">--kds-sem-typography-heading-h4</code></span></div>
+          <div style="font-size:1.5rem;font-weight:600;letter-spacing:-0.02em;line-height:1.3;">Card &amp; Group Titles</div>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="name">Caption</span><span class="spec">Barlow 600 · 0.75rem<br>0.04em · lh 1.0 · CAPS</span></div>
-          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.04em;line-height:1;text-transform:uppercase;color:var(--text-3);">Case Study · Industrial</div>
+          <div class="type-meta"><span class="name">H5</span><span class="spec">Barlow SemiBold · 1.25rem<br>LS −2% · lh 130%<br><code style="font-size:10px">--kds-sem-typography-heading-h5</code></span></div>
+          <div style="font-size:1.25rem;font-weight:600;letter-spacing:-0.02em;line-height:1.3;">Smaller Groupings</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">H6</span><span class="spec">Barlow SemiBold · 1.125rem<br>LS −2% · lh 140%<br><code style="font-size:10px">--kds-sem-typography-heading-h6</code></span></div>
+          <div style="font-size:1.125rem;font-weight:600;letter-spacing:-0.02em;line-height:1.4;">Dense Headings</div>
+        </div>
+
+        <!-- Body — Barlow Regular/SemiBold -->
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body / LG</span><span class="spec">Barlow Regular · 1.125rem<br>LS −2% · lh 160%<br><code style="font-size:10px">--kds-sem-typography-body-lg</code></span></div>
+          <div style="font-size:1.125rem;font-weight:400;letter-spacing:-0.02em;line-height:1.6;">KEWAZO automates and digitizes on-site material handling with robotics and data analytics.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body / MD</span><span class="spec">Barlow Regular · 1rem<br>LS −2% · lh 160%<br><code style="font-size:10px">--kds-sem-typography-body-md</code></span></div>
+          <div style="font-size:1rem;font-weight:400;letter-spacing:-0.02em;line-height:1.6;">Reduces hazardous exposure hours by one third with continuous deployment across turnarounds.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body / SM</span><span class="spec">Barlow Regular · 0.875rem<br>LS −2% · lh 150%<br><code style="font-size:10px">--kds-sem-typography-body-sm</code></span></div>
+          <div style="font-size:0.875rem;font-weight:400;letter-spacing:-0.02em;line-height:1.5;color:var(--text-2);">Continuous deployment across turnarounds and capital projects in the construction industry.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Body / XS</span><span class="spec">Barlow Regular · 0.75rem<br>LS −2% · lh 150%<br><code style="font-size:10px">--kds-sem-typography-body-xs</code></span></div>
+          <div style="font-size:0.75rem;font-weight:400;letter-spacing:-0.02em;line-height:1.5;color:var(--text-2);">Helper text, footnotes, supplementary information.</div>
+        </div>
+
+        <!-- Label — Barlow Medium -->
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Label / LG</span><span class="spec">Barlow Medium · 1rem<br>LS −2% · lh 140%<br><code style="font-size:10px">--kds-sem-typography-label-lg</code></span></div>
+          <div style="font-size:1rem;font-weight:500;letter-spacing:-0.02em;line-height:1.4;color:var(--text-1);">Form Label Large</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Label / MD</span><span class="spec">Barlow Medium · 0.875rem<br>LS −2% · lh 140%<br><code style="font-size:10px">--kds-sem-typography-label-md</code></span></div>
+          <div style="font-size:0.875rem;font-weight:500;letter-spacing:-0.02em;line-height:1.4;color:var(--text-1);">Form Label Medium</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Label / SM</span><span class="spec">Barlow Medium · 0.75rem<br>LS −2% · lh 140%<br><code style="font-size:10px">--kds-sem-typography-label-sm</code></span></div>
+          <div style="font-size:0.75rem;font-weight:500;letter-spacing:-0.02em;line-height:1.4;color:var(--text-1);">Form Label Small</div>
+        </div>
+
+        <!-- Button — Barlow SemiBold -->
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button / LG</span><span class="spec">Barlow SemiBold · 1rem<br>LS −2% · lh 100%<br><code style="font-size:10px">--kds-sem-typography-button-lg</code></span></div>
+          <button class="kbtn kbtn-md" style="pointer-events:none">Button LG</button>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button / MD</span><span class="spec">Barlow SemiBold · 0.875rem<br>LS −2% · lh 100%<br><code style="font-size:10px">--kds-sem-typography-button-md</code></span></div>
+          <button class="kbtn kbtn-sm" style="pointer-events:none">Button MD</button>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Button / SM</span><span class="spec">Barlow SemiBold · 0.75rem<br>LS −2% · lh 100%<br><code style="font-size:10px">--kds-sem-typography-button-sm</code></span></div>
+          <button class="kbtn kbtn-sm" style="font-size:0.75rem;pointer-events:none">Button SM</button>
+        </div>
+
+        <!-- Utility -->
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Caption</span><span class="spec">Barlow Regular · 0.75rem<br>LS −2% · lh 140%<br><code style="font-size:10px">--kds-sem-typography-caption</code></span></div>
+          <div style="font-size:0.75rem;font-weight:400;letter-spacing:-0.02em;line-height:1.4;color:var(--text-3);">Captions, helper text, hint text</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="name">Overline</span><span class="spec">Barlow Bold · 0.75rem<br>LS −1.2% · lh 100% · CAPS<br><code style="font-size:10px">--kds-sem-typography-overline</code></span></div>
+          <div style="font-size:0.75rem;font-weight:700;letter-spacing:-0.012em;line-height:1;text-transform:uppercase;color:var(--text-3);">Case Study · Industrial</div>
         </div>
       </div>
       <!-- UI Text Styles -->
@@ -1319,29 +1532,41 @@ img{display:block;max-width:100%;}
       <div class="section" id="ft-tokens" data-sec>
         <h2 class="sh2">Design Token Names</h2>
         <div class="code-block"><code><span class="c-cmt">/* Typeface */</span>
-<span class="c-kw">--kds-font-family</span>: <span class="c-val">'Barlow'</span>, -apple-system, sans-serif;
+<span class="c-kw">--kds-font-family-display</span>: <span class="c-val">'LIFTBOT'</span>, 'Barlow', sans-serif; <span class="c-cmt">/* Display only */</span>
+<span class="c-kw">--kds-font-family</span>: <span class="c-val">'Barlow'</span>, -apple-system, sans-serif;     <span class="c-cmt">/* All other text */</span>
 
-<span class="c-cmt">/* Type scale */</span>
-<span class="c-kw">--kds-font-size-display</span>: <span class="c-val">3rem</span>;       <span class="c-cmt">/* 48px */</span>
-<span class="c-kw">--kds-font-size-h1</span>: <span class="c-val">2.5rem</span>;          <span class="c-cmt">/* 40px */</span>
-<span class="c-kw">--kds-font-size-h2</span>: <span class="c-val">2rem</span>;            <span class="c-cmt">/* 32px */</span>
-<span class="c-kw">--kds-font-size-h3</span>: <span class="c-val">1.5rem</span>;          <span class="c-cmt">/* 24px */</span>
-<span class="c-kw">--kds-font-size-body-lg</span>: <span class="c-val">1rem</span>;       <span class="c-cmt">/* 16px */</span>
-<span class="c-kw">--kds-font-size-body</span>: <span class="c-val">0.875rem</span>;      <span class="c-cmt">/* 14px */</span>
-<span class="c-kw">--kds-font-size-caption</span>: <span class="c-val">0.75rem</span>;    <span class="c-cmt">/* 12px */</span>
+<span class="c-cmt">/* Display — LIFTBOT Medium, LS 0% */</span>
+<span class="c-kw">--kds-sem-typography-display-2xl</span>: <span class="c-val">4.5rem / 100%</span>;   <span class="c-cmt">/* 72px — fluid: clamp(3rem, 2.2rem+4vw, 4.5rem) */</span>
+<span class="c-kw">--kds-sem-typography-display-xl</span>:  <span class="c-val">3.75rem / 100%</span>;  <span class="c-cmt">/* 60px — fluid: clamp(2.5rem, 1.9rem+3vw, 3.75rem) */</span>
+<span class="c-kw">--kds-sem-typography-display-lg</span>:  <span class="c-val">3rem / 110%</span>;     <span class="c-cmt">/* 48px — fluid: clamp(2rem, 1.6rem+2vw, 3rem) */</span>
 
-<span class="c-cmt">/* UI roles */</span>
-<span class="c-kw">--kds-font-size-page-title</span>: <span class="c-val">48px</span>;   <span class="c-cmt">/* .b-title — clamp(32px,4vw,48px) */</span>
-<span class="c-kw">--kds-font-size-section-h2</span>: <span class="c-val">32px</span>;   <span class="c-cmt">/* .sh2 — clamp(22px,3vw,32px) */</span>
-<span class="c-kw">--kds-font-size-body-ui</span>: <span class="c-val">14px</span>;      <span class="c-cmt">/* .sp — body paragraphs */</span>
-<span class="c-kw">--kds-font-size-nav</span>: <span class="c-val">14px</span>;          <span class="c-cmt">/* .snav-item */</span>
-<span class="c-kw">--kds-font-size-label</span>: <span class="c-val">12px</span>;        <span class="c-cmt">/* captions, eyebrows, uppercase labels */</span>
-<span class="c-kw">--kds-font-size-code</span>: <span class="c-val">12px</span>;         <span class="c-cmt">/* monospace code blocks */</span>
+<span class="c-cmt">/* Heading — Barlow Bold/SemiBold, LS −2% */</span>
+<span class="c-kw">--kds-sem-typography-heading-h1</span>: <span class="c-val">2.5rem / 110%</span>;   <span class="c-cmt">/* 40px Bold */</span>
+<span class="c-kw">--kds-sem-typography-heading-h2</span>: <span class="c-val">2rem / 120%</span>;     <span class="c-cmt">/* 32px Bold */</span>
+<span class="c-kw">--kds-sem-typography-heading-h3</span>: <span class="c-val">1.75rem / 120%</span>;  <span class="c-cmt">/* 28px SemiBold */</span>
+<span class="c-kw">--kds-sem-typography-heading-h4</span>: <span class="c-val">1.5rem / 130%</span>;   <span class="c-cmt">/* 24px SemiBold */</span>
+<span class="c-kw">--kds-sem-typography-heading-h5</span>: <span class="c-val">1.25rem / 130%</span>;  <span class="c-cmt">/* 20px SemiBold */</span>
+<span class="c-kw">--kds-sem-typography-heading-h6</span>: <span class="c-val">1.125rem / 140%</span>; <span class="c-cmt">/* 18px SemiBold */</span>
 
-<span class="c-cmt">/* Button sizes */</span>
-<span class="c-kw">--kds-btn-font-lg</span>: <span class="c-val">1.125rem</span>;        <span class="c-cmt">/* 18px */</span>
-<span class="c-kw">--kds-btn-font-md</span>: <span class="c-val">1rem</span>;            <span class="c-cmt">/* 16px */</span>
-<span class="c-kw">--kds-btn-font-sm</span>: <span class="c-val">0.875rem</span>;        <span class="c-cmt">/* 14px */</span></code></div>
+<span class="c-cmt">/* Body — Barlow Regular, LS −2% */</span>
+<span class="c-kw">--kds-sem-typography-body-lg</span>: <span class="c-val">1.125rem / 160%</span>;  <span class="c-cmt">/* 18px */</span>
+<span class="c-kw">--kds-sem-typography-body-md</span>: <span class="c-val">1rem / 160%</span>;      <span class="c-cmt">/* 16px */</span>
+<span class="c-kw">--kds-sem-typography-body-sm</span>: <span class="c-val">0.875rem / 150%</span>;  <span class="c-cmt">/* 14px */</span>
+<span class="c-kw">--kds-sem-typography-body-xs</span>: <span class="c-val">0.75rem / 150%</span>;   <span class="c-cmt">/* 12px */</span>
+
+<span class="c-cmt">/* Label — Barlow Medium, LS −2% */</span>
+<span class="c-kw">--kds-sem-typography-label-lg</span>: <span class="c-val">1rem / 140%</span>;     <span class="c-cmt">/* 16px */</span>
+<span class="c-kw">--kds-sem-typography-label-md</span>: <span class="c-val">0.875rem / 140%</span>; <span class="c-cmt">/* 14px */</span>
+<span class="c-kw">--kds-sem-typography-label-sm</span>: <span class="c-val">0.75rem / 140%</span>;  <span class="c-cmt">/* 12px */</span>
+
+<span class="c-cmt">/* Button — Barlow SemiBold, LS −2%, LH 100% */</span>
+<span class="c-kw">--kds-sem-typography-button-lg</span>: <span class="c-val">1rem / 100%</span>;     <span class="c-cmt">/* 16px */</span>
+<span class="c-kw">--kds-sem-typography-button-md</span>: <span class="c-val">0.875rem / 100%</span>; <span class="c-cmt">/* 14px */</span>
+<span class="c-kw">--kds-sem-typography-button-sm</span>: <span class="c-val">0.75rem / 100%</span>;  <span class="c-cmt">/* 12px */</span>
+
+<span class="c-cmt">/* Utility */</span>
+<span class="c-kw">--kds-sem-typography-caption</span>:  <span class="c-val">0.75rem / 140%</span>;  <span class="c-cmt">/* 12px Regular, LS −2% */</span>
+<span class="c-kw">--kds-sem-typography-overline</span>: <span class="c-val">0.75rem / 100%</span>;  <span class="c-cmt">/* 12px Bold, LS −1.2%, UPPERCASE */</span></code></div>
       </div>
     </div>
     <div class="sticky-nav">
@@ -1380,31 +1605,41 @@ img{display:block;max-width:100%;}
         <h2 class="sh2">Breakpoint for responsive web</h2>
         <div style="overflow-x:auto;">
         <table class="ttable">
-          <thead><tr><th>Breakpoint</th><th>Width</th><th>Layout</th><th>Side Nav</th><th>Sticky Nav</th></tr></thead>
+          <thead><tr><th>Breakpoint</th><th>Width</th><th>Columns</th><th>Gutter</th><th>Margin</th><th>Max container</th></tr></thead>
           <tbody>
-            <tr><td>Desktop</td><td>≥ 1280px</td><td>3-column</td><td>213px fixed</td><td>213px fixed</td></tr>
-            <tr><td>Tablet</td><td>768–1279px</td><td>2-column</td><td>180px fixed</td><td>Hidden</td></tr>
-            <tr><td>Mobile</td><td>≤ 767px</td><td>1-column</td><td>Drawer (hamburger)</td><td>Hidden</td></tr>
+            <tr><td colspan="6" class="tcat">Mobile</td></tr>
+            <tr><td>Mobile (dense 1-col)</td><td>&lt; 768px</td><td>1</td><td>0px</td><td>16px (1rem)</td><td>393px</td></tr>
+            <tr><td>Mobile (dense 4-col)</td><td>&lt; 768px</td><td>4</td><td>8px (0.5rem)</td><td>16px (1rem)</td><td>393px</td></tr>
+            <tr><td colspan="6" class="tcat">Tablet</td></tr>
+            <tr><td>Tablet (standard 8-col)</td><td>768–1279px</td><td>8</td><td>8px (0.5rem)</td><td>24px (1.5rem)</td><td>834px</td></tr>
+            <tr><td colspan="6" class="tcat">Desktop</td></tr>
+            <tr><td>Desktop (standard 12-col)</td><td>≥ 1280px</td><td>12</td><td>16px (1rem)</td><td>80px (5rem)</td><td>1280px</td></tr>
+            <tr><td>Desktop (dense 16-col)</td><td>≥ 1280px</td><td>16</td><td>20px (1.25rem)</td><td>80px (5rem)</td><td>1280px</td></tr>
+            <tr><td colspan="6" class="tcat">Presentation</td></tr>
+            <tr><td>Presentation (1920×1080)</td><td>1920px</td><td>12</td><td>16px (1rem)</td><td>80px (5rem)</td><td>—</td></tr>
           </tbody>
         </table>
         </div>
       </div>
       <div class="section" id="fl-grid" data-sec>
         <h2 class="sh2">Grid</h2>
-        <p class="sp">Page horizontal padding: <strong>40px</strong>. Column gap: <strong>16px</strong>. The body column is fluid between the two fixed sidebars. On mobile, padding reduces to <strong>16px</strong>.</p>
+        <p class="sp">Base unit: <strong>1rem = 16px</strong>. The KDS web UI uses a standard 12-column desktop grid with 16px gutters and 80px margins. The body column is fluid between the two fixed sidebars. On mobile, padding reduces to <strong>16px</strong>.</p>
       </div>
       <div class="section" id="fl-spacing" data-sec>
         <h2 class="sh2">Spacing</h2>
-        <p class="sp">4px base unit. All spacing values are multiples of 4.</p>
+        <p class="sp">4px base unit — all spacing values are multiples of 4. Spacing/1 through Spacing/11 cover the full scale from micro to macro.</p>
         <div class="sp-rows">
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-1</span><span class="sp-px">4 px</span><div class="sp-bar" style="width:4px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-2</span><span class="sp-px">8 px</span><div class="sp-bar" style="width:8px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-4</span><span class="sp-px">16 px · Column gap</span><div class="sp-bar" style="width:16px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-6</span><span class="sp-px">24 px</span><div class="sp-bar" style="width:24px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-8</span><span class="sp-px">32 px</span><div class="sp-bar" style="width:32px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-10</span><span class="sp-px">40 px · Page margin</span><div class="sp-bar" style="width:40px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-16</span><span class="sp-px">64 px · GNB height</span><div class="sp-bar" style="width:64px"></div></div>
-          <div class="sp-row"><span class="sp-tok">--kds-spacing-20</span><span class="sp-px">80 px · Page top padding</span><div class="sp-bar" style="width:80px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-1</span><span class="sp-px">4 px</span><div class="sp-bar" style="width:4px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-2</span><span class="sp-px">8 px</span><div class="sp-bar" style="width:8px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-3</span><span class="sp-px">12 px</span><div class="sp-bar" style="width:12px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-4</span><span class="sp-px">16 px · Column gap</span><div class="sp-bar" style="width:16px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-5</span><span class="sp-px">20 px</span><div class="sp-bar" style="width:20px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-6</span><span class="sp-px">24 px · Mobile margin</span><div class="sp-bar" style="width:24px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-7</span><span class="sp-px">32 px</span><div class="sp-bar" style="width:32px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-8</span><span class="sp-px">40 px · Page margin</span><div class="sp-bar" style="width:40px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-9</span><span class="sp-px">48 px</span><div class="sp-bar" style="width:48px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-10</span><span class="sp-px">64 px · GNB height</span><div class="sp-bar" style="width:64px"></div></div>
+          <div class="sp-row"><span class="sp-tok">--kds-sem-spacing-11</span><span class="sp-px">80 px · Page top padding · Desktop margin</span><div class="sp-bar" style="width:80px"></div></div>
         </div>
       </div>
     </div>
@@ -1437,26 +1672,20 @@ img{display:block;max-width:100%;}
       <div class="bhead"><h1 class="b-title">Radius</h1><span class="b-sub">Foundation</span></div>
       <div class="section" id="fr-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">KDS keeps border-radius minimal and purposeful. The default UI radius is 4px. Components such as swatches, input fields, and cards use 4px. Pill-shaped elements (CTAs, tags) use 36px. Badge/chip elements use 999px for a fully rounded appearance.</p>
+        <p class="sp">KDS keeps border-radius intentionally minimal. Round corners are used only in exceptional cases. The system defines just three values — no rounding by default, a 4px XS for rare UI accents, and a full 99px pill for truly circular elements. Never apply radius without explicit design justification.</p>
       </div>
       <div class="section" id="fr-tokens" data-sec>
         <h2 class="sh2">Design Token Names</h2>
-        <div class="code-block"><code><span class="c-kw">--kds-radius-none</span>: <span class="c-val">0px</span>;
-<span class="c-kw">--kds-radius-sm</span>:   <span class="c-val">4px</span>;   <span class="c-cmt">/* UI default: chips, swatches, inputs */</span>
-<span class="c-kw">--kds-radius-md</span>:   <span class="c-val">8px</span>;
-<span class="c-kw">--kds-radius-lg</span>:   <span class="c-val">12px</span>;  <span class="c-cmt">/* Cards, panels */</span>
-<span class="c-kw">--kds-radius-pill</span>: <span class="c-val">36px</span>;  <span class="c-cmt">/* Buttons, CTAs */</span>
-<span class="c-kw">--kds-radius-full</span>: <span class="c-val">999px</span>; <span class="c-cmt">/* Badges */</span></code></div>
+        <div class="code-block"><code><span class="c-kw">--kds-sem-radius-none</span>: <span class="c-val">0px</span>;   <span class="c-cmt">/* Default — sharp corners */</span>
+<span class="c-kw">--kds-sem-radius-xs</span>:   <span class="c-val">4px</span>;   <span class="c-cmt">/* Exceptional use only */</span>
+<span class="c-kw">--kds-sem-radius-full</span>: <span class="c-val">99px</span>;  <span class="c-cmt">/* Circular / pill elements */</span></code></div>
       </div>
       <div class="section" id="fr-radius" data-sec>
         <h2 class="sh2">Radius</h2>
         <div class="rad-grid">
-          <div class="rad-card"><div class="rad-box" style="border-radius:0"></div><div class="rad-name">None</div><div class="rad-val">0px</div></div>
-          <div class="rad-card"><div class="rad-box" style="border-radius:4px"></div><div class="rad-name">SM</div><div class="rad-val">4px — UI default</div></div>
-          <div class="rad-card"><div class="rad-box" style="border-radius:8px"></div><div class="rad-name">MD</div><div class="rad-val">8px</div></div>
-          <div class="rad-card"><div class="rad-box" style="border-radius:12px"></div><div class="rad-name">LG</div><div class="rad-val">12px — Cards</div></div>
-          <div class="rad-card"><div class="rad-box" style="border-radius:36px"></div><div class="rad-name">Pill</div><div class="rad-val">36px — Buttons</div></div>
-          <div class="rad-card"><div class="rad-box" style="border-radius:999px"></div><div class="rad-name">Full</div><div class="rad-val">999px — Badges</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:0"></div><div class="rad-name">None</div><div class="rad-val">0px — Default</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:4px"></div><div class="rad-name">XS</div><div class="rad-val">4px — Exceptional</div></div>
+          <div class="rad-card"><div class="rad-box" style="border-radius:99px"></div><div class="rad-name">Full</div><div class="rad-val">99px — Pill / Circle</div></div>
         </div>
       </div>
     </div>
@@ -1540,8 +1769,36 @@ img{display:block;max-width:100%;}
           </div>
         </div>
 
+        <div class="ico-section-lbl" style="margin-top:40px">Icon · Action</div>
+        <div class="ico-grid">
+          <div class="ico-tile" title="ico_print" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_print.svg','ico_print')">
+            <img src="./04_Element/02_icon/icon=ico_print.svg" width="24" height="24" alt="print" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_docs" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_docs.svg','ico_docs')">
+            <img src="./04_Element/02_icon/icon=ico_docs.svg" width="24" height="24" alt="docs" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_setup" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_setup.svg','ico_setup')">
+            <img src="./04_Element/02_icon/icon=ico_setup.svg" width="24" height="24" alt="setup" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_lock" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_lock.svg','ico_lock')">
+            <img src="./04_Element/02_icon/icon=ico_lock.svg" width="24" height="24" alt="lock" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_unlock" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_unlock.svg','ico_unlock')">
+            <img src="./04_Element/02_icon/icon=ico_unlock.svg" width="24" height="24" alt="unlock" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_checkcircle" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_checkcircle.svg','ico_checkcircle')">
+            <img src="./04_Element/02_icon/icon=ico_checkcircle.svg" width="24" height="24" alt="check circle" draggable="false">
+          </div>
+          <div class="ico-tile" title="ico_calendar" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_calendar.svg','ico_calendar')">
+            <img src="./04_Element/02_icon/icon=ico_calendar.svg" width="24" height="24" alt="calendar" draggable="false">
+          </div>
+        </div>
+
         <div class="ico-section-lbl" style="margin-top:40px">Icon · Construction Industry</div>
         <div class="ico-grid">
+          <div class="ico-tile" style="width:64px;height:64px" title="ico_helmet" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_helmet.svg','ico_helmet')">
+            <img src="./04_Element/02_icon/icon=ico_helmet.svg" width="40" height="40" alt="helmet" draggable="false">
+          </div>
           <div class="ico-tile" style="width:64px;height:64px" title="ico_truck" onclick="kdsDownloadFile('./04_Element/02_icon/icon=ico_truck.svg','ico_truck')">
             <img src="./04_Element/02_icon/icon=ico_truck.svg" width="40" height="40" alt="truck" draggable="false">
           </div>
@@ -2533,6 +2790,58 @@ document.addEventListener('click',e=>{
   el.classList.add('active');
 });
 
+/* ── Collapsible side-nav ── */
+(function initCollapsibleNav(){
+  const KEY='kds-snav-collapsed';
+
+  /* wrap item text in .snav-item-label and prepend .snav-abbr chip */
+  document.querySelectorAll('.snav-item').forEach(item=>{
+    const text=item.textContent.trim();
+    const words=text.split(/[\s&\/\-]+/).filter(Boolean);
+    const abbr=words.length>1
+      ? (words[0][0]+(words[1][0]||'')).toUpperCase()
+      : text.slice(0,2).toUpperCase();
+
+    const abbrEl=document.createElement('span');
+    abbrEl.className='snav-abbr';
+    abbrEl.textContent=abbr;
+    abbrEl.setAttribute('aria-hidden','true');
+
+    const labelEl=document.createElement('span');
+    labelEl.className='snav-item-label';
+    labelEl.textContent=text;
+
+    item.textContent='';
+    item.appendChild(abbrEl);
+    item.appendChild(labelEl);
+    item.setAttribute('title',text);
+  });
+
+  /* add toggle button to every side-nav */
+  document.querySelectorAll('.side-nav').forEach(nav=>{
+    const btn=document.createElement('button');
+    btn.className='snav-toggle-btn';
+    btn.setAttribute('aria-label','Collapse sidebar');
+    btn.innerHTML=`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const collapsed=document.body.classList.toggle('snav-collapsed');
+      localStorage.setItem(KEY,collapsed);
+      document.querySelectorAll('.snav-toggle-btn').forEach(b=>{
+        b.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');
+      });
+    });
+    nav.insertBefore(btn,nav.firstChild);
+  });
+
+  /* restore persisted state */
+  if(localStorage.getItem(KEY)==='true'){
+    document.body.classList.add('snav-collapsed');
+  }
+})();
+
 })();
 </script>
 
@@ -2685,7 +2994,7 @@ document.addEventListener('keydown',function(e){
       if(hex) navigator.clipboard.writeText(hex).then(()=>{
         showToast(hex);
         const box=swCol.querySelector('.sw-box');
-        if(box){box.style.outline='2px solid var(--t400)';setTimeout(()=>box.style.outline='',1200);}
+        if(box){box.style.outline='2px solid var(--t400)';box.style.outlineOffset='2px';setTimeout(()=>{box.style.outline='';box.style.outlineOffset='';},1200);}
       });
       return;
     }
