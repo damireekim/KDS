@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>KEWAZO Design System</title>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="apple-touch-icon" href="favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -309,15 +311,15 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .pal-sec-title{font-size:16px;font-weight:600;letter-spacing:-0.024em;color:#000;line-height:1;}
 .pal-group{display:flex;flex-direction:column;gap:16px;}
 .pal-row{display:flex;gap:16px;align-items:flex-start;}
-.pal-info{width:auto;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+.pal-info{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
 .pal-info-lbl{font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0.02em;}
 .pal-swatches{display:flex;gap:8px;align-items:flex-start;flex:1 0 0;min-width:0;overflow:hidden;}
 
 /* ── Colour label chip (Figma: KDS_Foundation_Color chip) ── */
 .p-chip{
-  display:inline-flex;align-items:center;gap:10px;
+  display:flex;width:100%;align-items:center;gap:10px;
   background:#fff;border:1px solid #E6E8EB;
-  padding:8px 24px 8px 8px;
+  padding:8px 16px 8px 8px;
   cursor:pointer;white-space:nowrap;
   transition:border-color .15s,box-shadow .15s,background .15s;
 }
@@ -361,8 +363,13 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 /* hex: 9px Regular dark-500 #6B7280 (Figma: Barlow:Regular text-[9px] text-[#6b7280]) */
 .sw-val{font-size:9px;font-weight:400;color:#6B7280;line-height:1;white-space:nowrap;}
 .sw-col:hover .sw-box{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.14);}
-/* Status swatches: allow wrap, align top-left */
-.pal-swatches[style*="flex-wrap"] .sw-col{flex:1 0 0;min-width:56px;}
+/* Status swatches: 9-column grid so the columns line up exactly with the
+   solid-scale rows above; the 13 status chips flow 9 + 4 across two rows.
+   (Mobile <768px keeps the horizontal-scroll behaviour from the base rule.) */
+@media(min-width:768px){
+  .pal-swatches[style*="grid-template"]{display:grid!important;}
+  .pal-swatches[style*="grid-template"] .sw-col{flex:none;min-width:0;}
+}
 /* print cards */
 .print-cards{display:flex;gap:12px;flex-wrap:wrap;}
 .print-card{width:242px;height:106px;padding:16px;display:flex;justify-content:space-between;align-items:flex-end;color:#fff;flex-shrink:0;}
@@ -1227,19 +1234,20 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
                 <div class="pal-info">
                   <div class="p-chip"><div class="pal-chip-tile" style="background:#EC1010"></div><div class="pal-chip-meta"><span class="pal-chip-name">Status</span><span class="p-hex">#EC1010</span></div></div>
                 </div>
-                <div class="pal-swatches" style="flex-wrap:wrap;row-gap:16px;">
-                  <div class="sw-col"><div class="sw-box" style="background:#0E5908"><span class="pal-wcag" style="color:#fff">AAA 7.9:1</span></div><div class="sw-info"><div class="sw-step">Green 700</div><div class="sw-val">#0E5908</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#10AC44"><span class="pal-wcag" style="color:#1B1F24">AA 5.4:1</span></div><div class="sw-info"><div class="sw-step">Green 500</div><div class="sw-val">#10AC44</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#E1F4DF"><span class="pal-wcag" style="color:#1B1F24">AAA 13.4:1</span></div><div class="sw-info"><div class="sw-step">Green 200</div><div class="sw-val">#E1F4DF</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#171975"><span class="pal-wcag" style="color:#fff">AAA 14.3:1</span></div><div class="sw-info"><div class="sw-step">Blue 700</div><div class="sw-val">#171975</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#4347CB"><span class="pal-wcag" style="color:#fff">AA 6.9:1</span></div><div class="sw-info"><div class="sw-step">Blue 500</div><div class="sw-val">#4347CB</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#DDEAFF"><span class="pal-wcag" style="color:#1B1F24">AAA 12.7:1</span></div><div class="sw-info"><div class="sw-step">Blue 200</div><div class="sw-val">#DDEAFF</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#BA1315"><span class="pal-wcag" style="color:#fff">AA 6.4:1</span></div><div class="sw-info"><div class="sw-step">Red 700</div><div class="sw-val">#BA1315</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA 4.5:1</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#1B1F24">AAA 14.2:1</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#FFF06B"><span class="pal-wcag" style="color:#1B1F24">AAA 13.1:1</span></div><div class="sw-info"><div class="sw-step">Yellow 400</div><div class="sw-val">#FFF06B</div></div></div>
-                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#1B1F24">AAA 12.5:1</span></div><div class="sw-info"><div class="sw-step">Yellow 300</div><div class="sw-val">#F9FF93</div></div></div>
-                  <div class="sw-col"><div class="sw-box bd" style="background:#FBF8E4"><span class="pal-wcag" style="color:#1B1F24">AAA 13.9:1</span></div><div class="sw-info"><div class="sw-step">Yellow 200</div><div class="sw-val">#FBF8E4</div></div></div>
+                <div class="pal-swatches" style="grid-template-columns:repeat(9,1fr);gap:8px;row-gap:16px;">
+                  <div class="sw-col"><div class="sw-box" style="background:#BA1315"><span class="pal-wcag" style="color:#fff">AA 6.58:1</span></div><div class="sw-info"><div class="sw-step">Red 700</div><div class="sw-val">#BA1315</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#EC1010"><span class="pal-wcag" style="color:#fff">AA 4.52:1</span></div><div class="sw-info"><div class="sw-step">Red 500</div><div class="sw-val">#EC1010</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FEF3F3"><span class="pal-wcag" style="color:#1B1F24">AAA 15.24:1</span></div><div class="sw-info"><div class="sw-step">Red 200</div><div class="sw-val">#FEF3F3</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#171975"><span class="pal-wcag" style="color:#fff">AAA 14.64:1</span></div><div class="sw-info"><div class="sw-step">Blue 700</div><div class="sw-val">#171975</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#4347CB"><span class="pal-wcag" style="color:#fff">AA 6.99:1</span></div><div class="sw-info"><div class="sw-step">Blue 500</div><div class="sw-val">#4347CB</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#DDEAFF"><span class="pal-wcag" style="color:#1B1F24">AAA 13.63:1</span></div><div class="sw-info"><div class="sw-step">Blue 200</div><div class="sw-val">#DDEAFF</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#0E5908"><span class="pal-wcag" style="color:#fff">AAA 8.57:1</span></div><div class="sw-info"><div class="sw-step">Green 700</div><div class="sw-val">#0E5908</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#22AD50"><span class="pal-wcag" style="color:#fff">AA 5.65:1</span></div><div class="sw-info"><div class="sw-step">Green 500</div><div class="sw-val">#22AD50</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#E1F4DF"><span class="pal-wcag" style="color:#1B1F24">AAA 14.37:1</span></div><div class="sw-info"><div class="sw-step">Green 200</div><div class="sw-val">#E1F4DF</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#9A7400"><span class="pal-wcag" style="color:#fff">Fail 4.31:1</span></div><div class="sw-info"><div class="sw-step">Yellow 700</div><div class="sw-val">#9A7400</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#FFF06B"><span class="pal-wcag" style="color:#1B1F24">AAA 14.18:1</span></div><div class="sw-info"><div class="sw-step">Yellow 400</div><div class="sw-val">#FFF06B</div></div></div>
+                  <div class="sw-col"><div class="sw-box" style="background:#F9FF93"><span class="pal-wcag" style="color:#1B1F24">AAA 15.58:1</span></div><div class="sw-info"><div class="sw-step">Yellow 300</div><div class="sw-val">#F9FF93</div></div></div>
+                  <div class="sw-col"><div class="sw-box bd" style="background:#FBF8E4"><span class="pal-wcag" style="color:#1B1F24">AAA 15.48:1</span></div><div class="sw-info"><div class="sw-step">Yellow 200</div><div class="sw-val">#FBF8E4</div></div></div>
                 </div>
               </div>
           </div>
@@ -1277,11 +1285,11 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
             <tr><td class="tvar">--kds-sem-color-text-primary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td class="chex">dark-900</td></tr>
             <tr><td class="tvar">--kds-sem-color-text-secondary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#414C59"></div><span class="chex">#414C59</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EAEDF3"></div><span class="chex">#EAEDF3</span></div></td><td class="chex">dark-700</td></tr>
             <tr><td class="tvar">--kds-sem-color-text-teriary</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#7A899C"></div><span class="chex">#7A899C</span></div></td><td class="chex">dark-500</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-highlight</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td class="chex">turquoise-400</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-red</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td><div class="chip-row"><div class="chip" style="background:#EC1010"></div><span class="chex">#EC1010</span></div></td><td class="chex">red-500</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-blue</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#4347CB"></div><span class="chex">#4347CB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#4347CB"></div><span class="chex">#4347CB</span></div></td><td class="chex">blue-500</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-green</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#10AC44"></div><span class="chex">#10AC44</span></div></td><td><div class="chip-row"><div class="chip" style="background:#10AC44"></div><span class="chex">#10AC44</span></div></td><td class="chex">green-500</td></tr>
-            <tr><td class="tvar">--kds-sem-color-text-yellow</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#B8860B"></div><span class="chex">#B8860B</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FFF06B"></div><span class="chex">#FFF06B</span></div></td><td class="chex">yellow-700</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-highlight</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#058B8C"></div><span class="chex">#058B8C</span></div></td><td><div class="chip-row"><div class="chip" style="background:#40C0C0"></div><span class="chex">#40C0C0</span></div></td><td class="chex">turquoise-600 / 400</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-red</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#BA1315"></div><span class="chex">#BA1315</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FEF3F3"></div><span class="chex">#FEF3F3</span></div></td><td class="chex">red-700 / 200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-blue</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#4347CB"></div><span class="chex">#4347CB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#DDEAFF"></div><span class="chex">#DDEAFF</span></div></td><td class="chex">blue-500 / 200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-green</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#0E5908"></div><span class="chex">#0E5908</span></div></td><td><div class="chip-row"><div class="chip" style="background:#E1F4DF"></div><span class="chex">#E1F4DF</span></div></td><td class="chex">green-700 / 200</td></tr>
+            <tr><td class="tvar">--kds-sem-color-text-yellow</td><td>Text</td><td><div class="chip-row"><div class="chip" style="background:#9A7400"></div><span class="chex">#9A7400</span></div></td><td><div class="chip-row"><div class="chip" style="background:#FBF8E4"></div><span class="chex">#FBF8E4</span></div></td><td class="chex">yellow-700 / 200</td></tr>
             <tr><td colspan="5" class="tcat">Background</td></tr>
             <tr><td class="tvar">--kds-sem-color-bg-primary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#FFFFFF;border:1px solid #E6E8EB"></div><span class="chex">#FFFFFF</span></div></td><td><div class="chip-row"><div class="chip" style="background:#1B1F24"></div><span class="chex">#1B1F24</span></div></td><td class="chex">mono-100</td></tr>
             <tr><td class="tvar">--kds-sem-color-bg-secondary</td><td>Background</td><td><div class="chip-row"><div class="chip" style="background:#F5F7FB"></div><span class="chex">#F5F7FB</span></div></td><td><div class="chip-row"><div class="chip" style="background:#2B3037"></div><span class="chex">#2B3037</span></div></td><td class="chex">dark-100</td></tr>
