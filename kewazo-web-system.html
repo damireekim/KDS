@@ -268,7 +268,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 
 /* ─── BODY ─── */
 .body-col{
-  flex:1;min-width:0;max-width:900px;
+  flex:1;min-width:0;max-width:none;
   padding:80px 0;display:flex;flex-direction:column;gap:80px;
 }
 .bhead{display:flex;flex-direction:column;gap:40px;width:100%;}
@@ -444,6 +444,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 ─────────────────────────────────────────── */
 .type-row{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--d200);align-items:baseline;}
 .type-row:last-child{border-bottom:none;}
+.type-row>.kbtn{justify-self:start;}
 .type-meta .name{font-size:12px;font-weight:700;color:var(--text-1);display:block;margin-bottom:4px;}
 .type-meta .spec{font-size:11px;color:var(--text-3);line-height:1.6;}
 
@@ -651,7 +652,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 }
 .ci-dl{
   display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
-  font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  font-size:0.8rem;font-weight:600;letter-spacing:-0.02em;line-height:1;text-transform:uppercase;
   color:var(--text-1);transition:color .15s;cursor:pointer;
 }
 .ci-dl:hover{color:var(--act);}
@@ -2580,14 +2581,14 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
             <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/01_Signature_bg.svg" alt="KEWAZO signature wordmark" style="width:56%"></div>
             <div class="ci-meta">
               <span class="ci-name">KEWAZO_SIGNATURE.svg</span>
-              <a class="ci-dl" href="./01_Signature/01_Signature_bg.svg" download="KEWAZO_Signature.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./01_Signature/01_Signature_bg.svg" download="KEWAZO_Signature.svg"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
           <div class="ci-card">
             <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/01_Symbol_bk.svg" alt="KEWAZO symbol" style="width:34%"></div>
             <div class="ci-meta">
               <span class="ci-name">KEWAZO_SYMBOL.svg</span>
-              <a class="ci-dl" href="./01_Signature/01_Symbol_bk.svg" download="KEWAZO_Symbol.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./01_Signature/01_Symbol_bk.svg" download="KEWAZO_Symbol.svg"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
         </div>
@@ -2601,7 +2602,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
             <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/02_Liftbot_typelogo_bk.svg" alt="LIFTBOT typelogo" style="width:50%"></div>
             <div class="ci-meta">
               <span class="ci-name">LIFTBOT_TYPELOGO.svg</span>
-              <a class="ci-dl" href="./01_Signature/02_Liftbot_typelogo_bk.svg" download="LIFTBOT_Typelogo.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./01_Signature/02_Liftbot_typelogo_bk.svg" download="LIFTBOT_Typelogo.svg"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
         </div>
@@ -2615,14 +2616,14 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
             <div class="ci-thumb light"><img src="./01_Signature/03_Signature_motion_bg.gif" alt="KEWAZO signature motion" style="width:82%"></div>
             <div class="ci-meta">
               <span class="ci-name">KEWAZO_SIGNATURE_MOTION.gif</span>
-              <a class="ci-dl" href="./01_Signature/03_Signature_motion_bg.gif" download="KEWAZO_Signature_Motion.gif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./01_Signature/03_Signature_motion_bg.gif" download="KEWAZO_Signature_Motion.gif"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
           <div class="ci-card">
             <div class="ci-thumb"><video src="./01_Signature/03_Outtro.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
             <div class="ci-meta">
               <span class="ci-name">KEWAZO_OUTRO.mp4</span>
-              <a class="ci-dl" href="./01_Signature/03_Outtro.mp4" download="KEWAZO_Outro.mp4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./01_Signature/03_Outtro.mp4" download="KEWAZO_Outro.mp4"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
         </div>
@@ -2636,7 +2637,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
             <div class="ci-thumb light"><img src="./favicon.png" alt="KEWAZO favicon" style="width:72px;height:72px;image-rendering:auto"></div>
             <div class="ci-meta">
               <span class="ci-name">FAVICON.png</span>
-              <a class="ci-dl" href="./favicon.png" download="KEWAZO_favicon.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+              <a class="ci-dl" href="./favicon.png" download="KEWAZO_favicon.png"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 25L13.75 18.75L15.5 16.9375L18.75 20.1875V10H21.25V20.1875L24.5 16.9375L26.25 18.75L20 25ZM10 30V23.75H12.5V27.5H27.5V23.75H30V30H10Z"/></svg>Download</a>
             </div>
           </div>
         </div>
