@@ -631,6 +631,37 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .stub-ph-lbl{font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-3);}
 
 /* ───────────────────────────────────────────
+   CI ASSET DOWNLOAD CARDS  (Resources → KEWAZO CI)
+─────────────────────────────────────────── */
+.ci-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px;}
+.ci-grid.one{grid-template-columns:1fr;max-width:calc(50% - 12px);}
+.ci-card{display:flex;flex-direction:column;gap:14px;}
+.ci-thumb{
+  aspect-ratio:16/9;border-radius:var(--r-md);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:#1B1F24;position:relative;
+}
+.ci-thumb.light{background:#F5F7FB;border:1px solid var(--border-1);}
+.ci-thumb img,.ci-thumb video{display:block;}
+.ci-thumb .logo-mark{filter:invert(1) brightness(2);}
+.ci-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.ci-name{
+  font-size:13px;font-weight:600;letter-spacing:0.04em;
+  color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.ci-dl{
+  display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+  font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-1);transition:color .15s;cursor:pointer;
+}
+.ci-dl:hover{color:var(--act);}
+.ci-dl svg{width:16px;height:16px;flex-shrink:0;}
+@media(max-width:767px){
+  .ci-grid{grid-template-columns:1fr;gap:20px;}
+  .ci-grid.one{max-width:none;}
+}
+
+/* ───────────────────────────────────────────
    RESPONSIVE  — 3 breakpoints
 ─────────────────────────────────────────── */
 
@@ -2518,6 +2549,110 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
   </div>
 </div>
 
+<!-- ══════════════════════ RESOURCES — KEWAZO CI ══════════════════════ -->
+<div id="page-resources-kewazo-ci" class="page">
+  <div class="interior">
+    <div class="side-nav">
+      <div class="snav-label">Resources</div>
+      <div class="snav-items">
+        <a class="snav-item active" data-page="resources-kewazo-ci">KEWAZO CI</a>
+        <a class="snav-item" data-page="resources-liftbot-bi">LIFTBOT BI</a>
+        <a class="snav-item" data-page="resources-google-docs">Google Docs Template</a>
+        <a class="snav-item" data-page="resources-social-media">Social Media Profile</a>
+        <a class="snav-item" data-page="resources-branded-merches">Branded Merches</a>
+        <a class="snav-item" data-page="resources-business-card">Business Card</a>
+        <a class="snav-item" data-page="resources-clients-logo">Clients' Logo</a>
+      </div>
+    </div>
+    <div class="body-col">
+      <div class="bhead"><h1 class="b-title">KEWAZO Corporate Identity</h1><span class="b-sub">Resources</span></div>
+
+      <div class="section" id="ci-overview" data-sec>
+        <h2 class="sh2">Overview</h2>
+        <p class="sp">Official KEWAZO corporate identity assets — the signature wordmark, brand symbol, LIFTBOT typelogo, and motion intro/outro. Use these source files in all KEWAZO communications and never redraw, recolour, or distort the marks. Preview tiles show each asset in white on KEWAZO Dark; click <strong>Download</strong> to save the original vector or media file.</p>
+      </div>
+
+      <div class="section" id="ci-signature" data-sec>
+        <h2 class="sh2">Signature</h2>
+        <p class="sp">The KEWAZO signature (wordmark) and symbol. The wordmark is the primary lockup; the symbol is used where space is limited or where the brand is already established in context.</p>
+        <div class="ci-grid">
+          <div class="ci-card">
+            <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/01_Signature_bg.svg" alt="KEWAZO signature wordmark" style="width:56%"></div>
+            <div class="ci-meta">
+              <span class="ci-name">KEWAZO_SIGNATURE.svg</span>
+              <a class="ci-dl" href="./01_Signature/01_Signature_bg.svg" download="KEWAZO_Signature.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/01_Symbol_bk.svg" alt="KEWAZO symbol" style="width:34%"></div>
+            <div class="ci-meta">
+              <span class="ci-name">KEWAZO_SYMBOL.svg</span>
+              <a class="ci-dl" href="./01_Signature/01_Symbol_bk.svg" download="KEWAZO_Symbol.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-typelogo" data-sec>
+        <h2 class="sh2">LIFTBOT Typelogo</h2>
+        <p class="sp">The LIFTBOT product typelogo. Use for the LIFTBOT robotic scaffolding system and the LIFTBOT data platform — always alongside, never replacing, the KEWAZO signature.</p>
+        <div class="ci-grid one">
+          <div class="ci-card">
+            <div class="ci-thumb"><img class="logo-mark" src="./01_Signature/02_Liftbot_typelogo_bk.svg" alt="LIFTBOT typelogo" style="width:50%"></div>
+            <div class="ci-meta">
+              <span class="ci-name">LIFTBOT_TYPELOGO.svg</span>
+              <a class="ci-dl" href="./01_Signature/02_Liftbot_typelogo_bk.svg" download="LIFTBOT_Typelogo.svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-video" data-sec>
+        <h2 class="sh2">Video Intro and Outtro</h2>
+        <p class="sp">Animated signature for video intros and the branded outro clip. Use as the opening / closing frames of KEWAZO video content and presentations.</p>
+        <div class="ci-grid">
+          <div class="ci-card">
+            <div class="ci-thumb light"><img src="./01_Signature/03_Signature_motion_bg.gif" alt="KEWAZO signature motion" style="width:82%"></div>
+            <div class="ci-meta">
+              <span class="ci-name">KEWAZO_SIGNATURE_MOTION.gif</span>
+              <a class="ci-dl" href="./01_Signature/03_Signature_motion_bg.gif" download="KEWAZO_Signature_Motion.gif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-thumb"><video src="./01_Signature/03_Outtro.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+            <div class="ci-meta">
+              <span class="ci-name">KEWAZO_OUTRO.mp4</span>
+              <a class="ci-dl" href="./01_Signature/03_Outtro.mp4" download="KEWAZO_Outro.mp4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-etc" data-sec>
+        <h2 class="sh2">Etc.</h2>
+        <p class="sp">Favicon for web properties — derived from the KEWAZO symbol at 16–32px.</p>
+        <div class="ci-grid one">
+          <div class="ci-card">
+            <div class="ci-thumb light"><img src="./favicon.png" alt="KEWAZO favicon" style="width:72px;height:72px;image-rendering:auto"></div>
+            <div class="ci-meta">
+              <span class="ci-name">FAVICON.png</span>
+              <a class="ci-dl" href="./favicon.png" download="KEWAZO_favicon.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-nav">
+      <div class="stnav-title">KEWAZO CI</div>
+      <a class="stnav-item active" data-target="ci-overview">Overview</a>
+      <a class="stnav-item" data-target="ci-signature">Signature</a>
+      <a class="stnav-item" data-target="ci-typelogo">LIFTBOT Typelogo</a>
+      <a class="stnav-item" data-target="ci-video">Video Intro and Outtro</a>
+      <a class="stnav-item" data-target="ci-etc">Etc.</a>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════════════ RESOURCES — CLIENTS' LOGO ══════════════════════ -->
 <div id="page-resources-clients-logo" class="page">
   <div class="interior">
@@ -2585,8 +2720,7 @@ const STUBS=[
   ['case-studies-internal-tools','Internal Tools','Overview,Operations'],
   ['case-studies-presentation-slides','Presentation Slides','Overview,Presentation Slides - Internal,Presentation Slides - Sales'],
   ['case-studies-sales-materials','Sales Materials','Overview,LIFTBOT One-pager,Case study report'],
-  // Resources
-  ['resources-kewazo-ci','KEWAZO Corporate Identity','Overview,Signature,LIFTBOT Typelogo,Video Intro and Outtro,Etc.'],
+  // Resources — KEWAZO CI is a full custom page (see markup above)
   ['resources-liftbot-bi','LIFTBOT BI','Overview'],
   ['resources-google-docs','Google Docs Template','Overview,Google Docs Template,Version History'],
   ['resources-social-media','Social Media Profile','Overview,Social Media Profile'],
