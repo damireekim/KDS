@@ -556,6 +556,57 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .kbtn-state-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:4px 10px;background:var(--bg-2);border-radius:4px;border:1px solid var(--border-1);width:fit-content;}
 .kbtn-disp-demo{display:flex;gap:32px;align-items:center;flex-wrap:wrap;padding:48px 40px;background:var(--d900);border-radius:4px;margin:24px 0;}
 .kbtn-ico-grid{display:flex;flex-direction:column;gap:24px;margin:16px 0;}
+
+/* ── ProfileMenuButton ─────────────────────────────────────── */
+.pmb-demo{display:flex;justify-content:center;align-items:flex-start;padding:40px;min-height:230px;background:var(--bg-2);border:1px solid var(--border-1);border-radius:var(--r-sm);margin:16px 0 24px;}
+.pmb{position:relative;display:inline-block;font-family:var(--ff);}
+.pmb-trigger{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:6px 12px 6px 6px;background:#fff;
+  border:1px solid var(--border-1);border-radius:var(--r-sm);
+  cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s;
+}
+.pmb-trigger:hover{background:var(--bg-2);border-color:var(--d400);}
+.pmb.open .pmb-trigger{border-color:var(--t400);box-shadow:0 0 0 3px rgba(64,192,192,.15);background:#fff;}
+.pmb-avatar{
+  width:36px;height:36px;flex-shrink:0;border-radius:50%;
+  background:var(--t600);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;overflow:hidden;
+}
+.pmb-avatar img{width:100%;height:100%;object-fit:cover;}
+.pmb-meta{display:flex;flex-direction:column;gap:1px;text-align:left;line-height:1.2;min-width:0;}
+.pmb-name{font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--text-1);white-space:nowrap;}
+.pmb-role{font-size:12px;font-weight:400;letter-spacing:-0.01em;color:var(--text-3);white-space:nowrap;}
+.pmb-chev{display:flex;flex-shrink:0;color:var(--text-3);transition:transform .2s ease;margin-left:4px;}
+.pmb-chev svg{width:18px;height:18px;}
+.pmb.open .pmb-chev{transform:rotate(180deg);}
+.pmb-menu{
+  position:absolute;top:calc(100% + 8px);right:0;z-index:50;min-width:244px;
+  background:#fff;border:1px solid var(--border-2);border-radius:var(--r-md);
+  box-shadow:0 12px 32px rgba(38,61,66,.16),0 4px 12px rgba(38,61,66,.08);
+  padding:6px;opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .16s ease,transform .16s ease;
+}
+.pmb.open .pmb-menu{opacity:1;transform:translateY(0);pointer-events:auto;}
+.pmb-menu-head{display:flex;align-items:center;gap:12px;padding:10px 12px 12px;border-bottom:1px solid var(--border-2);margin-bottom:6px;}
+.pmb-menu-head .pmb-avatar{width:40px;height:40px;font-size:14px;}
+.pmb-menu-name{font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--text-1);}
+.pmb-menu-mail{font-size:12px;color:var(--text-3);}
+.pmb-item{
+  display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;
+  border:none;background:none;border-radius:var(--r-sm);
+  font-family:var(--ff);font-size:14px;font-weight:500;letter-spacing:-0.02em;color:var(--text-1);
+  cursor:pointer;transition:background .12s,color .12s;text-align:left;
+}
+.pmb-item:hover{background:var(--bg-2);}
+.pmb-item svg{width:18px;height:18px;flex-shrink:0;color:var(--text-3);}
+.pmb-item:hover svg{color:var(--text-1);}
+.pmb-item-danger{color:var(--red);}
+.pmb-item-danger svg,.pmb-item-danger:hover svg{color:var(--red);}
+.pmb-item-danger:hover{background:var(--red-bg);}
+.pmb-sep{height:1px;background:var(--border-2);margin:6px 0;}
+
 .sh3{font-size:1.0625rem;font-weight:700;letter-spacing:-0.02rem;color:var(--text-1);margin:32px 0 0;}
 
 /* ───────────────────────────────────────────
@@ -2539,6 +2590,57 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
    overflow:hidden on .kbtn-disp clips the 200%×200% rotating layer.
    .kbtn-disp-in sits at z-index:1 above both animated layers. */</code></div>
       </div>
+
+      <!-- ProfileMenuButton -->
+      <div class="section" id="cb-profile" data-sec>
+        <h2 class="sh2">ProfileMenuButton</h2>
+        <p class="sp">A compact account control for the top navigation — avatar, name and role with a chevron that flips when open. Clicking toggles a dropdown (Profile, Settings, Sign out). Click outside or press <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">Esc</code> to close. Built on KDS tokens (Barlow, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">--r-sm</code>/<code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">--r-md</code>, turquoise focus ring).</p>
+        <div class="pmb-demo">
+          <div class="pmb" data-pmb>
+            <button class="pmb-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+              <span class="pmb-avatar">DK</span>
+              <span class="pmb-meta">
+                <span class="pmb-name">Damiree Kim</span>
+                <span class="pmb-role">Design Lead</span>
+              </span>
+              <span class="pmb-chev"><svg viewBox="0 0 20 20" fill="none"><path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="pmb-menu" role="menu">
+              <div class="pmb-menu-head">
+                <span class="pmb-avatar">DK</span>
+                <div>
+                  <div class="pmb-menu-name">Damiree Kim</div>
+                  <div class="pmb-menu-mail">damiree.kim@kewazo.com</div>
+                </div>
+              </div>
+              <button class="pmb-item" role="menuitem" type="button"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6.5" r="3.25" stroke="currentColor" stroke-width="1.6"/><path d="M4 16c0-2.8 2.7-4.6 6-4.6s6 1.8 6 4.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Profile</button>
+              <button class="pmb-item" role="menuitem" type="button"><svg viewBox="0 0 20 20" fill="none"><path d="M4 6.5h6M15 6.5h1M4 13.5h1M10 13.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12.5" cy="6.5" r="1.9" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="13.5" r="1.9" stroke="currentColor" stroke-width="1.6"/></svg>Settings</button>
+              <div class="pmb-sep"></div>
+              <button class="pmb-item pmb-item-danger" role="menuitem" type="button"><svg viewBox="0 0 20 20" fill="none"><path d="M8 16H5.5A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4H8M13 13.5 16.5 10 13 6.5M16.5 10H8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Sign out</button>
+            </div>
+          </div>
+        </div>
+        <div class="code-block"><code>&lt;div class="pmb" data-pmb&gt;
+  &lt;button class="pmb-trigger" aria-haspopup="true" aria-expanded="false"&gt;
+    &lt;span class="pmb-avatar"&gt;DK&lt;/span&gt;
+    &lt;span class="pmb-meta"&gt;
+      &lt;span class="pmb-name"&gt;Damiree Kim&lt;/span&gt;
+      &lt;span class="pmb-role"&gt;Design Lead&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;span class="pmb-chev"&gt;[chevron svg]&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="pmb-menu" role="menu"&gt;
+    &lt;div class="pmb-menu-head"&gt;…avatar · name · email…&lt;/div&gt;
+    &lt;button class="pmb-item"&gt;[icon] Profile&lt;/button&gt;
+    &lt;button class="pmb-item"&gt;[icon] Settings&lt;/button&gt;
+    &lt;div class="pmb-sep"&gt;&lt;/div&gt;
+    &lt;button class="pmb-item pmb-item-danger"&gt;[icon] Sign out&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="c-cmt">/* .pmb.open toggles the menu; JS wires click-to-open,
+   click-outside + Esc to close, and aria-expanded. */</span></code></div>
+      </div>
     </div><!-- /body-col -->
 
     <div class="sticky-nav">
@@ -2547,6 +2649,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <a class="stnav-item" data-target="cb-basic">Basic</a>
       <a class="stnav-item" data-target="cb-icon">Icon</a>
       <a class="stnav-item" data-target="cb-display">Display</a>
+      <a class="stnav-item" data-target="cb-profile">ProfileMenuButton</a>
     </div>
   </div>
 </div>
@@ -3152,6 +3255,27 @@ document.addEventListener('keydown',function(e){
       });
     }
   });
+})();
+</script>
+
+<!-- ProfileMenuButton dropdown -->
+<script>
+(function(){
+  function initPMB(root){
+    var trigger=root.querySelector('.pmb-trigger');
+    if(!trigger||root.dataset.pmbInit) return;
+    root.dataset.pmbInit='1';
+    function close(){root.classList.remove('open');trigger.setAttribute('aria-expanded','false');}
+    function open(){root.classList.add('open');trigger.setAttribute('aria-expanded','true');}
+    trigger.addEventListener('click',function(e){
+      e.stopPropagation();
+      root.classList.contains('open')?close():open();
+    });
+    root.querySelectorAll('.pmb-item').forEach(function(it){it.addEventListener('click',close);});
+    document.addEventListener('click',function(e){if(!root.contains(e.target)) close();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape') close();});
+  }
+  document.querySelectorAll('[data-pmb]').forEach(initPMB);
 })();
 </script>
 </body>
