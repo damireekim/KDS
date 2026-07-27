@@ -89,7 +89,7 @@ img{display:block;max-width:100%;}
 .gnb-right{display:flex;align-items:center;gap:8px;}
 .gnb-icon-btn{
   width:40px;height:40px;display:flex;align-items:center;justify-content:center;
-  border-radius:4px;color:var(--text-3);transition:background .15s,color .15s;
+  border-radius:0px;color:var(--text-3);transition:background .15s,color .15s;
 }
 .gnb-icon-btn:hover{background:var(--bg-2);color:var(--text-1);}
 .gnb-icon-btn svg{width:20px;height:20px;flex-shrink:0;}
@@ -102,7 +102,7 @@ img{display:block;max-width:100%;}
 }
 .gnb-hamburger span{
   display:block;width:22px;height:2px;background:var(--text-1);
-  transition:transform .25s,opacity .25s;border-radius:1px;
+  transition:transform .25s,opacity .25s;border-radius:0px;
 }
 .gnb-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .gnb-hamburger.open span:nth-child(2){opacity:0;}
@@ -149,7 +149,7 @@ img{display:block;max-width:100%;}
 .hero-date{font-size:14px;font-weight:400;letter-spacing:-0.336px;color:var(--text-2);white-space:nowrap;}
 .hero-img{width:100%;height:clamp(160px,20vw,275px);background:var(--d200);overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .hero-img-bars{display:flex;gap:4px;align-items:flex-end;opacity:.3;}
-.hero-img-bars span{width:8px;border-radius:2px 2px 0 0;background:var(--d500);}
+.hero-img-bars span{width:8px;border-radius:0px;background:var(--d500);}
 .hero-toc{width:100%;display:flex;justify-content:center;}
 .toc-inner{display:flex;gap:clamp(20px,4vw,40px);flex-wrap:wrap;justify-content:center;}
 .toc-group{display:flex;flex-direction:column;gap:18px;min-width:80px;}
@@ -196,7 +196,7 @@ img{display:block;max-width:100%;}
   display:flex;align-items:center;gap:8px;
   font-size:13px;font-weight:600;letter-spacing:-0.26px;color:var(--text-2);
   line-height:1;text-transform:uppercase;
-  padding:10px 8px;border-radius:4px;
+  padding:10px 8px;border-radius:0px;
   transition:background .15s,color .15s,padding .22s;
   white-space:nowrap;overflow:hidden;
 }
@@ -379,7 +379,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .print-card-ref{font-size:13.5px;font-weight:600;letter-spacing:-0.27px;line-height:1;}
 .print-card-usage{font-size:14px;font-weight:700;letter-spacing:-0.28px;line-height:1;}
 .print-card-cmyk{font-size:9px;font-weight:500;line-height:1.5;}
-.copy-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--d900);color:#fff;padding:8px 16px;border-radius:4px;font-size:13px;font-weight:500;letter-spacing:-0.26px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:400;white-space:nowrap;}
+.copy-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--d900);color:#fff;padding:8px 16px;border-radius:0px;font-size:13px;font-weight:500;letter-spacing:-0.26px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:400;white-space:nowrap;}
 .copy-toast.show{opacity:1;}
 
 /* ───────────────────────────────────────────
@@ -392,23 +392,23 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .ttable tr:hover td{background:var(--bg-2);}
 .tvar{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:var(--text-1);}
 .chip-row{display:flex;align-items:center;gap:8px;}
-.chip{width:20px;height:20px;border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,.06);}
+.chip{width:20px;height:20px;border-radius:4px;flex-shrink:0;border:1px solid rgba(0,0,0,.06);}
 .chex{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--text-3);}
 .ttable .tcat{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);background:var(--bg-2);padding:6px 12px;border-bottom:1px solid var(--border-1);}
 
 /* ───────────────────────────────────────────
    GUIDELINE — code blocks, rules
 ─────────────────────────────────────────── */
-.code-block{background:var(--d900);border-radius:4px;padding:20px 24px;overflow-x:auto;}
+.code-block{background:var(--d900);border-radius:0px;padding:20px 24px;overflow-x:auto;}
 .code-block code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.9;color:rgba(255,255,255,.8);white-space:pre;display:block;}
 .c-cmt{color:var(--t400);}
 .c-prop{color:#A3DADB;}
 .c-val{color:#F9FF93;}
 .c-kw{color:#FFB3C1;}
 
-.tok-anatomy{background:var(--bg-2);border:1px solid var(--border-1);border-radius:4px;padding:24px 28px;}
+.tok-anatomy{background:var(--bg-2);border:1px solid var(--border-1);border-radius:0px;padding:24px 28px;}
 .ta-full{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
-.ta-p{display:inline-block;padding:4px 8px;font-weight:700;font-size:13px;border-radius:3px;margin:2px;}
+.ta-p{display:inline-block;padding:4px 8px;font-weight:700;font-size:13px;border-radius:4px;margin:2px;}
 .ta-sep{color:var(--text-dis);padding:0 2px;}
 .ta-sys{background:var(--t200);color:var(--t700);}
 .ta-tier{background:var(--d200);color:var(--d700);}
@@ -417,7 +417,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .ta-step{background:var(--b300);color:var(--b800);}
 .ta-leg{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
 .ta-li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);}
-.ta-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.ta-dot{width:10px;height:10px;border-radius:0px;flex-shrink:0;}
 
 .rule-list{display:flex;flex-direction:column;gap:12px;}
 .rule-item{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--text-2);letter-spacing:-0.3px;line-height:1.5;}
@@ -431,7 +431,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .sp-row:last-child{border-bottom:none;}
 .sp-tok{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--text-3);}
 .sp-px{font-size:12px;color:var(--text-dis);}
-.sp-bar{height:6px;border-radius:2px;background:var(--t400);}
+.sp-bar{height:6px;border-radius:0px;background:var(--t400);}
 
 .rad-grid{display:flex;flex-wrap:wrap;gap:24px;}
 .rad-card{display:flex;flex-direction:column;align-items:center;gap:10px;}
@@ -453,13 +453,13 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 ─────────────────────────────────────────── */
 .demo-wrap{display:flex;flex-direction:column;gap:8px;}
 .demo-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);}
-.demo-stage{border:1px solid var(--border-1);border-radius:4px;overflow:hidden;}
+.demo-stage{border:1px solid var(--border-1);border-radius:0px;overflow:hidden;}
 
 .demo-gnb{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:#fff;border-bottom:1px solid var(--border-1);}
 .demo-gnb.dark{background:var(--d900);border-color:var(--d800);}
 .demo-gnb-left{display:flex;align-items:center;gap:32px;}
 .demo-brand{display:flex;align-items:center;gap:8px;}
-.demo-k{width:20px;height:20px;border-radius:3px;background:var(--t400);}
+.demo-k{width:20px;height:20px;border-radius:4px;background:var(--t400);}
 .demo-name{font-size:16px;font-weight:700;letter-spacing:-0.32px;color:var(--text-1);}
 .demo-gnb.dark .demo-name{color:#fff;}
 .demo-links{display:flex;gap:24px;}
@@ -468,7 +468,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .demo-link.act{color:var(--text-1);font-weight:600;}
 .demo-gnb.dark .demo-link.act{color:#fff;}
 .demo-r{display:flex;gap:8px;}
-.demo-rb{width:40px;height:40px;border-radius:4px;background:var(--d200);}
+.demo-rb{width:40px;height:40px;border-radius:0px;background:var(--d200);}
 .demo-gnb.dark .demo-rb{background:var(--d700);}
 
 .demo-3col{display:flex;background:#fff;min-height:200px;}
@@ -553,8 +553,8 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .kbtn-row{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-top:16px;}
 .kbtn-col{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
 .kbtn-col-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);}
-.kbtn-state-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:4px 10px;background:var(--bg-2);border-radius:4px;border:1px solid var(--border-1);width:fit-content;}
-.kbtn-disp-demo{display:flex;gap:32px;align-items:center;flex-wrap:wrap;padding:48px 40px;background:var(--d900);border-radius:4px;margin:24px 0;}
+.kbtn-state-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:4px 10px;background:var(--bg-2);border-radius:0px;border:1px solid var(--border-1);width:fit-content;}
+.kbtn-disp-demo{display:flex;gap:32px;align-items:center;flex-wrap:wrap;padding:48px 40px;background:var(--d900);border-radius:0px;margin:24px 0;}
 .kbtn-ico-grid{display:flex;flex-direction:column;gap:24px;margin:16px 0;}
 
 /* ── ProfileMenuButton ─────────────────────────────────────── */
@@ -661,7 +661,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 .kmod-widget-btn:hover{background:#414C59;}
 .kmod-widget-trigger{width:48px;height:48px;background:var(--d900);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .15s;border:none;flex-shrink:0;}
 .kmod-widget-trigger:hover{background:#414C59;}
-.kmod-demo-wrap{background:var(--bg-2);border:1px solid var(--border-1);border-radius:4px;padding:40px;display:flex;align-items:flex-start;justify-content:flex-end;min-height:260px;position:relative;}
+.kmod-demo-wrap{background:var(--bg-2);border:1px solid var(--border-1);border-radius:0px;padding:40px;display:flex;align-items:flex-start;justify-content:flex-end;min-height:260px;position:relative;}
 /* form inputs inside modal */
 .kmod-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
 .kmod-field:last-of-type{margin-bottom:0;}
@@ -675,7 +675,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
    PLACEHOLDER SECTIONS (stub pages)
 ─────────────────────────────────────────── */
 .stub-ph{
-  width:100%;height:200px;background:var(--bg-2);border-radius:4px;
+  width:100%;height:200px;background:var(--bg-2);border-radius:0px;
   border:1px dashed var(--border-1);
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
 }
@@ -777,7 +777,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 /* scrollbar */
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:999px;}
+::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:99px;}
 
 /* ═══════════════════════════════════════════════════════════
    PEEC-INSPIRED DESIGN REFRESH
@@ -787,7 +787,8 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
 
 /* ── Radius & Shadow tokens ──────────────────────────────── */
 :root{
-  --r-xs:4px;--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;--r-pill:999px;
+  /* KDS radius system: 0 default, 4px exceptional, 99px pill/circle only */
+  --r-xs:4px;--r-sm:0px;--r-md:0px;--r-lg:0px;--r-xl:0px;--r-pill:99px;
   --sh-xs:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
   --sh-sm:0 2px 6px rgba(12,10,9,.08),0 0 0 1px rgba(27,31,36,.04);
   --sh-md:0 4px 12px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);
@@ -1455,7 +1456,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <div class="bhead"><h1 class="b-title">Typography</h1><span class="b-sub">Foundation</span></div>
       <div class="section" id="ft-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">KDS uses two typefaces: <strong>LIFTBOT Medium</strong> for Display-level text (hero headings and brand statements) and <strong>Barlow</strong> for all other UI text. Both typefaces reflect KEWAZO's industrial precision. Letter-spacing defaults to <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">−2%</code> throughout (except Display which uses 0%) to maintain the brand's tight, confident voice. There are <strong>24 type roles</strong> across 5 categories.</p>
+        <p class="sp">KDS uses two typefaces: <strong>LIFTBOT Medium</strong> for Display-level text (hero headings and brand statements) and <strong>Barlow</strong> for all other UI text. Both typefaces reflect KEWAZO's industrial precision. Letter-spacing defaults to <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">−2%</code> throughout (except Display which uses 0%) to maintain the brand's tight, confident voice. There are <strong>24 type roles</strong> across 5 categories.</p>
       </div>
       <div class="section" id="ft-primary" data-sec>
         <h2 class="sh2">Type Scale</h2>
@@ -1811,7 +1812,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Overview -->
       <div class="section" id="fi-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">KDS uses a curated icon set aligned to the brand's industrial, precise visual language. Icon graphic is always <strong>24×24px</strong> with a <strong>40×40px</strong> touch area. Colour follows semantic tokens — default icons use <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:3px;">--kds-sem-color-ico-primary</code>. Click any icon to download the SVG file.</p>
+        <p class="sp">KDS uses a curated icon set aligned to the brand's industrial, precise visual language. Icon graphic is always <strong>24×24px</strong> with a <strong>40×40px</strong> touch area. Colour follows semantic tokens — default icons use <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:0px;">--kds-sem-color-ico-primary</code>. Click any icon to download the SVG file.</p>
       </div>
 
       <!-- Icon set -->
@@ -1900,7 +1901,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Formative anatomy -->
       <div class="section" id="fi-anatomy" data-sec>
         <h2 class="sh2">Formative anatomy</h2>
-        <p class="sp">KDS icons are drawn on a <strong>40×40px</strong> artboard using filled paths (no stroke). The effective graphic area follows the KDS icon bounds. Below, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">ico_hamburger</code> is shown at 5× scale with construction guides.</p>
+        <p class="sp">KDS icons are drawn on a <strong>40×40px</strong> artboard using filled paths (no stroke). The effective graphic area follows the KDS icon bounds. Below, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">ico_hamburger</code> is shown at 5× scale with construction guides.</p>
 
         <div class="ico-anatomy">
           <!-- SVG diagram -->
@@ -2205,7 +2206,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Stat Card -->
       <div class="section" id="cc-stat" data-sec>
         <h2 class="sh2">Stat Card</h2>
-        <p class="sp">Highlight KPIs and metrics. Use the <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">.up</code> / <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">.dn</code> modifier for trend direction.</p>
+        <p class="sp">Highlight KPIs and metrics. Use the <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">.up</code> / <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">.dn</code> modifier for trend direction.</p>
         <div class="kcard-grid">
           <div class="kstat">
             <div class="kstat-label">Total Lift Cycles</div>
@@ -2306,7 +2307,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Overview -->
       <div class="section" id="cm-overview" data-sec>
         <h2 class="sh2">Overview</h2>
-        <p class="sp">KDS provides two modal patterns: a <strong>centered overlay</strong> for confirmations and forms, and a <strong>contact widget</strong> fixed to the bottom-right viewport corner — matching the interaction on the KEWAZO.com landing page. The close icon uses <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">ico_close</code> from the KDS icon set.</p>
+        <p class="sp">KDS provides two modal patterns: a <strong>centered overlay</strong> for confirmations and forms, and a <strong>contact widget</strong> fixed to the bottom-right viewport corner — matching the interaction on the KEWAZO.com landing page. The close icon uses <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">ico_close</code> from the KDS icon set.</p>
       </div>
 
       <!-- Centered Modal -->
@@ -2469,7 +2470,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Basic -->
       <div class="section" id="cb-basic" data-sec>
         <h2 class="sh2">Basic</h2>
-        <p class="sp">Four configurations. Hover directly on each button to see the state change — fill shifts from Midnight <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">#1B1F24</code> to Slate <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">#414C59</code>.</p>
+        <p class="sp">Four configurations. Hover directly on each button to see the state change — fill shifts from Midnight <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">#1B1F24</code> to Slate <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">#414C59</code>.</p>
         <div class="kbtn-row" style="align-items:flex-end">
           <div class="kbtn-col">
             <div class="kbtn-col-lbl">Shadow LG</div>
@@ -2567,7 +2568,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- Display -->
       <div class="section" id="cb-display" data-sec>
         <h2 class="sh2">Display</h2>
-        <p class="sp">High-emphasis CTA for hero sections. A soft teal light sweeps around the border using a rotating conic-gradient layer clipped by <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:3px;">overflow:hidden</code>. A pulsing teal glow dot anchors the bottom edge.</p>
+        <p class="sp">High-emphasis CTA for hero sections. A soft teal light sweeps around the border using a rotating conic-gradient layer clipped by <code style="font-size:12px;background:var(--bg-2);padding:2px 6px;border-radius:0px;">overflow:hidden</code>. A pulsing teal glow dot anchors the bottom edge.</p>
         <div class="kbtn-disp-demo">
           <a class="kbtn-disp" href="#">
             <span class="kbtn-disp-glow"></span>
@@ -2594,7 +2595,7 @@ body.snav-collapsed .snav-item-label{max-width:0;opacity:0;}
       <!-- ProfileMenuButton -->
       <div class="section" id="cb-profile" data-sec>
         <h2 class="sh2">ProfileMenuButton</h2>
-        <p class="sp">A compact account control for the top navigation — avatar, name and role with a chevron that flips when open. Clicking toggles a dropdown (Profile, Settings, Sign out). Click outside or press <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">Esc</code> to close. Built on KDS tokens (Barlow, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">--r-sm</code>/<code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:3px;">--r-md</code>, turquoise focus ring).</p>
+        <p class="sp">A compact account control for the top navigation — avatar, name and role with a chevron that flips when open. Clicking toggles a dropdown (Profile, Settings, Sign out). Click outside or press <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">Esc</code> to close. Built on KDS tokens (Barlow, <code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">--r-sm</code>/<code style="font-size:12px;background:var(--bg-2);padding:2px 5px;border-radius:0px;">--r-md</code>, turquoise focus ring).</p>
         <div class="pmb-demo">
           <div class="pmb" data-pmb>
             <button class="pmb-trigger" type="button" aria-haspopup="true" aria-expanded="false">
